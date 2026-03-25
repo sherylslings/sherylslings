@@ -24,7 +24,7 @@ export const Header = () => {
             </div>
           )}
           <div className="block">
-            <h1 className="font-serif text-xs sm:text-lg font-semibold text-foreground leading-tight">
+            <h1 className="font-serif text-sm sm:text-lg font-semibold text-foreground leading-tight">
               {settings.brand_name}
             </h1>
             {settings.tagline && (
