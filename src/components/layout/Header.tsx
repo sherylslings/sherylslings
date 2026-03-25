@@ -23,12 +23,12 @@ export const Header = () => {
               </span>
             </div>
           )}
-          <div className="hidden sm:block">
-            <h1 className="font-serif text-lg font-semibold text-foreground leading-tight">
+          <div className="block max-w-[140px] sm:max-w-none">
+            <h1 className="font-serif text-sm sm:text-lg font-semibold text-foreground leading-tight truncate">
               {settings.brand_name}
             </h1>
             {settings.tagline && (
-              <p className="text-xs text-muted-foreground">{settings.tagline}</p>
+              <p className="text-xs text-muted-foreground hidden sm:block">{settings.tagline}</p>
             )}
           </div>
         </Link>
