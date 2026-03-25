@@ -23,8 +23,8 @@ export const Header = () => {
               </span>
             </div>
           )}
-          <div className="block max-w-[140px] sm:max-w-none">
-            <h1 className="font-serif text-sm sm:text-lg font-semibold text-foreground leading-tight truncate">
+          <div className="block">
+            <h1 className="font-serif text-xs sm:text-lg font-semibold text-foreground leading-tight">
               {settings.brand_name}
             </h1>
             {settings.tagline && (
