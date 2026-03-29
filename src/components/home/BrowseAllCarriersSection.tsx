@@ -88,6 +88,12 @@ export const BrowseAllCarriersSection = () => {
     }
   };
 
+  const toggleCategory = (slug: string) => {
+    setSelectedCategories(prev =>
+      prev.includes(slug) ? prev.filter(v => v !== slug) : [...prev, slug]
+    );
+  };
+
   const clearAllFilters = () => {
     setSearchQuery('');
     setSelectedCategories([]);
@@ -97,6 +103,9 @@ export const BrowseAllCarriersSection = () => {
   };
 
   const hasActiveFilters = searchQuery || selectedCategories.length > 0 || selectedBrands.length > 0 || selectedAgeRanges.length > 0 || showAvailableOnly;
+
+  // Count of active non-category filters (for badge on filter button)
+  const activeFilterCount = (selectedBrands.length > 0 ? 1 : 0) + (selectedAgeRanges.length > 0 ? 1 : 0) + (showAvailableOnly ? 1 : 0);
 
   const FilterContent = () => (
     <div className="space-y-6">
@@ -194,8 +203,8 @@ export const BrowseAllCarriersSection = () => {
           </p>
         </div>
 
-        {/* Search and Sort Bar */}
-        <div className="flex flex-col sm:flex-row gap-4 mb-8">
+        {/* Search and Sort/Filter Bar */}
+        <div className="flex flex-col sm:flex-row gap-3 mb-4">
           <div className="relative flex-1">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
             <Input
@@ -206,16 +215,16 @@ export const BrowseAllCarriersSection = () => {
             />
           </div>
 
-          <div className="flex gap-2">
-            {/* Mobile Filter Button */}
+          <div className="flex gap-2 shrink-0">
+            {/* Filter Button (Sheet) — visible on all screen sizes */}
             <Sheet open={isFilterOpen} onOpenChange={setIsFilterOpen}>
               <SheetTrigger asChild>
-                <Button variant="outline" className="lg:hidden gap-2">
+                <Button variant="outline" className="gap-2">
                   <Filter className="w-4 h-4" />
                   Filters
-                  {hasActiveFilters && (
+                  {activeFilterCount > 0 && (
                     <span className="bg-primary text-primary-foreground text-xs rounded-full w-5 h-5 flex items-center justify-center">
-                      !
+                      {activeFilterCount}
                     </span>
                   )}
                 </Button>
@@ -248,57 +257,74 @@ export const BrowseAllCarriersSection = () => {
           </div>
         </div>
 
-        <div className="flex gap-8">
-          {/* Desktop Sidebar Filters */}
-          <aside className="hidden lg:block w-64 shrink-0">
-            <div className="sticky top-24 bg-card rounded-lg border p-4 max-h-[calc(100vh-7rem)] overflow-y-auto">
-              <h3 className="font-medium mb-4">Filters</h3>
-              <FilterContent />
-            </div>
-          </aside>
+        {/* Category Quick-Filter Pills */}
+        <div className="flex flex-wrap gap-2 mb-6">
+          <button
+            onClick={() => setSelectedCategories([])}
+            className={`px-4 py-1.5 rounded-full text-sm font-medium border transition-colors ${
+              selectedCategories.length === 0
+                ? 'bg-primary text-primary-foreground border-primary'
+                : 'bg-background text-foreground border-border hover:border-primary hover:text-primary'
+            }`}
+          >
+            All
+          </button>
+          {CATEGORIES.map((cat) => (
+            <button
+              key={cat.slug}
+              onClick={() => toggleCategory(cat.slug)}
+              className={`px-4 py-1.5 rounded-full text-sm font-medium border transition-colors ${
+                selectedCategories.includes(cat.slug)
+                  ? 'bg-primary text-primary-foreground border-primary'
+                  : 'bg-background text-foreground border-border hover:border-primary hover:text-primary'
+              }`}
+            >
+              {cat.name}
+            </button>
+          ))}
+        </div>
 
-          {/* Results */}
-          <div className="flex-1">
-            <div className="mb-4 text-sm text-muted-foreground">
-              {isLoading ? 'Loading...' : `${filteredCarriers.length} carrier${filteredCarriers.length !== 1 ? 's' : ''} found`}
-            </div>
-
-            {isLoading ? (
-              <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6">
-                {[1, 2, 3, 4, 5, 6].map((i) => (
-                  <div key={i} className="space-y-4">
-                    <Skeleton className="aspect-[4/3] rounded-lg" />
-                    <Skeleton className="h-4 w-20" />
-                    <Skeleton className="h-6 w-32" />
-                    <Skeleton className="h-4 w-full" />
-                  </div>
-                ))}
-              </div>
-            ) : filteredCarriers.length > 0 ? (
-              <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6">
-                {filteredCarriers.map((carrier, index) => (
-                  <div
-                    key={carrier.id}
-                    className="animate-fade-in"
-                    style={{ animationDelay: `${index * 0.05}s` }}
-                  >
-                    <CarrierCard carrier={carrier} />
-                  </div>
-                ))}
-              </div>
-            ) : (
-              <div className="text-center py-12">
-                <p className="text-muted-foreground mb-4">
-                  No carriers found matching your criteria.
-                </p>
-                {hasActiveFilters && (
-                  <Button variant="outline" onClick={clearAllFilters}>
-                    Clear Filters
-                  </Button>
-                )}
-              </div>
-            )}
+        {/* Results */}
+        <div>
+          <div className="mb-4 text-sm text-muted-foreground">
+            {isLoading ? 'Loading...' : `${filteredCarriers.length} carrier${filteredCarriers.length !== 1 ? 's' : ''} found`}
           </div>
+
+          {isLoading ? (
+            <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6">
+              {[1, 2, 3, 4, 5, 6].map((i) => (
+                <div key={i} className="space-y-4">
+                  <Skeleton className="aspect-[4/3] rounded-lg" />
+                  <Skeleton className="h-4 w-20" />
+                  <Skeleton className="h-6 w-32" />
+                  <Skeleton className="h-4 w-full" />
+                </div>
+              ))}
+            </div>
+          ) : filteredCarriers.length > 0 ? (
+            <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6">
+              {filteredCarriers.map((carrier, index) => (
+                <div
+                  key={carrier.id}
+                  className="animate-fade-in"
+                  style={{ animationDelay: `${index * 0.05}s` }}
+                >
+                  <CarrierCard carrier={carrier} />
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div className="text-center py-12">
+              <p className="text-muted-foreground mb-4">
+                No carriers found matching your criteria.
+              </p>
+              {hasActiveFilters && (
+                <Button variant="outline" onClick={clearAllFilters}>
+                  Clear Filters
+                </Button>
+              )}
+            </div>
+          )}
         </div>
       </div>
     </section>

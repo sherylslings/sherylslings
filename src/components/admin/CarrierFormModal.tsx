@@ -9,6 +9,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
+import { RichTextEditor } from '@/components/ui/RichTextEditor';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Calendar } from '@/components/ui/calendar';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
@@ -65,6 +66,7 @@ export const CarrierFormModal = ({ open, onOpenChange, carrier }: CarrierFormMod
   });
 
   const category = watch('category');
+  const description = watch('description');
   const availabilityStatus = watch('availability_status');
   const nextAvailableDate = watch('next_available_date');
 
@@ -220,7 +222,12 @@ export const CarrierFormModal = ({ open, onOpenChange, carrier }: CarrierFormMod
 
           <div className="space-y-2">
             <Label>Description</Label>
-            <Textarea {...register('description')} rows={3} />
+            <RichTextEditor
+              value={description || ''}
+              onChange={(val) => setValue('description', val)}
+              placeholder="Describe the carrier, care instructions, features..."
+              minHeight="100px"
+            />
           </div>
 
           <div className="space-y-2">

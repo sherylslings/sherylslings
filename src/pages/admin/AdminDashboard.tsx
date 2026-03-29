@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useNavigate, Link, Outlet, useLocation } from 'react-router-dom';
-import { Package, ClipboardList, LogOut, Home, Settings, FileText, Shield } from 'lucide-react';
+import { Package, ClipboardList, LogOut, Home, Settings, FileText, Shield, BookOpen } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useAuth } from '@/hooks/useAuth';
 import { cn } from '@/lib/utils';
@@ -38,6 +38,7 @@ const AdminDashboard = () => {
     { href: '/admin/dashboard/bookings', icon: ClipboardList, label: 'Bookings' },
     { href: '/admin/dashboard/policies', icon: FileText, label: 'Policies' },
     { href: '/admin/dashboard/safety', icon: Shield, label: 'Safety' },
+    { href: '/admin/dashboard/blog', icon: BookOpen, label: 'Blog' },
     { href: '/admin/dashboard/settings', icon: Settings, label: 'Site Settings' },
   ];
 

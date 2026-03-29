@@ -3,8 +3,8 @@ import { toast } from 'sonner';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
+import { RichTextEditor } from '@/components/ui/RichTextEditor';
 import { useSiteSettings, useUpdateSiteSettings } from '@/hooks/useSiteSettings';
 import { Plus, Trash2, Save, ExternalLink, GripVertical } from 'lucide-react';
 
@@ -48,7 +48,7 @@ const sectionsToHtml = (sections: PolicySection[]): string => {
   return sections
     .map(
       (s) =>
-        `<section>\n<h2>${s.title}</h2>\n<p>${s.content}</p>\n</section>`
+        `<section>\n<h2>${s.title}</h2>\n<div>${s.content}</div>\n</section>`
     )
     .join('\n\n');
 };
@@ -61,7 +61,7 @@ const htmlToSections = (html: string): PolicySection[] | null => {
     if (sections.length === 0) return null;
     return sections.map((el) => ({
       title: el.querySelector('h2')?.textContent?.trim() || '',
-      content: el.querySelector('p')?.textContent?.trim() || '',
+      content: el.querySelector('div')?.innerHTML?.trim() || el.querySelector('p')?.innerHTML?.trim() || '',
     }));
   } catch {
     return null;
@@ -190,13 +190,12 @@ const AdminPolicies = () => {
                 />
               </div>
               <div className="space-y-1.5">
-                <Label htmlFor={`content-${index}`}>Content</Label>
-                <Textarea
-                  id={`content-${index}`}
+                <Label>Content</Label>
+                <RichTextEditor
                   value={section.content}
-                  onChange={(e) => updateSection(index, 'content', e.target.value)}
+                  onChange={(val) => updateSection(index, 'content', val)}
                   placeholder="Describe this policy..."
-                  rows={3}
+                  minHeight="100px"
                 />
               </div>
             </CardContent>

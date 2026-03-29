@@ -3,8 +3,8 @@ import { toast } from 'sonner';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
+import { RichTextEditor } from '@/components/ui/RichTextEditor';
 import { useSiteSettings, useUpdateSiteSettings } from '@/hooks/useSiteSettings';
 import { Plus, Trash2, Save, ExternalLink, GripVertical } from 'lucide-react';
 
@@ -46,7 +46,7 @@ const buildHtml = (ticks: TicksItem[], sections: SafetySection[]): string => {
     .join('\n')}\n</ul>\n</section>`;
 
   const sectionsHtml = sections
-    .map((s) => `<section>\n<h2>${s.title}</h2>\n<p>${s.content}</p>\n</section>`)
+    .map((s) => `<section>\n<h2>${s.title}</h2>\n<div>${s.content}</div>\n</section>`)
     .join('\n\n');
 
   return [ticksHtml, sectionsHtml].join('\n\n');
@@ -77,7 +77,8 @@ const parseHtml = (html: string): { ticks: TicksItem[]; sections: SafetySection[
         });
         if (items.length > 0) ticks = items;
       } else {
-        const p = el.querySelector('p')?.textContent?.trim() || '';
+        const contentEl = el.querySelector('div') || el.querySelector('p');
+        const p = contentEl?.innerHTML?.trim() || '';
         sections.push({ title: h2, content: p });
       }
     }
@@ -258,13 +259,12 @@ const AdminSafety = () => {
                 />
               </div>
               <div className="space-y-1.5">
-                <Label htmlFor={`safety-content-${index}`}>Content</Label>
-                <Textarea
-                  id={`safety-content-${index}`}
+                <Label>Content</Label>
+                <RichTextEditor
                   value={section.content}
-                  onChange={(e) => updateSection(index, 'content', e.target.value)}
+                  onChange={(val) => updateSection(index, 'content', val)}
                   placeholder="Describe this safety tip..."
-                  rows={3}
+                  minHeight="100px"
                 />
               </div>
             </CardContent>

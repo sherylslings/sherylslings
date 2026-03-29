@@ -16,6 +16,9 @@ import AdminBookings from "./pages/admin/AdminBookings";
 import AdminSettings from "./pages/admin/AdminSettings";
 import AdminPolicies from "./pages/admin/AdminPolicies";
 import AdminSafety from "./pages/admin/AdminSafety";
+import AdminBlog from "./pages/admin/AdminBlog";
+import BlogPage from "./pages/BlogPage";
+import BlogPostPage from "./pages/BlogPostPage";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -33,6 +36,8 @@ const App = () => (
             <Route path="/carrier/:id" element={<CarrierDetailPage />} />
             <Route path="/policies" element={<PoliciesPage />} />
             <Route path="/safety" element={<SafetyPage />} />
+            <Route path="/blog" element={<BlogPage />} />
+            <Route path="/blog/:slug" element={<BlogPostPage />} />
             <Route path="/admin/login" element={<AdminLogin />} />
             <Route path="/admin/dashboard" element={<AdminDashboard />}>
               <Route index element={<Navigate to="carriers" replace />} />
@@ -40,6 +45,7 @@ const App = () => (
               <Route path="bookings" element={<AdminBookings />} />
               <Route path="policies" element={<AdminPolicies />} />
               <Route path="safety" element={<AdminSafety />} />
+              <Route path="blog" element={<AdminBlog />} />
               <Route path="settings" element={<AdminSettings />} />
             </Route>
             <Route path="*" element={<NotFound />} />

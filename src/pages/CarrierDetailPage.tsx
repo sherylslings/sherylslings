@@ -8,10 +8,12 @@ import { BookingModal } from '@/components/carrier/BookingModal';
 import { useCarrier } from '@/hooks/useCarriers';
 import { getCategoryName } from '@/lib/types';
 import { Skeleton } from '@/components/ui/skeleton';
+import { useSiteSettingsContext } from '@/contexts/SiteSettingsContext';
 
 const CarrierDetailPage = () => {
   const { id } = useParams<{id: string;}>();
   const { data: carrier, isLoading } = useCarrier(id!);
+  const { getWhatsAppLink } = useSiteSettingsContext();
   const [bookingOpen, setBookingOpen] = useState(false);
   const [selectedImage, setSelectedImage] = useState(0);
 
@@ -44,9 +46,9 @@ const CarrierDetailPage = () => {
 
   }
 
-  const whatsappLink = `https://wa.me/919876543210?text=${encodeURIComponent(
+  const whatsappLink = getWhatsAppLink(
     `Hi! I'm interested in the ${carrier.brand_name} ${carrier.model_name}. Is it available?`
-  )}`;
+  );
 
   return (
     <Layout>
@@ -99,7 +101,12 @@ const CarrierDetailPage = () => {
 
             <AvailabilityBadge status={carrier.availability_status} nextAvailableDate={carrier.next_available_date} />
 
-            <p className="text-muted-foreground">{carrier.description}</p>
+            {carrier.description && (
+              <div
+                className="text-muted-foreground prose prose-sm max-w-none [&_a]:text-primary [&_a]:underline [&_ul]:list-disc [&_ul]:pl-4 [&_ol]:list-decimal [&_ol]:pl-4"
+                dangerouslySetInnerHTML={{ __html: carrier.description }}
+              />
+            )}
 
             <div className="grid grid-cols-2 gap-4 text-sm">
               <div className="bg-muted/50 rounded-lg p-4">
