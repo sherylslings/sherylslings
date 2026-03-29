@@ -88,10 +88,9 @@ export const BrowseAllCarriersSection = () => {
     }
   };
 
-  const toggleCategory = (slug: string) => {
-    setSelectedCategories(prev =>
-      prev.includes(slug) ? prev.filter(v => v !== slug) : [...prev, slug]
-    );
+  const selectCategory = (slug: string) => {
+    // Single-select: clicking the active category deselects it, otherwise replace selection
+    setSelectedCategories(prev => prev.includes(slug) ? [] : [slug]);
   };
 
   const clearAllFilters = () => {
@@ -131,7 +130,7 @@ export const BrowseAllCarriersSection = () => {
               <Checkbox
                 id={`home-category-${category.slug}`}
                 checked={selectedCategories.includes(category.slug)}
-                onCheckedChange={() => toggleFilter(category.slug, selectedCategories, setSelectedCategories)}
+                onCheckedChange={() => selectCategory(category.slug)}
               />
               <label htmlFor={`home-category-${category.slug}`} className="text-sm cursor-pointer">
                 {category.name}
@@ -272,7 +271,7 @@ export const BrowseAllCarriersSection = () => {
           {CATEGORIES.map((cat) => (
             <button
               key={cat.slug}
-              onClick={() => toggleCategory(cat.slug)}
+              onClick={() => selectCategory(cat.slug)}
               className={`px-4 py-1.5 rounded-full text-sm font-medium border transition-colors ${
                 selectedCategories.includes(cat.slug)
                   ? 'bg-primary text-primary-foreground border-primary'

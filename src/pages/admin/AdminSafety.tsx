@@ -65,8 +65,9 @@ const parseHtml = (html: string): { ticks: TicksItem[]; sections: SafetySection[
     for (const el of allSections) {
       const h2 = el.querySelector('h2')?.textContent?.trim() || '';
       const ul = el.querySelector('ul');
-      if (ul) {
-        // TICKS section
+      // Only treat as TICKS if the heading explicitly says T.I.C.K.S.
+      const isTicksSection = ul && h2.includes('T.I.C.K.S');
+      if (isTicksSection) {
         const items = Array.from(ul.querySelectorAll('li')).map((li) => {
           const text = li.textContent || '';
           const match = text.match(/^([A-Z])\s*[–-]\s*([^:]+):\s*(.+)$/);
@@ -78,7 +79,10 @@ const parseHtml = (html: string): { ticks: TicksItem[]; sections: SafetySection[
         if (items.length > 0) ticks = items;
       } else {
         const contentEl = el.querySelector('div') || el.querySelector('p');
-        const p = contentEl?.innerHTML?.trim() || '';
+        // Fallback: get all inner HTML excluding the h2
+        const clone = el.cloneNode(true) as Element;
+        clone.querySelector('h2')?.remove();
+        const p = contentEl?.innerHTML?.trim() || clone.innerHTML.trim();
         sections.push({ title: h2, content: p });
       }
     }
