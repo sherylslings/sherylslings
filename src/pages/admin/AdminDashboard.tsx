@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useNavigate, Link, Outlet, useLocation } from 'react-router-dom';
-import { Package, ClipboardList, LogOut, Home, Settings, FileText, Shield, BookOpen } from 'lucide-react';
+import { Package, ClipboardList, LogOut, Home, Settings, FileText, Shield, BookOpen, IndianRupee, Receipt } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useAuth } from '@/hooks/useAuth';
 import { cn } from '@/lib/utils';
