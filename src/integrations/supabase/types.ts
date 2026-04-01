@@ -301,6 +301,63 @@ export type Database = {
         }
         Relationships: []
       }
+      transactions: {
+        Row: {
+          amount: number
+          booking_id: string | null
+          carrier_id: string | null
+          category: string
+          created_at: string
+          customer_name: string | null
+          description: string | null
+          id: string
+          transaction_date: string
+          type: Database["public"]["Enums"]["transaction_type"]
+          updated_at: string
+        }
+        Insert: {
+          amount: number
+          booking_id?: string | null
+          carrier_id?: string | null
+          category?: string
+          created_at?: string
+          customer_name?: string | null
+          description?: string | null
+          id?: string
+          transaction_date?: string
+          type: Database["public"]["Enums"]["transaction_type"]
+          updated_at?: string
+        }
+        Update: {
+          amount?: number
+          booking_id?: string | null
+          carrier_id?: string | null
+          category?: string
+          created_at?: string
+          customer_name?: string | null
+          description?: string | null
+          id?: string
+          transaction_date?: string
+          type?: Database["public"]["Enums"]["transaction_type"]
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "transactions_booking_id_fkey"
+            columns: ["booking_id"]
+            isOneToOne: false
+            referencedRelation: "booking_requests"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "transactions_carrier_id_fkey"
+            columns: ["carrier_id"]
+            isOneToOne: false
+            referencedRelation: "carriers"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       user_roles: {
         Row: {
           created_at: string
@@ -327,6 +384,28 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      approve_booking_with_transactions: {
+        Args: {
+          p_booking_id: string
+          p_carrier_id: string
+          p_customer_name: string
+          p_deposit_amount: number
+          p_duration: string
+          p_rent_amount: number
+          p_return_date: string
+          p_start_date: string
+        }
+        Returns: undefined
+      }
+      complete_booking_with_refund: {
+        Args: {
+          p_booking_id: string
+          p_carrier_id: string
+          p_customer_name: string
+          p_deposit_amount: number
+        }
+        Returns: undefined
+      }
       has_role: {
         Args: {
           _role: Database["public"]["Enums"]["app_role"]
@@ -337,6 +416,7 @@ export type Database = {
     }
     Enums: {
       app_role: "admin" | "user"
+      transaction_type: "income" | "expense" | "deposit_in" | "deposit_out"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -465,6 +545,7 @@ export const Constants = {
   public: {
     Enums: {
       app_role: ["admin", "user"],
+      transaction_type: ["income", "expense", "deposit_in", "deposit_out"],
     },
   },
 } as const

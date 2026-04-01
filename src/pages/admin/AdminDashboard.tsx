@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useNavigate, Link, Outlet, useLocation } from 'react-router-dom';
-import { Package, ClipboardList, LogOut, Home, Settings, FileText, Shield, BookOpen } from 'lucide-react';
+import { Package, ClipboardList, LogOut, Home, Settings, FileText, Shield, BookOpen, IndianRupee, Receipt } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useAuth } from '@/hooks/useAuth';
 import { cn } from '@/lib/utils';
@@ -36,6 +36,8 @@ const AdminDashboard = () => {
   const navItems = [
     { href: '/admin/dashboard/carriers', icon: Package, label: 'Carriers' },
     { href: '/admin/dashboard/bookings', icon: ClipboardList, label: 'Bookings' },
+    { href: '/admin/dashboard/accounting', icon: IndianRupee, label: 'Accounting' },
+    { href: '/admin/dashboard/transactions', icon: Receipt, label: 'Transactions' },
     { href: '/admin/dashboard/policies', icon: FileText, label: 'Policies' },
     { href: '/admin/dashboard/safety', icon: Shield, label: 'Safety' },
     { href: '/admin/dashboard/blog', icon: BookOpen, label: 'Blog' },

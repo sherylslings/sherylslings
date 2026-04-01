@@ -17,6 +17,8 @@ import AdminSettings from "./pages/admin/AdminSettings";
 import AdminPolicies from "./pages/admin/AdminPolicies";
 import AdminSafety from "./pages/admin/AdminSafety";
 import AdminBlog from "./pages/admin/AdminBlog";
+import AccountingDashboard from "./pages/admin/AccountingDashboard";
+import Transactions from "./pages/admin/Transactions";
 import BlogPage from "./pages/BlogPage";
 import BlogPostPage from "./pages/BlogPostPage";
 import NotFound from "./pages/NotFound";
@@ -46,6 +48,8 @@ const App = () => (
               <Route path="policies" element={<AdminPolicies />} />
               <Route path="safety" element={<AdminSafety />} />
               <Route path="blog" element={<AdminBlog />} />
+              <Route path="accounting" element={<AccountingDashboard />} />
+              <Route path="transactions" element={<Transactions />} />
               <Route path="settings" element={<AdminSettings />} />
             </Route>
             <Route path="*" element={<NotFound />} />
