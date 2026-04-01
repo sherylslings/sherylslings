@@ -1,11 +1,12 @@
 import { format } from 'date-fns';
-import { Check, X, Clock, MessageCircle } from 'lucide-react';
+import { Check, X, MessageCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Badge } from '@/components/ui/badge';
-import { useBookingRequests, useUpdateBookingRequest } from '@/hooks/useBookingRequests';
-import { useCarriers, useUpdateCarrier } from '@/hooks/useCarriers';
+import { useBookingRequests } from '@/hooks/useBookingRequests';
+import { useCarriers } from '@/hooks/useCarriers';
+import { useApproveBooking, useCompleteBooking } from '@/hooks/useTransactions';
 import { useToast } from '@/hooks/use-toast';
 import { addDays, addMonths } from 'date-fns';
 
@@ -19,59 +20,72 @@ const statusColors = {
 const AdminBookings = () => {
   const { data: bookings, isLoading } = useBookingRequests();
   const { data: carriers } = useCarriers();
-  const updateBooking = useUpdateBookingRequest();
-  const updateCarrier = useUpdateCarrier();
+  const approveBooking = useApproveBooking();
+  const completeBooking = useCompleteBooking();
   const { toast } = useToast();
 
+  const getCarrier = (carrierId: string) => carriers?.find(c => c.id === carrierId);
   const getCarrierName = (carrierId: string) => {
-    const carrier = carriers?.find(c => c.id === carrierId);
+    const carrier = getCarrier(carrierId);
     return carrier ? `${carrier.brand_name} ${carrier.model_name}` : 'Unknown';
   };
 
-  const handleApprove = async (booking: typeof bookings extends (infer T)[] ? T : never) => {
+  const handleApprove = async (booking: NonNullable<typeof bookings>[number]) => {
     try {
-      await updateBooking.mutateAsync({ id: booking.id, status: 'approved' });
-      
-      // Update carrier availability
+      const carrier = getCarrier(booking.carrier_id);
       const startDate = new Date(booking.start_date);
-      const returnDate = booking.duration === 'weekly' 
-        ? addDays(startDate, 7) 
+      const returnDate = booking.duration === 'weekly'
+        ? addDays(startDate, 7)
         : addMonths(startDate, 1);
-      
-      await updateCarrier.mutateAsync({
-        id: booking.carrier_id,
-        availability_status: 'rented',
-        next_available_date: format(returnDate, 'yyyy-MM-dd'),
+
+      const rentAmount = carrier
+        ? (booking.duration === 'weekly' ? carrier.weekly_rent : carrier.monthly_rent)
+        : 0;
+      const depositAmount = carrier?.refundable_deposit || 0;
+
+      await approveBooking.mutateAsync({
+        p_booking_id: booking.id,
+        p_carrier_id: booking.carrier_id,
+        p_customer_name: booking.customer_name,
+        p_duration: booking.duration,
+        p_start_date: booking.start_date,
+        p_rent_amount: rentAmount,
+        p_deposit_amount: depositAmount,
+        p_return_date: format(returnDate, 'yyyy-MM-dd'),
       });
-      
-      toast({ title: 'Booking approved!' });
+
+      toast({ title: 'Booking approved & transactions created!' });
     } catch (error) {
       toast({ variant: 'destructive', title: 'Failed to approve booking' });
     }
   };
 
   const handleReject = async (id: string) => {
+    // Still use direct update for cancellation (no transactions needed)
+    const { supabase } = await import('@/integrations/supabase/client');
     try {
-      await updateBooking.mutateAsync({ id, status: 'cancelled' });
+      const { error } = await supabase
+        .from('booking_requests')
+        .update({ status: 'cancelled' })
+        .eq('id', id);
+      if (error) throw error;
       toast({ title: 'Booking cancelled' });
-    } catch (error) {
+    } catch {
       toast({ variant: 'destructive', title: 'Failed to cancel booking' });
     }
   };
 
-  const handleComplete = async (booking: typeof bookings extends (infer T)[] ? T : never) => {
+  const handleComplete = async (booking: NonNullable<typeof bookings>[number]) => {
     try {
-      await updateBooking.mutateAsync({ id: booking.id, status: 'completed' });
-      
-      // Mark carrier as available
-      await updateCarrier.mutateAsync({
-        id: booking.carrier_id,
-        availability_status: 'available',
-        next_available_date: null,
+      const carrier = getCarrier(booking.carrier_id);
+      await completeBooking.mutateAsync({
+        p_booking_id: booking.id,
+        p_carrier_id: booking.carrier_id,
+        p_customer_name: booking.customer_name,
+        p_deposit_amount: carrier?.refundable_deposit || 0,
       });
-      
-      toast({ title: 'Marked as returned!' });
-    } catch (error) {
+      toast({ title: 'Marked as returned & deposit refunded!' });
+    } catch {
       toast({ variant: 'destructive', title: 'Failed to update booking' });
     }
   };
