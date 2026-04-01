@@ -40,6 +40,9 @@ export const Header = () => {
           <Link to="/safety" className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors hidden sm:block">
             Safety
           </Link>
+          <Link to="/blog" className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors hidden sm:block">
+            Blog
+          </Link>
           <a href={getWhatsAppLink()} target="_blank" rel="noopener noreferrer">
             <Button size="sm" className="gap-2">
               <MessageCircle className="w-4 h-4" />
