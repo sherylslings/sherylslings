@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { ArrowLeft, MessageCircle, Info } from 'lucide-react';
+import { ArrowLeft, MessageCircle, Info, Share2 } from 'lucide-react';
+import { toast } from 'sonner';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { Layout } from '@/components/layout/Layout';
 import { Button } from '@/components/ui/button';
 import { AvailabilityBadge } from '@/components/carrier/AvailabilityBadge';
@@ -87,16 +89,40 @@ const CarrierDetailPage = () => {
 
           {/* Details */}
           <div className="space-y-6">
-            <div>
-              <p className="text-sm font-semibold uppercase tracking-wide text-foreground">
-                {carrier.brand_name}
-              </p>
-              <h1 className="font-serif text-3xl md:text-4xl font-bold text-foreground mt-1">
-                {carrier.model_name}
-              </h1>
-              <span className="text-sm text-muted-foreground uppercase tracking-wide">
-                {getCategoryName(carrier.category)}
-              </span>
+            <div className="flex items-start justify-between">
+              <div>
+                <p className="text-sm font-semibold uppercase tracking-wide text-foreground">
+                  {carrier.brand_name}
+                </p>
+                <h1 className="font-serif text-3xl md:text-4xl font-bold text-foreground mt-1">
+                  {carrier.model_name}
+                </h1>
+                <span className="text-sm text-muted-foreground uppercase tracking-wide">
+                  {getCategoryName(carrier.category)}
+                </span>
+              </div>
+              <TooltipProvider>
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <Button
+                      variant="outline"
+                      size="icon"
+                      onClick={() => {
+                        const url = window.location.href;
+                        if (navigator.share) {
+                          navigator.share({ title: `${carrier.brand_name} ${carrier.model_name}`, url });
+                        } else {
+                          navigator.clipboard.writeText(url);
+                          toast.success('Link copied to clipboard!');
+                        }
+                      }}
+                    >
+                      <Share2 className="w-4 h-4" />
+                    </Button>
+                  </TooltipTrigger>
+                  <TooltipContent>Share</TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
             </div>
 
             <AvailabilityBadge status={carrier.availability_status} nextAvailableDate={carrier.next_available_date} />
