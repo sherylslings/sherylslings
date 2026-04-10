@@ -107,13 +107,13 @@ const CarrierDetailPage = () => {
                     <Button
                       variant="outline"
                       size="icon"
-                      onClick={() => {
+                      onClick={async () => {
                         const url = window.location.href;
-                        if (navigator.share) {
-                          navigator.share({ title: `${carrier.brand_name} ${carrier.model_name}`, url });
-                        } else {
-                          navigator.clipboard.writeText(url);
+                        try {
+                          await navigator.clipboard.writeText(url);
                           toast.success('Link copied to clipboard!');
+                        } catch {
+                          toast.error('Could not copy link');
                         }
                       }}
                     >
