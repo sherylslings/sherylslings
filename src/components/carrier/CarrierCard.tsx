@@ -51,9 +51,12 @@ export const CarrierCard = ({ carrier }: CarrierCardProps) => {
           </span>
         </div>
         
-        <p className="text-sm text-muted-foreground mb-4 line-clamp-2">
-          {carrier.description}
-        </p>
+        {carrier.description && (
+          <p
+            className="text-sm text-muted-foreground mb-4 line-clamp-2 [&_*]:inline"
+            dangerouslySetInnerHTML={{ __html: carrier.description }}
+          />
+        )}
         
         <div className="flex items-center justify-between gap-3 mb-4">
           <div>
