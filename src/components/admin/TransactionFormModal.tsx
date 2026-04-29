@@ -1,19 +1,21 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
-import { useCreateTransaction } from '@/hooks/useTransactions';
+import { useCreateTransaction, useUpdateTransaction, type Transaction } from '@/hooks/useTransactions';
 import { useToast } from '@/hooks/use-toast';
 
 interface Props {
   open: boolean;
   onOpenChange: (open: boolean) => void;
+  transaction?: Transaction | null;
 }
 
-const TransactionFormModal = ({ open, onOpenChange }: Props) => {
+const TransactionFormModal = ({ open, onOpenChange, transaction }: Props) => {
+  const isEdit = !!transaction;
   const [type, setType] = useState<'income' | 'expense' | 'deposit_in' | 'deposit_out'>('income');
   const [category, setCategory] = useState('rental');
   const [amount, setAmount] = useState('');
@@ -22,36 +24,62 @@ const TransactionFormModal = ({ open, onOpenChange }: Props) => {
   const [transactionDate, setTransactionDate] = useState(new Date().toISOString().split('T')[0]);
 
   const createTransaction = useCreateTransaction();
+  const updateTransaction = useUpdateTransaction();
   const { toast } = useToast();
+
+  useEffect(() => {
+    if (transaction) {
+      setType(transaction.type);
+      setCategory(transaction.category);
+      setAmount(String(transaction.amount));
+      setDescription(transaction.description ?? '');
+      setCustomerName(transaction.customer_name ?? '');
+      setTransactionDate(transaction.transaction_date);
+    } else {
+      setType('income');
+      setCategory('rental');
+      setAmount('');
+      setDescription('');
+      setCustomerName('');
+      setTransactionDate(new Date().toISOString().split('T')[0]);
+    }
+  }, [transaction, open]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      await createTransaction.mutateAsync({
+      const payload = {
         type,
         category,
         amount: parseFloat(amount),
         description: description || null,
         customer_name: customerName || null,
         transaction_date: transactionDate,
-        booking_id: null,
-        carrier_id: null,
-      });
-      toast({ title: 'Transaction added!' });
+      };
+      if (isEdit && transaction) {
+        await updateTransaction.mutateAsync({ id: transaction.id, ...payload });
+        toast({ title: 'Transaction updated!' });
+      } else {
+        await createTransaction.mutateAsync({
+          ...payload,
+          booking_id: null,
+          carrier_id: null,
+        });
+        toast({ title: 'Transaction added!' });
+      }
       onOpenChange(false);
-      setAmount('');
-      setDescription('');
-      setCustomerName('');
     } catch {
-      toast({ variant: 'destructive', title: 'Failed to add transaction' });
+      toast({ variant: 'destructive', title: isEdit ? 'Failed to update transaction' : 'Failed to add transaction' });
     }
   };
 
+  const isPending = createTransaction.isPending || updateTransaction.isPending;
+
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent>
+      <DialogContent className="max-h-[90vh] overflow-y-auto">
         <DialogHeader>
-          <DialogTitle className="font-serif">Add Transaction</DialogTitle>
+          <DialogTitle className="font-serif">{isEdit ? 'Edit Transaction' : 'Add Transaction'}</DialogTitle>
         </DialogHeader>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="grid grid-cols-2 gap-4">
@@ -101,8 +129,8 @@ const TransactionFormModal = ({ open, onOpenChange }: Props) => {
             <Label>Description</Label>
             <Textarea value={description} onChange={(e) => setDescription(e.target.value)} placeholder="Optional notes" />
           </div>
-          <Button type="submit" className="w-full" disabled={createTransaction.isPending}>
-            {createTransaction.isPending ? 'Adding...' : 'Add Transaction'}
+          <Button type="submit" className="w-full" disabled={isPending}>
+            {isPending ? 'Saving...' : isEdit ? 'Update Transaction' : 'Add Transaction'}
           </Button>
         </form>
       </DialogContent>
