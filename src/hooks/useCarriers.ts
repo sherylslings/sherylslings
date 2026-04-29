@@ -21,7 +21,7 @@ export const useCarriers = (category?: Category) => {
       // Best-effort: persist availability for any carrier whose return date has passed.
       // Fails silently for unauthenticated users (RLS blocks UPDATE), the frontend
       // still normalizes the result below.
-      await supabase.rpc('refresh_carrier_availability').catch(() => {});
+      try { await supabase.rpc('refresh_carrier_availability'); } catch {}
       let query = supabase
         .from('carriers')
         .select('*')
