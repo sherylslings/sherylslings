@@ -141,7 +141,9 @@ export const BookingModal = ({ carrier, open, onOpenChange }: BookingModalProps)
 
         <div className="bg-accent/50 rounded-lg p-4 mb-4">
           <p className="text-sm font-medium">{carrier.brand_name} {carrier.model_name}</p>
-          <p className="text-sm text-muted-foreground">{duration === 'weekly' ? 'Weekly' : 'Monthly'} Rent: ₹{rentAmount}</p>
+          <p className="text-sm text-muted-foreground">
+            {duration === 'weekly' ? 'Weekly' : duration === 'biweekly' ? 'Biweekly' : 'Monthly'} Rent: ₹{rentAmount}
+          </p>
           <p className="text-sm text-muted-foreground">Refundable Deposit: ₹{carrier.refundable_deposit}</p>
         </div>
 
@@ -184,6 +186,20 @@ export const BookingModal = ({ carrier, open, onOpenChange }: BookingModalProps)
             )}
           </div>
 
+          <div className="space-y-2">
+            <Label htmlFor="address">Full Address</Label>
+            <textarea
+              id="address"
+              {...register('address')}
+              placeholder="House/flat no., street, area, landmark, pincode"
+              rows={3}
+              className="flex w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+            />
+            {errors.address && (
+              <p className="text-xs text-destructive">{errors.address.message}</p>
+            )}
+          </div>
+
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="space-y-2">
               <Label>Preferred Start Date</Label>
@@ -219,13 +235,14 @@ export const BookingModal = ({ carrier, open, onOpenChange }: BookingModalProps)
               <Label>Duration</Label>
               <Select
                 value={duration}
-                onValueChange={(value: 'weekly' | 'monthly') => setValue('duration', value)}
+                onValueChange={(value: 'weekly' | 'biweekly' | 'monthly') => setValue('duration', value)}
               >
                 <SelectTrigger>
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="weekly">Weekly (₹{carrier.weekly_rent})</SelectItem>
+                  <SelectItem value="biweekly">Biweekly (₹{carrier.weekly_rent * 2})</SelectItem>
                   <SelectItem value="monthly">Monthly (₹{carrier.monthly_rent})</SelectItem>
                 </SelectContent>
               </Select>
