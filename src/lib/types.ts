@@ -28,8 +28,9 @@ export interface BookingRequest {
   customer_name: string;
   phone: string;
   city: string;
+  address: string | null;
   start_date: string;
-  duration: 'weekly' | 'monthly';
+  duration: 'weekly' | 'biweekly' | 'monthly';
   status: 'pending' | 'approved' | 'completed' | 'cancelled';
   agreed_to_terms: boolean;
   notes: string | null;
