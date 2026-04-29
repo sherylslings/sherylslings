@@ -126,10 +126,15 @@ const AdminBookings = () => {
                 {bookings.map((booking) => (
                   <TableRow key={booking.id}>
                     <TableCell>
-                      <div>
+                      <div className="max-w-[240px]">
                         <p className="font-medium">{booking.customer_name}</p>
                         <p className="text-sm text-muted-foreground">{booking.phone}</p>
                         <p className="text-sm text-muted-foreground">{booking.city}</p>
+                        {booking.address && (
+                          <p className="text-xs text-muted-foreground whitespace-pre-wrap break-words mt-1">
+                            {booking.address}
+                          </p>
+                        )}
                       </div>
                     </TableCell>
                     <TableCell>{getCarrierName(booking.carrier_id)}</TableCell>
