@@ -52,6 +52,7 @@ export type Database = {
       }
       booking_requests: {
         Row: {
+          address: string | null
           agreed_to_terms: boolean
           carrier_id: string
           city: string
@@ -66,6 +67,7 @@ export type Database = {
           updated_at: string
         }
         Insert: {
+          address?: string | null
           agreed_to_terms?: boolean
           carrier_id: string
           city: string
@@ -80,6 +82,7 @@ export type Database = {
           updated_at?: string
         }
         Update: {
+          address?: string | null
           agreed_to_terms?: boolean
           carrier_id?: string
           city?: string
@@ -413,6 +416,7 @@ export type Database = {
         }
         Returns: boolean
       }
+      refresh_carrier_availability: { Args: never; Returns: undefined }
     }
     Enums: {
       app_role: "admin" | "user"

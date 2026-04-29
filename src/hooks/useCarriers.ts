@@ -2,10 +2,26 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import type { Carrier, Category } from '@/lib/types';
 
+// Auto-correct availability: if next_available_date has passed, treat as available.
+const normalizeAvailability = (carrier: Carrier): Carrier => {
+  if (
+    carrier.availability_status === 'rented' &&
+    carrier.next_available_date &&
+    new Date(carrier.next_available_date) <= new Date(new Date().toDateString())
+  ) {
+    return { ...carrier, availability_status: 'available', next_available_date: null };
+  }
+  return carrier;
+};
+
 export const useCarriers = (category?: Category) => {
   return useQuery({
     queryKey: ['carriers', category],
     queryFn: async () => {
+      // Best-effort: persist availability for any carrier whose return date has passed.
+      // Fails silently for unauthenticated users (RLS blocks UPDATE), the frontend
+      // still normalizes the result below.
+      try { await supabase.rpc('refresh_carrier_availability'); } catch {}
       let query = supabase
         .from('carriers')
         .select('*')
@@ -18,7 +34,7 @@ export const useCarriers = (category?: Category) => {
       const { data, error } = await query;
       
       if (error) throw error;
-      return data as Carrier[];
+      return (data as Carrier[]).map(normalizeAvailability);
     },
   });
 };
@@ -34,7 +50,7 @@ export const useCarrier = (id: string) => {
         .maybeSingle();
       
       if (error) throw error;
-      return data as Carrier | null;
+      return data ? normalizeAvailability(data as Carrier) : null;
     },
     enabled: !!id,
   });

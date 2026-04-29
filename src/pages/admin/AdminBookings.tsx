@@ -36,10 +36,16 @@ const AdminBookings = () => {
       const startDate = new Date(booking.start_date);
       const returnDate = booking.duration === 'weekly'
         ? addDays(startDate, 7)
-        : addMonths(startDate, 1);
+        : booking.duration === 'biweekly'
+          ? addDays(startDate, 14)
+          : addMonths(startDate, 1);
 
       const rentAmount = carrier
-        ? (booking.duration === 'weekly' ? carrier.weekly_rent : carrier.monthly_rent)
+        ? (booking.duration === 'weekly'
+            ? carrier.weekly_rent
+            : booking.duration === 'biweekly'
+              ? carrier.weekly_rent * 2
+              : carrier.monthly_rent)
         : 0;
       const depositAmount = carrier?.refundable_deposit || 0;
 
@@ -54,7 +60,7 @@ const AdminBookings = () => {
         p_return_date: format(returnDate, 'yyyy-MM-dd'),
       });
 
-      toast({ title: 'Booking approved & transactions created!' });
+      toast({ title: 'Booking approved!' });
     } catch (error) {
       toast({ variant: 'destructive', title: 'Failed to approve booking' });
     }
@@ -84,7 +90,7 @@ const AdminBookings = () => {
         p_customer_name: booking.customer_name,
         p_deposit_amount: carrier?.refundable_deposit || 0,
       });
-      toast({ title: 'Marked as returned & deposit refunded!' });
+      toast({ title: 'Marked as returned!' });
     } catch {
       toast({ variant: 'destructive', title: 'Failed to update booking' });
     }
@@ -120,10 +126,15 @@ const AdminBookings = () => {
                 {bookings.map((booking) => (
                   <TableRow key={booking.id}>
                     <TableCell>
-                      <div>
+                      <div className="max-w-[240px]">
                         <p className="font-medium">{booking.customer_name}</p>
                         <p className="text-sm text-muted-foreground">{booking.phone}</p>
                         <p className="text-sm text-muted-foreground">{booking.city}</p>
+                        {booking.address && (
+                          <p className="text-xs text-muted-foreground whitespace-pre-wrap break-words mt-1">
+                            {booking.address}
+                          </p>
+                        )}
                       </div>
                     </TableCell>
                     <TableCell>{getCarrierName(booking.carrier_id)}</TableCell>

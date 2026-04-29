@@ -37,8 +37,9 @@ const bookingSchema = z.object({
   customer_name: z.string().min(2, 'Name is required'),
   phone: z.string().min(10, 'Valid phone number required'),
   city: z.string().min(2, 'City is required'),
+  address: z.string().min(5, 'Full address is required'),
   start_date: z.date({ required_error: 'Start date is required' }),
-  duration: z.enum(['weekly', 'monthly']),
+  duration: z.enum(['weekly', 'biweekly', 'monthly']),
   agreed_to_terms: z.literal(true, {
     errorMap: () => ({ message: 'You must agree to the rental terms' }),
   }),
@@ -83,6 +84,7 @@ export const BookingModal = ({ carrier, open, onOpenChange }: BookingModalProps)
         customer_name: data.customer_name,
         phone: data.phone,
         city: data.city,
+        address: data.address,
         start_date: format(data.start_date, 'yyyy-MM-dd'),
         duration: data.duration,
         agreed_to_terms: data.agreed_to_terms,
@@ -104,7 +106,12 @@ export const BookingModal = ({ carrier, open, onOpenChange }: BookingModalProps)
     onOpenChange(false);
   };
 
-  const rentAmount = duration === 'weekly' ? carrier.weekly_rent : carrier.monthly_rent;
+  const rentAmount =
+    duration === 'weekly'
+      ? carrier.weekly_rent
+      : duration === 'biweekly'
+        ? carrier.weekly_rent * 2
+        : carrier.monthly_rent;
 
   if (submitted) {
     return (
@@ -134,7 +141,9 @@ export const BookingModal = ({ carrier, open, onOpenChange }: BookingModalProps)
 
         <div className="bg-accent/50 rounded-lg p-4 mb-4">
           <p className="text-sm font-medium">{carrier.brand_name} {carrier.model_name}</p>
-          <p className="text-sm text-muted-foreground">{duration === 'weekly' ? 'Weekly' : 'Monthly'} Rent: ₹{rentAmount}</p>
+          <p className="text-sm text-muted-foreground">
+            {duration === 'weekly' ? 'Weekly' : duration === 'biweekly' ? 'Biweekly' : 'Monthly'} Rent: ₹{rentAmount}
+          </p>
           <p className="text-sm text-muted-foreground">Refundable Deposit: ₹{carrier.refundable_deposit}</p>
         </div>
 
@@ -177,6 +186,20 @@ export const BookingModal = ({ carrier, open, onOpenChange }: BookingModalProps)
             )}
           </div>
 
+          <div className="space-y-2">
+            <Label htmlFor="address">Full Address</Label>
+            <textarea
+              id="address"
+              {...register('address')}
+              placeholder="House/flat no., street, area, landmark, pincode"
+              rows={3}
+              className="flex w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+            />
+            {errors.address && (
+              <p className="text-xs text-destructive">{errors.address.message}</p>
+            )}
+          </div>
+
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="space-y-2">
               <Label>Preferred Start Date</Label>
@@ -212,13 +235,14 @@ export const BookingModal = ({ carrier, open, onOpenChange }: BookingModalProps)
               <Label>Duration</Label>
               <Select
                 value={duration}
-                onValueChange={(value: 'weekly' | 'monthly') => setValue('duration', value)}
+                onValueChange={(value: 'weekly' | 'biweekly' | 'monthly') => setValue('duration', value)}
               >
                 <SelectTrigger>
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="weekly">Weekly (₹{carrier.weekly_rent})</SelectItem>
+                  <SelectItem value="biweekly">Biweekly (₹{carrier.weekly_rent * 2})</SelectItem>
                   <SelectItem value="monthly">Monthly (₹{carrier.monthly_rent})</SelectItem>
                 </SelectContent>
               </Select>
