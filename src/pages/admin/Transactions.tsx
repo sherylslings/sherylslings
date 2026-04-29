@@ -1,12 +1,11 @@
 import { useState } from 'react';
 import { format } from 'date-fns';
-import { Plus, Trash2, Upload } from 'lucide-react';
+import { Pencil, Plus, Trash2, Upload } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent } from '@/components/ui/card';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Badge } from '@/components/ui/badge';
-import { Input } from '@/components/ui/input';
-import { useTransactions, useDeleteTransaction, useCreateTransaction } from '@/hooks/useTransactions';
+import { useTransactions, useDeleteTransaction, useCreateTransaction, type Transaction } from '@/hooks/useTransactions';
 import { useToast } from '@/hooks/use-toast';
 import TransactionFormModal from '@/components/admin/TransactionFormModal';
 
@@ -26,6 +25,7 @@ const typeLabels: Record<string, string> = {
 
 const Transactions = () => {
   const [showForm, setShowForm] = useState(false);
+  const [editing, setEditing] = useState<Transaction | null>(null);
   const { data: transactions, isLoading } = useTransactions();
   const deleteTransaction = useDeleteTransaction();
   const createTransaction = useCreateTransaction();
@@ -101,7 +101,7 @@ const Transactions = () => {
               <input type="file" accept=".csv" className="hidden" onChange={handleCSVImport} />
             </label>
           </Button>
-          <Button size="sm" className="gap-2" onClick={() => setShowForm(true)}>
+          <Button size="sm" className="gap-2" onClick={() => { setEditing(null); setShowForm(true); }}>
             <Plus className="w-4 h-4" />
             Add Transaction
           </Button>
