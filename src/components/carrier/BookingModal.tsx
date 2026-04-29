@@ -37,8 +37,9 @@ const bookingSchema = z.object({
   customer_name: z.string().min(2, 'Name is required'),
   phone: z.string().min(10, 'Valid phone number required'),
   city: z.string().min(2, 'City is required'),
+  address: z.string().min(5, 'Full address is required'),
   start_date: z.date({ required_error: 'Start date is required' }),
-  duration: z.enum(['weekly', 'monthly']),
+  duration: z.enum(['weekly', 'biweekly', 'monthly']),
   agreed_to_terms: z.literal(true, {
     errorMap: () => ({ message: 'You must agree to the rental terms' }),
   }),
@@ -83,6 +84,7 @@ export const BookingModal = ({ carrier, open, onOpenChange }: BookingModalProps)
         customer_name: data.customer_name,
         phone: data.phone,
         city: data.city,
+        address: data.address,
         start_date: format(data.start_date, 'yyyy-MM-dd'),
         duration: data.duration,
         agreed_to_terms: data.agreed_to_terms,
@@ -104,7 +106,12 @@ export const BookingModal = ({ carrier, open, onOpenChange }: BookingModalProps)
     onOpenChange(false);
   };
 
-  const rentAmount = duration === 'weekly' ? carrier.weekly_rent : carrier.monthly_rent;
+  const rentAmount =
+    duration === 'weekly'
+      ? carrier.weekly_rent
+      : duration === 'biweekly'
+        ? carrier.weekly_rent * 2
+        : carrier.monthly_rent;
 
   if (submitted) {
     return (
