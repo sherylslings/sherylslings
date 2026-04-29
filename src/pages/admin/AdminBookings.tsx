@@ -36,10 +36,16 @@ const AdminBookings = () => {
       const startDate = new Date(booking.start_date);
       const returnDate = booking.duration === 'weekly'
         ? addDays(startDate, 7)
-        : addMonths(startDate, 1);
+        : booking.duration === 'biweekly'
+          ? addDays(startDate, 14)
+          : addMonths(startDate, 1);
 
       const rentAmount = carrier
-        ? (booking.duration === 'weekly' ? carrier.weekly_rent : carrier.monthly_rent)
+        ? (booking.duration === 'weekly'
+            ? carrier.weekly_rent
+            : booking.duration === 'biweekly'
+              ? carrier.weekly_rent * 2
+              : carrier.monthly_rent)
         : 0;
       const depositAmount = carrier?.refundable_deposit || 0;
 
@@ -54,7 +60,7 @@ const AdminBookings = () => {
         p_return_date: format(returnDate, 'yyyy-MM-dd'),
       });
 
-      toast({ title: 'Booking approved & transactions created!' });
+      toast({ title: 'Booking approved!' });
     } catch (error) {
       toast({ variant: 'destructive', title: 'Failed to approve booking' });
     }
@@ -84,7 +90,7 @@ const AdminBookings = () => {
         p_customer_name: booking.customer_name,
         p_deposit_amount: carrier?.refundable_deposit || 0,
       });
-      toast({ title: 'Marked as returned & deposit refunded!' });
+      toast({ title: 'Marked as returned!' });
     } catch {
       toast({ variant: 'destructive', title: 'Failed to update booking' });
     }
