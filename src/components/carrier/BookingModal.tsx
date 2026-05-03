@@ -95,7 +95,7 @@ export const BookingModal = ({ carrier, open, onOpenChange }: BookingModalProps)
         carrier_id: carrier.id,
         customer_name: data.customer_name,
         phone: data.phone,
-        city: data.city,
+        city: data.pincode,
         address: data.address,
         start_date: format(data.start_date, 'yyyy-MM-dd'),
         duration: data.duration,
