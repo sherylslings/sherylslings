@@ -36,7 +36,7 @@ import { Link } from 'react-router-dom';
 const bookingSchema = z.object({
   customer_name: z.string().min(2, 'Name is required'),
   phone: z.string().min(10, 'Valid phone number required'),
-  city: z.string().min(2, 'City is required'),
+  pincode: z.string().regex(/^\d{6}$/, 'Enter a valid 6-digit pincode'),
   address: z.string().min(5, 'Full address is required'),
   start_date: z.date({ required_error: 'Start date is required' }),
   duration: z.enum(['weekly', 'biweekly', 'monthly']),
@@ -95,7 +95,7 @@ export const BookingModal = ({ carrier, open, onOpenChange }: BookingModalProps)
         carrier_id: carrier.id,
         customer_name: data.customer_name,
         phone: data.phone,
-        city: data.city,
+        city: data.pincode,
         address: data.address,
         start_date: format(data.start_date, 'yyyy-MM-dd'),
         duration: data.duration,
@@ -187,28 +187,30 @@ export const BookingModal = ({ carrier, open, onOpenChange }: BookingModalProps)
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="city">City</Label>
-            <Input
-              id="city"
-              {...register('city')}
-              placeholder="Your city"
-            />
-            {errors.city && (
-              <p className="text-xs text-destructive">{errors.city.message}</p>
-            )}
-          </div>
-
-          <div className="space-y-2">
             <Label htmlFor="address">Full Address</Label>
             <textarea
               id="address"
               {...register('address')}
-              placeholder="House/flat no., street, area, landmark, pincode"
+              placeholder="House/flat no., street, area, city, landmark"
               rows={3}
               className="flex w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
             />
             {errors.address && (
               <p className="text-xs text-destructive">{errors.address.message}</p>
+            )}
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="pincode">Pincode</Label>
+            <Input
+              id="pincode"
+              {...register('pincode')}
+              placeholder="6-digit pincode"
+              inputMode="numeric"
+              maxLength={6}
+            />
+            {errors.pincode && (
+              <p className="text-xs text-destructive">{errors.pincode.message}</p>
             )}
           </div>
 
@@ -272,9 +274,12 @@ export const BookingModal = ({ carrier, open, onOpenChange }: BookingModalProps)
               <span>₹{carrier.refundable_deposit}</span>
             </div>
             <div className="flex justify-between font-semibold pt-2 border-t border-border">
-              <span>Total Payable</span>
+              <span>Total Payable*</span>
               <span>₹{rentAmount + carrier.refundable_deposit}</span>
             </div>
+            <p className="text-xs text-muted-foreground pt-1">
+              * shipping charges extra as per actuals (approx. ₹200-400, based on location)
+            </p>
           </div>
 
           <div className="flex items-start gap-3">
