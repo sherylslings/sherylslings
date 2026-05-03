@@ -36,7 +36,7 @@ import { Link } from 'react-router-dom';
 const bookingSchema = z.object({
   customer_name: z.string().min(2, 'Name is required'),
   phone: z.string().min(10, 'Valid phone number required'),
-  city: z.string().min(2, 'City is required'),
+  pincode: z.string().regex(/^\d{6}$/, 'Enter a valid 6-digit pincode'),
   address: z.string().min(5, 'Full address is required'),
   start_date: z.date({ required_error: 'Start date is required' }),
   duration: z.enum(['weekly', 'biweekly', 'monthly']),
