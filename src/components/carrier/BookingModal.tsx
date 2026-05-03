@@ -274,9 +274,12 @@ export const BookingModal = ({ carrier, open, onOpenChange }: BookingModalProps)
               <span>₹{carrier.refundable_deposit}</span>
             </div>
             <div className="flex justify-between font-semibold pt-2 border-t border-border">
-              <span>Total Payable</span>
+              <span>Total Payable*</span>
               <span>₹{rentAmount + carrier.refundable_deposit}</span>
             </div>
+            <p className="text-xs text-muted-foreground pt-1">
+              * shipping charges extra as per actuals (approx. ₹200-400, based on location)
+            </p>
           </div>
 
           <div className="flex items-start gap-3">
