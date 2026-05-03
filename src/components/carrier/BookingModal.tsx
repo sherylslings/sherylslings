@@ -187,28 +187,30 @@ export const BookingModal = ({ carrier, open, onOpenChange }: BookingModalProps)
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="city">City</Label>
-            <Input
-              id="city"
-              {...register('city')}
-              placeholder="Your city"
-            />
-            {errors.city && (
-              <p className="text-xs text-destructive">{errors.city.message}</p>
-            )}
-          </div>
-
-          <div className="space-y-2">
             <Label htmlFor="address">Full Address</Label>
             <textarea
               id="address"
               {...register('address')}
-              placeholder="House/flat no., street, area, landmark, pincode"
+              placeholder="House/flat no., street, area, city, landmark"
               rows={3}
               className="flex w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
             />
             {errors.address && (
               <p className="text-xs text-destructive">{errors.address.message}</p>
+            )}
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="pincode">Pincode</Label>
+            <Input
+              id="pincode"
+              {...register('pincode')}
+              placeholder="6-digit pincode"
+              inputMode="numeric"
+              maxLength={6}
+            />
+            {errors.pincode && (
+              <p className="text-xs text-destructive">{errors.pincode.message}</p>
             )}
           </div>
 
