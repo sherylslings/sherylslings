@@ -58,6 +58,17 @@ export const BookingModal = ({ carrier, open, onOpenChange }: BookingModalProps)
   const { toast } = useToast();
   const createBooking = useCreateBookingRequest();
 
+  const earliestDate = (() => {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    if (carrier.availability_status === 'rented' && carrier.next_available_date) {
+      const next = new Date(carrier.next_available_date);
+      next.setHours(0, 0, 0, 0);
+      return next > today ? next : today;
+    }
+    return today;
+  })();
+
   const {
     register,
     handleSubmit,
@@ -69,6 +80,7 @@ export const BookingModal = ({ carrier, open, onOpenChange }: BookingModalProps)
     resolver: zodResolver(bookingSchema),
     defaultValues: {
       duration: 'weekly',
+      start_date: earliestDate,
       agreed_to_terms: false as unknown as true,
     },
   });
@@ -221,7 +233,7 @@ export const BookingModal = ({ carrier, open, onOpenChange }: BookingModalProps)
                     mode="single"
                     selected={startDate}
                     onSelect={(date) => date && setValue('start_date', date)}
-                    disabled={(date) => date < new Date()}
+                    disabled={(date) => date < earliestDate}
                     initialFocus
                   />
                 </PopoverContent>

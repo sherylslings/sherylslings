@@ -20,15 +20,18 @@ export const SiteSettingsProvider: React.FC<{ children: React.ReactNode }> = ({ 
     updated_at: new Date().toISOString(),
   };
 
-  // Apply dynamic CSS variables when settings change
+  // Apply dynamic CSS variables when settings change.
+  // Tailwind builds colors with `hsl(var(--token) / <alpha>)`, which requires
+  // space-separated HSL values. Strip stray commas to keep alpha modifiers valid.
   useEffect(() => {
     if (settings) {
+      const sanitize = (v: string) => v.replace(/,/g, ' ').replace(/\s+/g, ' ').trim();
       const root = document.documentElement;
-      root.style.setProperty('--primary', settings.primary_color);
-      root.style.setProperty('--secondary', settings.secondary_color);
-      root.style.setProperty('--accent', settings.accent_color);
-      root.style.setProperty('--background', settings.background_color);
-      root.style.setProperty('--foreground', settings.foreground_color);
+      root.style.setProperty('--primary', sanitize(settings.primary_color));
+      root.style.setProperty('--secondary', sanitize(settings.secondary_color));
+      root.style.setProperty('--accent', sanitize(settings.accent_color));
+      root.style.setProperty('--background', sanitize(settings.background_color));
+      root.style.setProperty('--foreground', sanitize(settings.foreground_color));
     }
   }, [settings]);
 
