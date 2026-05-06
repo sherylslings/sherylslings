@@ -202,6 +202,8 @@ export type Database = {
       site_settings: {
         Row: {
           accent_color: string
+          admin_notification_email: string | null
+          admin_telegram_chat_id: string | null
           background_color: string
           brand_name: string
           categories_subtitle: string | null
@@ -225,6 +227,8 @@ export type Database = {
           menu_items: Json | null
           meta_description: string | null
           meta_title: string | null
+          notifications_enabled_email: boolean
+          notifications_enabled_telegram: boolean
           policy_content: string | null
           primary_color: string
           safety_content: string | null
@@ -236,6 +240,8 @@ export type Database = {
         }
         Insert: {
           accent_color?: string
+          admin_notification_email?: string | null
+          admin_telegram_chat_id?: string | null
           background_color?: string
           brand_name?: string
           categories_subtitle?: string | null
@@ -259,6 +265,8 @@ export type Database = {
           menu_items?: Json | null
           meta_description?: string | null
           meta_title?: string | null
+          notifications_enabled_email?: boolean
+          notifications_enabled_telegram?: boolean
           policy_content?: string | null
           primary_color?: string
           safety_content?: string | null
@@ -270,6 +278,8 @@ export type Database = {
         }
         Update: {
           accent_color?: string
+          admin_notification_email?: string | null
+          admin_telegram_chat_id?: string | null
           background_color?: string
           brand_name?: string
           categories_subtitle?: string | null
@@ -293,6 +303,8 @@ export type Database = {
           menu_items?: Json | null
           meta_description?: string | null
           meta_title?: string | null
+          notifications_enabled_email?: boolean
+          notifications_enabled_telegram?: boolean
           policy_content?: string | null
           primary_color?: string
           safety_content?: string | null
