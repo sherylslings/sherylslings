@@ -9,7 +9,8 @@ import { Label } from '@/components/ui/label';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useSiteSettings, useUpdateSiteSettings } from '@/hooks/useSiteSettings';
 import { SiteSettings, SiteFeature, HowItWorksStep, MenuItem, FooterLink } from '@/lib/siteSettings';
-import { Palette, Type, MessageCircle, Layout, FileText, Menu, Plus, Trash2, Save } from 'lucide-react';
+import { Switch } from '@/components/ui/switch';
+import { Palette, Type, MessageCircle, Layout, FileText, Menu, Plus, Trash2, Save, Bell } from 'lucide-react';
 
 const AdminSettings = () => {
   const { data: settings, isLoading } = useSiteSettings();
@@ -32,7 +33,7 @@ const AdminSettings = () => {
       </div>
 
       <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
-        <TabsList className="grid grid-cols-2 lg:grid-cols-6 gap-2 h-auto">
+        <TabsList className="grid grid-cols-2 lg:grid-cols-7 gap-2 h-auto">
           <TabsTrigger value="branding" className="gap-2">
             <Type className="w-4 h-4" />
             <span className="hidden sm:inline">Branding</span>
@@ -56,6 +57,10 @@ const AdminSettings = () => {
           <TabsTrigger value="content" className="gap-2">
             <FileText className="w-4 h-4" />
             <span className="hidden sm:inline">Content</span>
+          </TabsTrigger>
+          <TabsTrigger value="notifications" className="gap-2">
+            <Bell className="w-4 h-4" />
+            <span className="hidden sm:inline">Notifications</span>
           </TabsTrigger>
         </TabsList>
 
@@ -81,6 +86,10 @@ const AdminSettings = () => {
 
         <TabsContent value="content">
           <ContentSettings settings={settings} onUpdate={updateSettings.mutateAsync} isUpdating={updateSettings.isPending} />
+        </TabsContent>
+
+        <TabsContent value="notifications">
+          <NotificationSettings settings={settings} onUpdate={updateSettings.mutateAsync} isUpdating={updateSettings.isPending} />
         </TabsContent>
       </Tabs>
     </div>
@@ -743,6 +752,122 @@ const ContentSettings = ({ settings, onUpdate, isUpdating }: SettingsCardProps) 
       <Button onClick={handleSave} disabled={isUpdating} className="gap-2">
         <Save className="w-4 h-4" />
         Save Content
+      </Button>
+    </div>
+  );
+};
+
+// Notification Settings
+const NotificationSettings = ({ settings, onUpdate, isUpdating }: SettingsCardProps) => {
+  const [telegramEnabled, setTelegramEnabled] = useState(settings.notifications_enabled_telegram);
+  const [telegramChatId, setTelegramChatId] = useState(settings.admin_telegram_chat_id || '');
+  const [emailEnabled, setEmailEnabled] = useState(settings.notifications_enabled_email);
+  const [adminEmail, setAdminEmail] = useState(settings.admin_notification_email || '');
+
+  useEffect(() => {
+    setTelegramEnabled(settings.notifications_enabled_telegram);
+    setTelegramChatId(settings.admin_telegram_chat_id || '');
+    setEmailEnabled(settings.notifications_enabled_email);
+    setAdminEmail(settings.admin_notification_email || '');
+  }, [settings]);
+
+  const handleSave = async () => {
+    try {
+      await onUpdate({
+        notifications_enabled_telegram: telegramEnabled,
+        admin_telegram_chat_id: telegramChatId.trim() || null,
+        notifications_enabled_email: emailEnabled,
+        admin_notification_email: adminEmail.trim() || null,
+      });
+      toast.success('Notification settings updated!');
+    } catch (e) {
+      toast.error('Failed to save notification settings');
+    }
+  };
+
+  return (
+    <div className="space-y-6">
+      <Card>
+        <CardHeader>
+          <CardTitle>Telegram Notifications</CardTitle>
+          <CardDescription>
+            Get an instant Telegram message every time someone submits a booking. 100% free.
+          </CardDescription>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <div className="flex items-center justify-between rounded-lg border p-4">
+            <div>
+              <Label>Enable Telegram alerts</Label>
+              <p className="text-xs text-muted-foreground">Sends a DM to the chat ID below.</p>
+            </div>
+            <Switch checked={telegramEnabled} onCheckedChange={setTelegramEnabled} />
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="telegramChatId">Telegram Chat ID</Label>
+            <Input
+              id="telegramChatId"
+              value={telegramChatId}
+              onChange={(e) => setTelegramChatId(e.target.value)}
+              placeholder="e.g., 123456789"
+              inputMode="numeric"
+            />
+          </div>
+
+          <div className="rounded-lg bg-muted/50 p-4 text-sm space-y-2">
+            <p className="font-medium">One-time setup (takes 2 minutes):</p>
+            <ol className="list-decimal pl-5 space-y-1 text-muted-foreground">
+              <li>
+                Open Telegram and message <span className="font-mono text-foreground">@BotFather</span>.
+                Send <span className="font-mono text-foreground">/newbot</span> and follow the prompts.
+                BotFather will give you a <strong>bot token</strong> (already saved in your project).
+              </li>
+              <li>Open a chat with your new bot and send it any message (e.g., "hi"). This is required so the bot can DM you.</li>
+              <li>
+                Visit{' '}
+                <span className="font-mono text-foreground break-all">
+                  https://api.telegram.org/bot&lt;YOUR_BOT_TOKEN&gt;/getUpdates
+                </span>{' '}
+                in a browser. Find <span className="font-mono text-foreground">"chat":{'{'}"id": NUMBER{'}'}</span> — paste that NUMBER above.
+              </li>
+              <li>Save and you're done. Test by submitting a booking on your site.</li>
+            </ol>
+          </div>
+        </CardContent>
+      </Card>
+
+      <Card>
+        <CardHeader>
+          <CardTitle>Email Notifications</CardTitle>
+          <CardDescription>
+            Receive booking alerts in your inbox. Requires a verified sender domain — ask to set this up when you're ready.
+          </CardDescription>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <div className="flex items-center justify-between rounded-lg border p-4">
+            <div>
+              <Label>Enable email alerts</Label>
+              <p className="text-xs text-muted-foreground">Only works once email infrastructure is configured.</p>
+            </div>
+            <Switch checked={emailEnabled} onCheckedChange={setEmailEnabled} />
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="adminEmail">Admin Email Address</Label>
+            <Input
+              id="adminEmail"
+              type="email"
+              value={adminEmail}
+              onChange={(e) => setAdminEmail(e.target.value)}
+              placeholder="you@example.com"
+            />
+          </div>
+        </CardContent>
+      </Card>
+
+      <Button onClick={handleSave} disabled={isUpdating} className="gap-2">
+        <Save className="w-4 h-4" />
+        Save Notification Settings
       </Button>
     </div>
   );
