@@ -29,6 +29,7 @@ import {
 } from '@/components/ui/select';
 import { useCreateBookingRequest } from '@/hooks/useBookingRequests';
 import { useToast } from '@/hooks/use-toast';
+import { supabase } from '@/integrations/supabase/client';
 import type { Carrier } from '@/lib/types';
 import { cn } from '@/lib/utils';
 import { Link } from 'react-router-dom';
@@ -91,7 +92,9 @@ export const BookingModal = ({ carrier, open, onOpenChange }: BookingModalProps)
 
   const onSubmit = async (data: BookingFormData) => {
     try {
+      const bookingId = crypto.randomUUID();
       await createBooking.mutateAsync({
+        id: bookingId,
         carrier_id: carrier.id,
         customer_name: data.customer_name,
         phone: data.phone,
@@ -101,7 +104,11 @@ export const BookingModal = ({ carrier, open, onOpenChange }: BookingModalProps)
         duration: data.duration,
         agreed_to_terms: data.agreed_to_terms,
         notes: null,
-      });
+      } as never);
+      // Fire-and-forget admin notification — must never block or fail the booking
+      supabase.functions
+        .invoke('notify-new-booking', { body: { bookingId } })
+        .catch((err) => console.warn('notify-new-booking failed', err));
       setSubmitted(true);
     } catch (error) {
       toast({

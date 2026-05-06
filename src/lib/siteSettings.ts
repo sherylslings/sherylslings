@@ -73,7 +73,13 @@ export interface SiteSettings {
   // SEO
   meta_title: string | null;
   meta_description: string | null;
-  
+
+  // Admin Notifications
+  admin_notification_email: string | null;
+  admin_telegram_chat_id: string | null;
+  notifications_enabled_email: boolean;
+  notifications_enabled_telegram: boolean;
+
   created_at: string;
   updated_at: string;
 }
@@ -127,4 +133,8 @@ export const DEFAULT_SETTINGS: Omit<SiteSettings, 'id' | 'created_at' | 'updated
   safety_content: null,
   meta_title: 'Baby Carrier Rental - Sling Library India',
   meta_description: 'Rent premium baby carriers in India. Try before you buy with our curated collection of ring slings, wraps, and buckle carriers.',
+  admin_notification_email: null,
+  admin_telegram_chat_id: null,
+  notifications_enabled_email: false,
+  notifications_enabled_telegram: true,
 };
