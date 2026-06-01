@@ -14,43 +14,47 @@ const normalizeAvailability = (carrier: Carrier): Carrier => {
   return carrier;
 };
 
-export const useCarriers = (category?: Category) => {
+export const useCarriers = (category?: Category, options?: { includeHidden?: boolean }) => {
+  const includeHidden = options?.includeHidden ?? false;
   return useQuery({
-    queryKey: ['carriers', category],
+    queryKey: ['carriers', category, includeHidden],
     queryFn: async () => {
-      // Best-effort: persist availability for any carrier whose return date has passed.
-      // Fails silently for unauthenticated users (RLS blocks UPDATE), the frontend
-      // still normalizes the result below.
       try { await supabase.rpc('refresh_carrier_availability'); } catch {}
       let query = supabase
         .from('carriers')
         .select('*')
         .order('created_at', { ascending: false });
-      
+
       if (category) {
         query = query.eq('category', category);
       }
-      
+      if (!includeHidden) {
+        query = query.neq('availability_status', 'hidden');
+      }
+
       const { data, error } = await query;
-      
+
       if (error) throw error;
       return (data as Carrier[]).map(normalizeAvailability);
     },
   });
 };
 
-export const useCarrier = (id: string) => {
+export const useCarrier = (id: string, options?: { includeHidden?: boolean }) => {
+  const includeHidden = options?.includeHidden ?? false;
   return useQuery({
-    queryKey: ['carrier', id],
+    queryKey: ['carrier', id, includeHidden],
     queryFn: async () => {
       const { data, error } = await supabase
         .from('carriers')
         .select('*')
         .eq('id', id)
         .maybeSingle();
-      
+
       if (error) throw error;
-      return data ? normalizeAvailability(data as Carrier) : null;
+      if (!data) return null;
+      if (!includeHidden && (data as Carrier).availability_status === 'hidden') return null;
+      return normalizeAvailability(data as Carrier);
     },
     enabled: !!id,
   });
