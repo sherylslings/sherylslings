@@ -32,7 +32,7 @@ const carrierSchema = z.object({
   carry_positions: z.string(),
   description: z.string().optional(),
   images: z.string(),
-  availability_status: z.enum(['available', 'rented']),
+  availability_status: z.enum(['available', 'rented', 'hidden']),
   next_available_date: z.date().optional().nullable(),
 });
 
@@ -127,7 +127,7 @@ export const CarrierFormModal = ({ open, onOpenChange, carrier }: CarrierFormMod
         description: data.description || null,
         laundry_instructions: null,
         images: data.images.split('\n').map(url => url.trim()).filter(Boolean),
-        availability_status: data.availability_status as 'available' | 'rented',
+        availability_status: data.availability_status as 'available' | 'rented' | 'hidden',
         next_available_date: data.next_available_date ? format(data.next_available_date, 'yyyy-MM-dd') : null,
       };
 
@@ -238,11 +238,12 @@ export const CarrierFormModal = ({ open, onOpenChange, carrier }: CarrierFormMod
           <div className="grid grid-cols-2 gap-4">
             <div className="space-y-2">
               <Label>Status</Label>
-              <Select value={availabilityStatus} onValueChange={(v) => setValue('availability_status', v as 'available' | 'rented')}>
+              <Select value={availabilityStatus} onValueChange={(v) => setValue('availability_status', v as 'available' | 'rented' | 'hidden')}>
                 <SelectTrigger><SelectValue /></SelectTrigger>
                 <SelectContent>
                   <SelectItem value="available">Available</SelectItem>
                   <SelectItem value="rented">Rented</SelectItem>
+                  <SelectItem value="hidden">Hidden (admin only)</SelectItem>
                 </SelectContent>
               </Select>
             </div>
