@@ -16,7 +16,7 @@ export interface Carrier {
   description: string | null;
   laundry_instructions: string | null;
   images: string[];
-  availability_status: 'available' | 'rented';
+  availability_status: 'available' | 'rented' | 'hidden';
   next_available_date: string | null;
   created_at: string;
   updated_at: string;

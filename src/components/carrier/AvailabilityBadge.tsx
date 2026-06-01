@@ -3,7 +3,7 @@ import { format } from 'date-fns';
 import { Check, Clock } from 'lucide-react';
 
 interface AvailabilityBadgeProps {
-  status: 'available' | 'rented';
+  status: 'available' | 'rented' | 'hidden';
   nextAvailableDate?: string | null;
   size?: 'sm' | 'md';
 }

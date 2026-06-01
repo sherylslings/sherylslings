@@ -13,7 +13,7 @@ import { useToast } from '@/hooks/use-toast';
 import type { Carrier } from '@/lib/types';
 
 const AdminCarriers = () => {
-  const { data: carriers, isLoading } = useCarriers();
+  const { data: carriers, isLoading } = useCarriers(undefined, { includeHidden: true });
   const deleteCarrier = useDeleteCarrier();
   const { toast } = useToast();
   const [editingCarrier, setEditingCarrier] = useState<Carrier | null>(null);
@@ -83,7 +83,15 @@ const AdminCarriers = () => {
                     <TableCell>₹{carrier.weekly_rent}</TableCell>
                     <TableCell>₹{carrier.monthly_rent}</TableCell>
                     <TableCell>
-                      <Badge variant={carrier.availability_status === 'available' ? 'default' : 'secondary'}>
+                      <Badge
+                        variant={
+                          carrier.availability_status === 'available'
+                            ? 'default'
+                            : carrier.availability_status === 'hidden'
+                            ? 'outline'
+                            : 'secondary'
+                        }
+                      >
                         {carrier.availability_status}
                       </Badge>
                     </TableCell>

@@ -19,7 +19,7 @@ const statusColors = {
 
 const AdminBookings = () => {
   const { data: bookings, isLoading } = useBookingRequests();
-  const { data: carriers } = useCarriers();
+  const { data: carriers } = useCarriers(undefined, { includeHidden: true });
   const approveBooking = useApproveBooking();
   const completeBooking = useCompleteBooking();
   const { toast } = useToast();
