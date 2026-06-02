@@ -1,0 +1,2 @@
+ALTER TABLE public.booking_requests DROP CONSTRAINT booking_requests_duration_check;
+ALTER TABLE public.booking_requests ADD CONSTRAINT booking_requests_duration_check CHECK (duration = ANY (ARRAY['weekly'::text, 'biweekly'::text, 'monthly'::text]));
