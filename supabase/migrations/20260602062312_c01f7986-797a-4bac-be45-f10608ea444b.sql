@@ -1,0 +1,2 @@
+ALTER TABLE public.carriers DROP CONSTRAINT carriers_availability_status_check;
+ALTER TABLE public.carriers ADD CONSTRAINT carriers_availability_status_check CHECK (availability_status = ANY (ARRAY['available'::text, 'rented'::text, 'hidden'::text, 'sold-out'::text]));
