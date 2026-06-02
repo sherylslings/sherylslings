@@ -173,8 +173,13 @@ const CarrierDetailPage = () => {
             </div>
 
             <div className="flex gap-3">
-              <Button size="lg" className="flex-1" onClick={() => setBookingOpen(true)}>
-                Request Booking
+              <Button
+                size="lg"
+                className="flex-1"
+                onClick={() => setBookingOpen(true)}
+                disabled={carrier.availability_status === 'sold-out'}
+              >
+                {carrier.availability_status === 'sold-out' ? 'Sold Out' : 'Request Booking'}
               </Button>
               <a href={whatsappLink} target="_blank" rel="noopener noreferrer">
                 <Button size="lg" variant="outline" className="gap-2">
