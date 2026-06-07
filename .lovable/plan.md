@@ -1,62 +1,59 @@
 ## Goal
-Notify the site admin instantly whenever a customer submits a booking request — using only free channels.
+Add a three-counter band directly under the Hero section on the homepage, matching the reference screenshot style (large number on top, small uppercase muted label below, separated by vertical dividers, on a soft banded background).
 
-## Approach
-Send **two** notifications in parallel on every new booking:
-1. **Email** to an admin address (via Lovable's built-in email infrastructure — no external API key needed).
-2. **Telegram** message to the admin (via a free Telegram bot — one-time setup).
+## Counters
+Pulled live from the database (no hardcoding):
 
-Both fire from a single new edge function `notify-new-booking`, called from `BookingModal.tsx` right after the booking insert succeeds. This keeps the existing booking flow untouched if notifications ever fail.
+1. **Carriers** — total count of carriers (excluding `hidden`)
+2. **Available Now** — carriers with `availability_status = 'available'`
+3. **Times Rented** — count of bookings with `status IN ('approved','completed')`
 
----
+Labels are configurable via `site_settings` later if needed, but v1 ships with the above defaults.
 
-## Step 1 — Add admin notification settings to the CMS
-Extend the `site_settings` table (and `SiteSettings` type) with:
-- `admin_notification_email` (text) — where booking emails go
-- `admin_telegram_chat_id` (text) — Telegram chat ID to DM
-- `notifications_enabled_email` (bool, default true)
-- `notifications_enabled_telegram` (bool, default false)
+## Implementation
 
-Expose these as editable fields in `AdminSettings.tsx` under a new "Notifications" section, with helper text explaining how to get the Telegram chat ID.
+**New component:** `src/components/home/StatsCounterSection.tsx`
+- Full-width section with `bg-secondary/40` band (matches reference's soft beige strip)
+- Container with 3-column grid (`grid-cols-3`), `divide-x divide-border` for vertical separators
+- Each cell: centered, large serif number (`text-4xl md:text-5xl font-serif font-bold`) + small uppercase muted label (`text-xs tracking-widest text-muted-foreground mt-2`)
+- Subtle count-up animation on mount (simple `requestAnimationFrame` tween, ~800ms ease-out) so numbers animate from 0 to target
+- Responsive: stays 3 columns on mobile but reduces number size; no wrap
 
-## Step 2 — Set up email infrastructure
-Use Lovable's built-in email system:
-- Configure sender domain (one-time setup dialog you'll complete).
-- Scaffold the email queue + transactional email function.
-- Create a `new-booking-notification` React Email template showing: customer name, phone, address, pincode, carrier, start date, duration, total payable.
+**Data fetching:** new hook `src/hooks/useHomeStats.ts`
+- Single React Query (`['home-stats']`) calling Supabase in parallel:
+  - `carriers` count where `availability_status != 'hidden'`
+  - `carriers` count where `availability_status = 'available'`
+  - `booking_requests` count where `status in ('approved','completed')`
+- Uses `head: true, count: 'exact'` for efficiency (no row payloads)
+- Note: `booking_requests` SELECT is admin-only per RLS. Will add a `SECURITY DEFINER` SQL function `public.get_home_stats()` returning the three integers so anonymous visitors can read aggregates without exposing PII. Grant EXECUTE to `anon, authenticated`.
 
-If you don't yet own a domain, the email step can be deferred and only Telegram will fire — the system will gracefully skip email until the domain is ready.
-
-## Step 3 — Set up Telegram bot (one-time, by you)
-I'll give you exact instructions:
-1. Open Telegram → message **@BotFather** → `/newbot` → get a **bot token**.
-2. Message your new bot once (say "hi") so it can DM you.
-3. Open `https://api.telegram.org/bot<TOKEN>/getUpdates` to find your **chat ID**.
-4. Paste the bot token as a project secret (`TELEGRAM_BOT_TOKEN`) and the chat ID into Admin Settings.
-
-No connector or paid account required — Telegram Bot API is fully free and unlimited for personal use.
-
-## Step 4 — Create `notify-new-booking` edge function
-A single function that:
-- Reads booking details + site settings.
-- If `notifications_enabled_email` and admin email set → invokes `send-transactional-email` with the new template.
-- If `notifications_enabled_telegram` and chat ID set → calls Telegram Bot API directly (`https://api.telegram.org/bot<token>/sendMessage`) using the `TELEGRAM_BOT_TOKEN` secret. No connector gateway needed since this is a free public API.
-- Errors in one channel don't block the other; all failures are logged but never thrown to the client.
-
-`verify_jwt = false` so anonymous booking submissions can trigger it.
-
-## Step 5 — Wire trigger in `BookingModal.tsx`
-After the existing `useCreateBookingRequest` succeeds, fire-and-forget invoke `notify-new-booking` with the booking ID. The customer-facing success toast is unaffected by notification outcome.
-
----
+**Wire-up:** `src/pages/Index.tsx`
+- Insert `<StatsCounterSection />` between `<HeroSection />` and `<BrowseAllCarriersSection />`.
 
 ## Technical details
-- **Files created**: `supabase/functions/notify-new-booking/index.ts`, `supabase/functions/_shared/transactional-email-templates/new-booking-notification.tsx`, migration adding the 4 settings columns.
-- **Files edited**: `src/lib/siteSettings.ts`, `src/pages/admin/AdminSettings.tsx`, `src/components/carrier/BookingModal.tsx`, `supabase/functions/_shared/transactional-email-templates/registry.ts`, `supabase/config.toml`.
-- **Secret added**: `TELEGRAM_BOT_TOKEN` (you'll paste it when prompted).
-- **No paid services. No external accounts beyond a free Telegram bot.**
 
-## What I need from you to start
-1. Confirm you want **both Email + Telegram** (or only one).
-2. The admin email address that should receive booking alerts.
-3. Confirm you can do the 2-minute @BotFather setup for Telegram (I'll walk you through it).
+```text
+<HeroSection />
+<StatsCounterSection />   ← new band, soft secondary bg
+<BrowseAllCarriersSection />
+<HowItWorksSection />
+```
+
+SQL function:
+```sql
+create or replace function public.get_home_stats()
+returns table(carriers_total int, carriers_available int, times_rented int)
+language sql stable security definer set search_path = public as $$
+  select
+    (select count(*) from carriers where availability_status <> 'hidden')::int,
+    (select count(*) from carriers where availability_status = 'available')::int,
+    (select count(*) from booking_requests where status in ('approved','completed'))::int;
+$$;
+grant execute on function public.get_home_stats() to anon, authenticated;
+```
+
+Styling uses existing semantic tokens only (`bg-secondary`, `text-foreground`, `text-muted-foreground`, `border-border`, `font-serif`) — no hardcoded colors.
+
+## Out of scope
+- Making labels CMS-editable (can follow up if wanted)
+- Icons next to counters (reference has none)

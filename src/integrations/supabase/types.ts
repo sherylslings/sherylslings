@@ -421,6 +421,14 @@ export type Database = {
         }
         Returns: undefined
       }
+      get_home_stats: {
+        Args: never
+        Returns: {
+          carriers_available: number
+          carriers_total: number
+          times_rented: number
+        }[]
+      }
       has_role: {
         Args: {
           _role: Database["public"]["Enums"]["app_role"]
