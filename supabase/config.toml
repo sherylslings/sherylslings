@@ -2,3 +2,9 @@ project_id = "xtrpokvxejwyrhbetmxr"
 
 [functions.notify-new-booking]
 verify_jwt = false
+
+[functions.notify-new-purchase]
+verify_jwt = false
+
+[functions.record-purchase-paid]
+verify_jwt = false
