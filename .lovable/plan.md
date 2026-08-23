@@ -1,59 +1,44 @@
-## Goal
-Add a three-counter band directly under the Hero section on the homepage, matching the reference screenshot style (large number on top, small uppercase muted label below, separated by vertical dividers, on a soft banded background).
+# Buy Now (direct purchase) flow
 
-## Counters
-Pulled live from the database (no hardcoding):
+Add a "Buy Now" button next to "Request Booking" on the carrier detail page, with its own purchase form, payment QR step, and admin notification.
 
-1. **Carriers** — total count of carriers (excluding `hidden`)
-2. **Available Now** — carriers with `availability_status = 'available'`
-3. **Times Rented** — count of bookings with `status IN ('approved','completed')`
+## What the buyer sees
 
-Labels are configurable via `site_settings` later if needed, but v1 ships with the above defaults.
+1. On a carrier page, two buttons side by side: **Request Booking** and **Buy Now**.
+2. **Buy Now** opens a form with no rental or refund wording:
+   - Full name, phone, full address, pincode
+   - Buyout summary: carrier name + buyout price (no deposit, no rent lines)
+   - Shipping note: charges extra as per actuals (approx. Rs.200-400, based on location)
+   - Checkbox: agree to terms & conditions
+   - Button: **Show QR Code for Payment** (disabled until all fields are valid)
+3. After clicking, the same dialog switches to the payment step:
+   - Payment QR image (uploaded by admin in settings)
+   - Amount payable shown above the QR
+   - Under the QR: "Shipping charges will be as per actuals and will be shared at the time of shipping (approx. Rs.200-400, based on location)"
+   - Button: **Payment Made**
+4. Clicking **Payment Made** records the purchase, sends the Telegram notification, marks the carrier **Sold Out**, and shows a confirmation message.
 
-## Implementation
+## Admin side
 
-**New component:** `src/components/home/StatsCounterSection.tsx`
-- Full-width section with `bg-secondary/40` band (matches reference's soft beige strip)
-- Container with 3-column grid (`grid-cols-3`), `divide-x divide-border` for vertical separators
-- Each cell: centered, large serif number (`text-4xl md:text-5xl font-serif font-bold`) + small uppercase muted label (`text-xs tracking-widest text-muted-foreground mt-2`)
-- Subtle count-up animation on mount (simple `requestAnimationFrame` tween, ~800ms ease-out) so numbers animate from 0 to target
-- Responsive: stays 3 columns on mobile but reduces number size; no wrap
+- **Settings → Payments**: upload/enter a payment QR image (shown in the buyer flow). If no QR is set, the Buy Now button is hidden so buyers never hit a dead end.
+- **New "Purchases" view** in the admin area: buyer contact, address, carrier, amount, payment-claimed status, date; ability to mark a purchase verified or cancelled.
+- On "Payment Made", an **income transaction** (category `sale`) is created in the accounting module so it appears in the P&L and transaction list.
 
-**Data fetching:** new hook `src/hooks/useHomeStats.ts`
-- Single React Query (`['home-stats']`) calling Supabase in parallel:
-  - `carriers` count where `availability_status != 'hidden'`
-  - `carriers` count where `availability_status = 'available'`
-  - `booking_requests` count where `status in ('approved','completed')`
-- Uses `head: true, count: 'exact'` for efficiency (no row payloads)
-- Note: `booking_requests` SELECT is admin-only per RLS. Will add a `SECURITY DEFINER` SQL function `public.get_home_stats()` returning the three integers so anonymous visitors can read aggregates without exposing PII. Grant EXECUTE to `anon, authenticated`.
+## Technical notes
 
-**Wire-up:** `src/pages/Index.tsx`
-- Insert `<StatsCounterSection />` between `<HeroSection />` and `<BrowseAllCarriersSection />`.
+**Database (one migration)**
+- New table `public.purchases`: `carrier_id`, `customer_name`, `phone`, `pincode`, `address`, `amount`, `status` (`payment_claimed` / `verified` / `cancelled`), `agreed_to_terms`, timestamps + updated_at trigger.
+- GRANTs: `INSERT` for `anon`+`authenticated`, `SELECT/UPDATE/DELETE` for `authenticated`, `ALL` for `service_role`. RLS: anyone may insert (blind insert, same pattern as bookings); only admins (`has_role`) may read/update/delete — protects buyer PII.
+- New RPC `record_purchase_paid(p_purchase_id, p_carrier_id, p_amount, p_customer_name)` (security definer): sets purchase status, marks carrier `sold-out`, and inserts the income transaction atomically. This lets the anonymous buyer trigger the carrier update without granting public write access to `carriers`.
+- Add `payment_qr_url` column to `site_settings`.
+- Storage: create a public `site-assets` bucket for the QR upload (if not already present).
 
-## Technical details
+**Frontend**
+- `src/components/carrier/BuyNowModal.tsx` — two-step dialog (details → QR), reuses shadcn form patterns from `BookingModal`, keeps scroll-safe dialog sizing.
+- `src/pages/CarrierDetailPage.tsx` — add the Buy Now button beside Request Booking; both disabled when the carrier is already sold out.
+- `src/hooks/usePurchases.ts` — create purchase, call `record_purchase_paid`, admin list/update queries.
+- `src/pages/admin/AdminPurchases.tsx` + route and nav entry in `AdminDashboard`.
+- `src/pages/admin/AdminSettings.tsx` + `src/lib/siteSettings.ts` — QR image field.
 
-```text
-<HeroSection />
-<StatsCounterSection />   ← new band, soft secondary bg
-<BrowseAllCarriersSection />
-<HowItWorksSection />
-```
-
-SQL function:
-```sql
-create or replace function public.get_home_stats()
-returns table(carriers_total int, carriers_available int, times_rented int)
-language sql stable security definer set search_path = public as $$
-  select
-    (select count(*) from carriers where availability_status <> 'hidden')::int,
-    (select count(*) from carriers where availability_status = 'available')::int,
-    (select count(*) from booking_requests where status in ('approved','completed'))::int;
-$$;
-grant execute on function public.get_home_stats() to anon, authenticated;
-```
-
-Styling uses existing semantic tokens only (`bg-secondary`, `text-foreground`, `text-muted-foreground`, `border-border`, `font-serif`) — no hardcoded colors.
-
-## Out of scope
-- Making labels CMS-editable (can follow up if wanted)
-- Icons next to counters (reference has none)
+**Notifications**
+- New edge function `notify-new-purchase` (CORS, `verify_jwt = false`), modeled on `notify-new-booking`: loads purchase + carrier + settings, sends a Telegram message with buyer details and amount, honours the existing Telegram/email toggles. Invoked fire-and-forget from the "Payment Made" click so a notification failure never blocks the buyer.
