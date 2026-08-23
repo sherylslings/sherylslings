@@ -199,6 +199,56 @@ export type Database = {
         }
         Relationships: []
       }
+      purchases: {
+        Row: {
+          address: string
+          agreed_to_terms: boolean
+          amount: number
+          carrier_id: string
+          created_at: string
+          customer_name: string
+          id: string
+          phone: string
+          pincode: string
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          address: string
+          agreed_to_terms?: boolean
+          amount: number
+          carrier_id: string
+          created_at?: string
+          customer_name: string
+          id?: string
+          phone: string
+          pincode: string
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          address?: string
+          agreed_to_terms?: boolean
+          amount?: number
+          carrier_id?: string
+          created_at?: string
+          customer_name?: string
+          id?: string
+          phone?: string
+          pincode?: string
+          status?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "purchases_carrier_id_fkey"
+            columns: ["carrier_id"]
+            isOneToOne: false
+            referencedRelation: "carriers"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       site_settings: {
         Row: {
           accent_color: string
@@ -229,6 +279,7 @@ export type Database = {
           meta_title: string | null
           notifications_enabled_email: boolean
           notifications_enabled_telegram: boolean
+          payment_qr_url: string | null
           policy_content: string | null
           primary_color: string
           safety_content: string | null
@@ -267,6 +318,7 @@ export type Database = {
           meta_title?: string | null
           notifications_enabled_email?: boolean
           notifications_enabled_telegram?: boolean
+          payment_qr_url?: string | null
           policy_content?: string | null
           primary_color?: string
           safety_content?: string | null
@@ -305,6 +357,7 @@ export type Database = {
           meta_title?: string | null
           notifications_enabled_email?: boolean
           notifications_enabled_telegram?: boolean
+          payment_qr_url?: string | null
           policy_content?: string | null
           primary_color?: string
           safety_content?: string | null
@@ -435,6 +488,15 @@ export type Database = {
           _user_id: string
         }
         Returns: boolean
+      }
+      record_purchase_paid: {
+        Args: {
+          p_amount: number
+          p_carrier_id: string
+          p_customer_name: string
+          p_purchase_id: string
+        }
+        Returns: undefined
       }
       refresh_carrier_availability: { Args: never; Returns: undefined }
     }
