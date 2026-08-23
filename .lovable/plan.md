@@ -1,22 +1,23 @@
 # Buy Now (direct purchase) flow
 
-Add a "Buy Now" button next to "Request Booking" on the carrier detail page, with its own purchase form, payment QR step, and admin notification.
+Add a "Buy Now" button next to "Rent Now" on the carrier detail page, with its own purchase form, payment QR step, and admin notification.
 
 ## What the buyer sees
 
-1. On a carrier page, two buttons side by side: **Request Booking** and **Buy Now**.
-2. **Buy Now** opens a form with no rental or refund wording:
+1. On a carrier page, two buttons side by side: **Rent Now** and **Buy Now**.
+2. **Rent Now** opens the existing booking request dialog (form copy remains about rental terms, deposit, etc.).
+3. **Buy Now** opens a form with no rental or refund wording:
    - Full name, phone, full address, pincode
    - Buyout summary: carrier name + buyout price (no deposit, no rent lines)
    - Shipping note: charges extra as per actuals (approx. Rs.200-400, based on location)
    - Checkbox: agree to terms & conditions
    - Button: **Show QR Code for Payment** (disabled until all fields are valid)
-3. After clicking, the same dialog switches to the payment step:
+4. After clicking, the same dialog switches to the payment step:
    - Payment QR image (uploaded by admin in settings)
    - Amount payable shown above the QR
    - Under the QR: "Shipping charges will be as per actuals and will be shared at the time of shipping (approx. Rs.200-400, based on location)"
    - Button: **Payment Made**
-4. Clicking **Payment Made** records the purchase, sends the Telegram notification, marks the carrier **Sold Out**, and shows a confirmation message.
+5. Clicking **Payment Made** records the purchase, sends the Telegram notification, marks the carrier **Sold Out**, and shows a confirmation message.
 
 ## Admin side
 
@@ -35,7 +36,7 @@ Add a "Buy Now" button next to "Request Booking" on the carrier detail page, wit
 
 **Frontend**
 - `src/components/carrier/BuyNowModal.tsx` — two-step dialog (details → QR), reuses shadcn form patterns from `BookingModal`, keeps scroll-safe dialog sizing.
-- `src/pages/CarrierDetailPage.tsx` — add the Buy Now button beside Request Booking; both disabled when the carrier is already sold out.
+- `src/pages/CarrierDetailPage.tsx` — add the Buy Now button beside Rent Now; both disabled when the carrier is already sold out.
 - `src/hooks/usePurchases.ts` — create purchase, call `record_purchase_paid`, admin list/update queries.
 - `src/pages/admin/AdminPurchases.tsx` + route and nav entry in `AdminDashboard`.
 - `src/pages/admin/AdminSettings.tsx` + `src/lib/siteSettings.ts` — QR image field.
