@@ -181,7 +181,17 @@ const CarrierDetailPage = () => {
                 onClick={() => setBookingOpen(true)}
                 disabled={carrier.availability_status === 'sold-out'}
               >
-                {carrier.availability_status === 'sold-out' ? 'Sold Out' : 'Request Booking'}
+                {carrier.availability_status === 'sold-out' ? 'Sold Out' : 'Rent Now'}
+              </Button>
+              <Button
+                size="lg"
+                variant="secondary"
+                className="flex-1 gap-2"
+                onClick={() => setBuyNowOpen(true)}
+                disabled={carrier.availability_status === 'sold-out'}
+              >
+                <ShoppingCart className="w-5 h-5" />
+                Buy Now
               </Button>
               <a href={whatsappLink} target="_blank" rel="noopener noreferrer">
                 <Button size="lg" variant="outline" className="gap-2">
@@ -193,7 +203,7 @@ const CarrierDetailPage = () => {
             <div className="flex items-start gap-3 p-4 bg-muted/50 rounded-lg text-sm">
               <Info className="w-5 h-5 text-primary shrink-0 mt-0.5" />
               <p className="text-muted-foreground">
-                <strong>Buyout available:</strong> If you decide to keep the carrier, the refundable deposit (₹{carrier.buyout_price}) will be adjusted against the purchase price. Contact us on WhatsApp to proceed.
+                <strong>Buyout available:</strong> If you decide to keep the carrier, the refundable deposit (₹{carrier.buyout_price}) will be adjusted against the purchase price. Contact us on WhatsApp to proceed. Or choose <strong>Buy Now</strong> to purchase outright.
               </p>
             </div>
           </div>
@@ -201,6 +211,7 @@ const CarrierDetailPage = () => {
       </div>
 
       <BookingModal carrier={carrier} open={bookingOpen} onOpenChange={setBookingOpen} />
+      <BuyNowModal carrier={carrier} open={buyNowOpen} onOpenChange={setBuyNowOpen} />
     </Layout>);
 
 };
