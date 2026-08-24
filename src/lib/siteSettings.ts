@@ -80,6 +80,9 @@ export interface SiteSettings {
   notifications_enabled_email: boolean;
   notifications_enabled_telegram: boolean;
 
+  // Payment
+  payment_qr_url: string | null;
+
   created_at: string;
   updated_at: string;
 }
