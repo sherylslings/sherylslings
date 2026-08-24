@@ -24,8 +24,8 @@ const buyNowSchema = z.object({
   phone: z.string().min(10, 'Valid phone number required'),
   pincode: z.string().regex(/^\d{6}$/, 'Enter a valid 6-digit pincode'),
   address: z.string().min(5, 'Full address is required'),
-  agreed_to_terms: z.literal(true, {
-    errorMap: () => ({ message: 'You must agree to the terms and conditions' }),
+  agreed_to_terms: z.boolean().refine((val) => val === true, {
+    message: 'You must agree to the terms and conditions',
   }),
 });
 
@@ -48,12 +48,13 @@ export const BuyNowModal = ({ carrier, open, onOpenChange }: BuyNowModalProps) =
     register,
     handleSubmit,
     watch,
+    setValue,
     formState: { errors, isSubmitting },
     reset,
   } = useForm<BuyNowFormData>({
     resolver: zodResolver(buyNowSchema),
     defaultValues: {
-      agreed_to_terms: false as unknown as true,
+      agreed_to_terms: false,
     },
   });
 
@@ -258,11 +259,7 @@ export const BuyNowModal = ({ carrier, open, onOpenChange }: BuyNowModalProps) =
             <Checkbox
               id="buy_terms"
               checked={agreedToTerms}
-              onCheckedChange={(checked) => {
-                // react-hook-form controlled manually for checkbox
-                const event = { target: { value: checked, name: 'agreed_to_terms' } } as unknown as React.ChangeEvent<HTMLInputElement>;
-                register('agreed_to_terms').onChange(event);
-              }}
+              onCheckedChange={(checked) => setValue('agreed_to_terms', checked as boolean, { shouldValidate: true })}
             />
             <Label htmlFor="buy_terms" className="text-sm text-muted-foreground leading-relaxed cursor-pointer">
               I agree to the{' '}

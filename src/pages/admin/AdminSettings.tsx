@@ -10,7 +10,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useSiteSettings, useUpdateSiteSettings } from '@/hooks/useSiteSettings';
 import { SiteSettings, SiteFeature, HowItWorksStep, MenuItem, FooterLink } from '@/lib/siteSettings';
 import { Switch } from '@/components/ui/switch';
-import { Palette, Type, MessageCircle, Layout, FileText, Menu, Plus, Trash2, Save, Bell } from 'lucide-react';
+import { Palette, Type, MessageCircle, Layout, FileText, Menu, Plus, Trash2, Save, Bell, CreditCard } from 'lucide-react';
 
 const AdminSettings = () => {
   const { data: settings, isLoading } = useSiteSettings();
@@ -33,7 +33,7 @@ const AdminSettings = () => {
       </div>
 
       <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
-        <TabsList className="grid grid-cols-2 lg:grid-cols-7 gap-2 h-auto">
+        <TabsList className="grid grid-cols-2 lg:grid-cols-8 gap-2 h-auto">
           <TabsTrigger value="branding" className="gap-2">
             <Type className="w-4 h-4" />
             <span className="hidden sm:inline">Branding</span>
@@ -61,6 +61,10 @@ const AdminSettings = () => {
           <TabsTrigger value="notifications" className="gap-2">
             <Bell className="w-4 h-4" />
             <span className="hidden sm:inline">Notifications</span>
+          </TabsTrigger>
+          <TabsTrigger value="payments" className="gap-2">
+            <CreditCard className="w-4 h-4" />
+            <span className="hidden sm:inline">Payments</span>
           </TabsTrigger>
         </TabsList>
 
@@ -90,6 +94,10 @@ const AdminSettings = () => {
 
         <TabsContent value="notifications">
           <NotificationSettings settings={settings} onUpdate={updateSettings.mutateAsync} isUpdating={updateSettings.isPending} />
+        </TabsContent>
+
+        <TabsContent value="payments">
+          <PaymentSettings settings={settings} onUpdate={updateSettings.mutateAsync} isUpdating={updateSettings.isPending} />
         </TabsContent>
       </Tabs>
     </div>
@@ -868,6 +876,63 @@ const NotificationSettings = ({ settings, onUpdate, isUpdating }: SettingsCardPr
       <Button onClick={handleSave} disabled={isUpdating} className="gap-2">
         <Save className="w-4 h-4" />
         Save Notification Settings
+      </Button>
+    </div>
+  );
+};
+
+function PaymentSettings({
+  settings,
+  onUpdate,
+  isUpdating,
+}: {
+  settings: SiteSettings;
+  onUpdate: (updates: Partial<SiteSettings>) => Promise<SiteSettings>;
+  isUpdating: boolean;
+}) {
+  const [paymentQrUrl, setPaymentQrUrl] = useState(settings.payment_qr_url || '');
+
+  const handleSave = async () => {
+    await onUpdate({ payment_qr_url: paymentQrUrl.trim() || null });
+    toast.success('Payment settings saved');
+  };
+
+  return (
+    <div className="space-y-6">
+      <Card>
+        <CardHeader>
+          <CardTitle>Buy Now Payment QR</CardTitle>
+          <CardDescription>
+            Buyers who click "Buy Now" on a listing will see this QR code on the final step. Enter a direct URL to an image (PNG/JPG) of your payment QR.
+          </CardDescription>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <div className="space-y-2">
+            <Label htmlFor="paymentQrUrl">Payment QR Image URL</Label>
+            <Input
+              id="paymentQrUrl"
+              type="url"
+              value={paymentQrUrl}
+              onChange={(e) => setPaymentQrUrl(e.target.value)}
+              placeholder="https://example.com/qr-payment.png"
+            />
+            <p className="text-xs text-muted-foreground">
+              Tip: Upload your QR image to any image hosting service and paste the direct link here.
+            </p>
+          </div>
+
+          {paymentQrUrl && (
+            <div className="rounded-lg border p-4 max-w-xs">
+              <p className="text-sm font-medium mb-2">Preview</p>
+              <img src={paymentQrUrl} alt="Payment QR preview" className="w-full rounded-md" />
+            </div>
+          )}
+        </CardContent>
+      </Card>
+
+      <Button onClick={handleSave} disabled={isUpdating} className="gap-2">
+        <Save className="w-4 h-4" />
+        Save Payment Settings
       </Button>
     </div>
   );
