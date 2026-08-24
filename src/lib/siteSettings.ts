@@ -140,4 +140,5 @@ export const DEFAULT_SETTINGS: Omit<SiteSettings, 'id' | 'created_at' | 'updated
   admin_telegram_chat_id: null,
   notifications_enabled_email: false,
   notifications_enabled_telegram: true,
+  payment_qr_url: null,
 };
