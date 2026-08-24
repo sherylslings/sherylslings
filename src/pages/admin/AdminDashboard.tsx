@@ -38,6 +38,7 @@ const AdminDashboard = () => {
     { href: '/admin/dashboard/bookings', icon: ClipboardList, label: 'Bookings' },
     { href: '/admin/dashboard/accounting', icon: IndianRupee, label: 'Accounting' },
     { href: '/admin/dashboard/transactions', icon: Receipt, label: 'Transactions' },
+    { href: '/admin/dashboard/purchases', icon: ShoppingCart, label: 'Purchases' },
     { href: '/admin/dashboard/policies', icon: FileText, label: 'Policies' },
     { href: '/admin/dashboard/safety', icon: Shield, label: 'Safety' },
     { href: '/admin/dashboard/blog', icon: BookOpen, label: 'Blog' },
