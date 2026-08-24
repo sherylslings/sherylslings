@@ -18,6 +18,7 @@ const CarrierDetailPage = () => {
   const { data: carrier, isLoading } = useCarrier(id!);
   const { getWhatsAppLink } = useSiteSettingsContext();
   const [bookingOpen, setBookingOpen] = useState(false);
+  const [buyNowOpen, setBuyNowOpen] = useState(false);
   const [selectedImage, setSelectedImage] = useState(0);
 
   if (isLoading) {
