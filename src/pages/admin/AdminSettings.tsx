@@ -881,4 +881,61 @@ const NotificationSettings = ({ settings, onUpdate, isUpdating }: SettingsCardPr
   );
 };
 
+function PaymentSettings({
+  settings,
+  onUpdate,
+  isUpdating,
+}: {
+  settings: SiteSettings;
+  onUpdate: (updates: Partial<SiteSettings>) => Promise<SiteSettings>;
+  isUpdating: boolean;
+}) {
+  const [paymentQrUrl, setPaymentQrUrl] = useState(settings.payment_qr_url || '');
+
+  const handleSave = async () => {
+    await onUpdate({ payment_qr_url: paymentQrUrl.trim() || null });
+    toast.success('Payment settings saved');
+  };
+
+  return (
+    <div className="space-y-6">
+      <Card>
+        <CardHeader>
+          <CardTitle>Buy Now Payment QR</CardTitle>
+          <CardDescription>
+            Buyers who click "Buy Now" on a listing will see this QR code on the final step. Enter a direct URL to an image (PNG/JPG) of your payment QR.
+          </CardDescription>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <div className="space-y-2">
+            <Label htmlFor="paymentQrUrl">Payment QR Image URL</Label>
+            <Input
+              id="paymentQrUrl"
+              type="url"
+              value={paymentQrUrl}
+              onChange={(e) => setPaymentQrUrl(e.target.value)}
+              placeholder="https://example.com/qr-payment.png"
+            />
+            <p className="text-xs text-muted-foreground">
+              Tip: Upload your QR image to any image hosting service and paste the direct link here.
+            </p>
+          </div>
+
+          {paymentQrUrl && (
+            <div className="rounded-lg border p-4 max-w-xs">
+              <p className="text-sm font-medium mb-2">Preview</p>
+              <img src={paymentQrUrl} alt="Payment QR preview" className="w-full rounded-md" />
+            </div>
+          )}
+        </CardContent>
+      </Card>
+
+      <Button onClick={handleSave} disabled={isUpdating} className="gap-2">
+        <Save className="w-4 h-4" />
+        Save Payment Settings
+      </Button>
+    </div>
+  );
+};
+
 export default AdminSettings;
