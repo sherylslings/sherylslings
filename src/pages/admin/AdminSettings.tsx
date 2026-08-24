@@ -33,7 +33,7 @@ const AdminSettings = () => {
       </div>
 
       <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
-        <TabsList className="grid grid-cols-2 lg:grid-cols-7 gap-2 h-auto">
+        <TabsList className="grid grid-cols-2 lg:grid-cols-8 gap-2 h-auto">
           <TabsTrigger value="branding" className="gap-2">
             <Type className="w-4 h-4" />
             <span className="hidden sm:inline">Branding</span>
@@ -61,6 +61,10 @@ const AdminSettings = () => {
           <TabsTrigger value="notifications" className="gap-2">
             <Bell className="w-4 h-4" />
             <span className="hidden sm:inline">Notifications</span>
+          </TabsTrigger>
+          <TabsTrigger value="payments" className="gap-2">
+            <CreditCard className="w-4 h-4" />
+            <span className="hidden sm:inline">Payments</span>
           </TabsTrigger>
         </TabsList>
 
@@ -90,6 +94,10 @@ const AdminSettings = () => {
 
         <TabsContent value="notifications">
           <NotificationSettings settings={settings} onUpdate={updateSettings.mutateAsync} isUpdating={updateSettings.isPending} />
+        </TabsContent>
+
+        <TabsContent value="payments">
+          <PaymentSettings settings={settings} onUpdate={updateSettings.mutateAsync} isUpdating={updateSettings.isPending} />
         </TabsContent>
       </Tabs>
     </div>
