@@ -48,12 +48,13 @@ export const BuyNowModal = ({ carrier, open, onOpenChange }: BuyNowModalProps) =
     register,
     handleSubmit,
     watch,
+    setValue,
     formState: { errors, isSubmitting },
     reset,
   } = useForm<BuyNowFormData>({
     resolver: zodResolver(buyNowSchema),
     defaultValues: {
-      agreed_to_terms: false as unknown as true,
+      agreed_to_terms: false,
     },
   });
 
