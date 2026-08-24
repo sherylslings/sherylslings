@@ -10,7 +10,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useSiteSettings, useUpdateSiteSettings } from '@/hooks/useSiteSettings';
 import { SiteSettings, SiteFeature, HowItWorksStep, MenuItem, FooterLink } from '@/lib/siteSettings';
 import { Switch } from '@/components/ui/switch';
-import { Palette, Type, MessageCircle, Layout, FileText, Menu, Plus, Trash2, Save, Bell } from 'lucide-react';
+import { Palette, Type, MessageCircle, Layout, FileText, Menu, Plus, Trash2, Save, Bell, CreditCard } from 'lucide-react';
 
 const AdminSettings = () => {
   const { data: settings, isLoading } = useSiteSettings();
