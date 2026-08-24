@@ -259,11 +259,7 @@ export const BuyNowModal = ({ carrier, open, onOpenChange }: BuyNowModalProps) =
             <Checkbox
               id="buy_terms"
               checked={agreedToTerms}
-              onCheckedChange={(checked) => {
-                // react-hook-form controlled manually for checkbox
-                const event = { target: { value: checked, name: 'agreed_to_terms' } } as unknown as React.ChangeEvent<HTMLInputElement>;
-                register('agreed_to_terms').onChange(event);
-              }}
+              onCheckedChange={(checked) => setValue('agreed_to_terms', checked as boolean, { shouldValidate: true })}
             />
             <Label htmlFor="buy_terms" className="text-sm text-muted-foreground leading-relaxed cursor-pointer">
               I agree to the{' '}
