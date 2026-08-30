@@ -43,22 +43,20 @@ export const useCreatePurchase = () => {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: async (input: PurchaseInput) => {
-      const { data, error } = await supabase
-        .from('purchases')
-        .insert({
-          carrier_id: input.carrier_id,
-          customer_name: input.customer_name,
-          phone: input.phone,
-          address: input.address,
-          pincode: input.pincode,
-          amount: input.amount,
-          agreed_to_terms: input.agreed_to_terms,
-          status: 'payment_claimed',
-        })
-        .select()
-        .single();
+      const id = crypto.randomUUID();
+      const { error } = await supabase.from('purchases').insert({
+        id,
+        carrier_id: input.carrier_id,
+        customer_name: input.customer_name,
+        phone: input.phone,
+        address: input.address,
+        pincode: input.pincode,
+        amount: input.amount,
+        agreed_to_terms: input.agreed_to_terms,
+        status: 'payment_claimed',
+      });
       if (error) throw error;
-      return data as Purchase;
+      return { id } as Purchase;
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['purchases'] });
