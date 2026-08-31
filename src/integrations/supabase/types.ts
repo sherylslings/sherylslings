@@ -284,6 +284,8 @@ export type Database = {
           primary_color: string
           safety_content: string | null
           secondary_color: string
+          site_url: string | null
+          social_image_url: string | null
           tagline: string | null
           updated_at: string
           whatsapp_message: string | null
@@ -323,6 +325,8 @@ export type Database = {
           primary_color?: string
           safety_content?: string | null
           secondary_color?: string
+          site_url?: string | null
+          social_image_url?: string | null
           tagline?: string | null
           updated_at?: string
           whatsapp_message?: string | null
@@ -362,6 +366,8 @@ export type Database = {
           primary_color?: string
           safety_content?: string | null
           secondary_color?: string
+          site_url?: string | null
+          social_image_url?: string | null
           tagline?: string | null
           updated_at?: string
           whatsapp_message?: string | null
