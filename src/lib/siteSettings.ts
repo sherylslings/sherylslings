@@ -73,6 +73,8 @@ export interface SiteSettings {
   // SEO
   meta_title: string | null;
   meta_description: string | null;
+  social_image_url: string | null;
+  site_url: string | null;
 
   // Admin Notifications
   admin_notification_email: string | null;
