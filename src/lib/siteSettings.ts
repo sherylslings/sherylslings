@@ -138,6 +138,8 @@ export const DEFAULT_SETTINGS: Omit<SiteSettings, 'id' | 'created_at' | 'updated
   safety_content: null,
   meta_title: 'Baby Carrier Rental - Sling Library India',
   meta_description: 'Rent premium baby carriers in India. Try before you buy with our curated collection of ring slings, wraps, and buckle carriers.',
+  social_image_url: null,
+  site_url: 'https://nestledbabywearing.lovable.app',
   admin_notification_email: null,
   admin_telegram_chat_id: null,
   notifications_enabled_email: false,
