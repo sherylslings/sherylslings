@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useEffect } from 'react';
 import { useSiteSettings } from '@/hooks/useSiteSettings';
 import { SiteSettings, DEFAULT_SETTINGS } from '@/lib/siteSettings';
+import { useDocumentMeta } from '@/hooks/useDocumentMeta';
 
 interface SiteSettingsContextType {
   settings: SiteSettings;
@@ -34,6 +35,9 @@ export const SiteSettingsProvider: React.FC<{ children: React.ReactNode }> = ({ 
       root.style.setProperty('--foreground', sanitize(settings.foreground_color));
     }
   }, [settings]);
+
+  // Keep the document head (title, description, social tags) in sync with settings
+  useDocumentMeta(settings);
 
   const getWhatsAppLink = (customMessage?: string) => {
     const message = customMessage || currentSettings.whatsapp_message || '';
