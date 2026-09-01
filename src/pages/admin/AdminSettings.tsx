@@ -10,7 +10,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useSiteSettings, useUpdateSiteSettings } from '@/hooks/useSiteSettings';
 import { SiteSettings, SiteFeature, HowItWorksStep, MenuItem, FooterLink } from '@/lib/siteSettings';
 import { Switch } from '@/components/ui/switch';
-import { Palette, Type, MessageCircle, Layout, FileText, Menu, Plus, Trash2, Save, Bell, CreditCard } from 'lucide-react';
+import { Palette, Type, MessageCircle, Layout, FileText, Menu, Plus, Trash2, Save, Bell, CreditCard, Search } from 'lucide-react';
 
 const AdminSettings = () => {
   const { data: settings, isLoading } = useSiteSettings();
@@ -33,7 +33,7 @@ const AdminSettings = () => {
       </div>
 
       <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
-        <TabsList className="grid grid-cols-2 lg:grid-cols-8 gap-2 h-auto">
+        <TabsList className="grid grid-cols-2 lg:grid-cols-9 gap-2 h-auto">
           <TabsTrigger value="branding" className="gap-2">
             <Type className="w-4 h-4" />
             <span className="hidden sm:inline">Branding</span>
@@ -65,6 +65,10 @@ const AdminSettings = () => {
           <TabsTrigger value="payments" className="gap-2">
             <CreditCard className="w-4 h-4" />
             <span className="hidden sm:inline">Payments</span>
+          </TabsTrigger>
+          <TabsTrigger value="seo" className="gap-2">
+            <Search className="w-4 h-4" />
+            <span className="hidden sm:inline">SEO</span>
           </TabsTrigger>
         </TabsList>
 
@@ -98,6 +102,10 @@ const AdminSettings = () => {
 
         <TabsContent value="payments">
           <PaymentSettings settings={settings} onUpdate={updateSettings.mutateAsync} isUpdating={updateSettings.isPending} />
+        </TabsContent>
+
+        <TabsContent value="seo">
+          <SeoSettings settings={settings} onUpdate={updateSettings.mutateAsync} isUpdating={updateSettings.isPending} />
         </TabsContent>
       </Tabs>
     </div>
@@ -933,6 +941,144 @@ function PaymentSettings({
       <Button onClick={handleSave} disabled={isUpdating} className="gap-2">
         <Save className="w-4 h-4" />
         Save Payment Settings
+      </Button>
+    </div>
+  );
+};
+
+// SEO / Sharing Settings
+const SeoSettings = ({ settings, onUpdate, isUpdating }: SettingsCardProps) => {
+  const [metaTitle, setMetaTitle] = useState(settings.meta_title || '');
+  const [metaDescription, setMetaDescription] = useState(settings.meta_description || '');
+  const [socialImageUrl, setSocialImageUrl] = useState(settings.social_image_url || '');
+  const [siteUrl, setSiteUrl] = useState(settings.site_url || '');
+
+  useEffect(() => {
+    setMetaTitle(settings.meta_title || '');
+    setMetaDescription(settings.meta_description || '');
+    setSocialImageUrl(settings.social_image_url || '');
+    setSiteUrl(settings.site_url || '');
+  }, [settings]);
+
+  const handleSave = async () => {
+    try {
+      await onUpdate({
+        meta_title: metaTitle.trim() || null,
+        meta_description: metaDescription.trim() || null,
+        social_image_url: socialImageUrl.trim() || null,
+        site_url: siteUrl.trim().replace(/\/$/, '') || null,
+      });
+      toast.success('SEO & sharing settings updated!');
+    } catch (e) {
+      toast.error('Failed to save SEO settings');
+    }
+  };
+
+  return (
+    <div className="space-y-6">
+      <Card>
+        <CardHeader>
+          <CardTitle>SEO &amp; Sharing</CardTitle>
+          <CardDescription>
+            Controls the browser tab title, search snippet, and the preview shown when your links are shared.
+          </CardDescription>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <div className="space-y-2">
+            <Label htmlFor="metaTitle">Page Title</Label>
+            <Input
+              id="metaTitle"
+              value={metaTitle}
+              onChange={(e) => setMetaTitle(e.target.value)}
+              placeholder="Nestled — Baby Carrier Library"
+              maxLength={70}
+            />
+            <p className="text-xs text-muted-foreground">{metaTitle.length}/60 characters recommended</p>
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="metaDescription">Meta Description</Label>
+            <Textarea
+              id="metaDescription"
+              value={metaDescription}
+              onChange={(e) => setMetaDescription(e.target.value)}
+              rows={3}
+              placeholder="Rent premium baby carriers in India..."
+              maxLength={200}
+            />
+            <p className="text-xs text-muted-foreground">{metaDescription.length}/160 characters recommended</p>
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="socialImageUrl">Social Preview Image URL</Label>
+            <Input
+              id="socialImageUrl"
+              value={socialImageUrl}
+              onChange={(e) => setSocialImageUrl(e.target.value)}
+              placeholder="https://example.com/social-preview.jpg"
+            />
+            <p className="text-xs text-muted-foreground">
+              Recommended size 1200 × 630 px (JPG or PNG). You can also use a path already on your site, e.g. /nestled-social-preview.jpg
+            </p>
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="siteUrl">Website URL</Label>
+            <Input
+              id="siteUrl"
+              value={siteUrl}
+              onChange={(e) => setSiteUrl(e.target.value)}
+              placeholder="https://nestledbabywearing.lovable.app"
+            />
+            <p className="text-xs text-muted-foreground">Used to build absolute links for previews and search engines.</p>
+          </div>
+        </CardContent>
+      </Card>
+
+      <Card>
+        <CardHeader>
+          <CardTitle>Preview</CardTitle>
+          <CardDescription>Roughly how a shared link will look.</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div className="max-w-md overflow-hidden rounded-lg border">
+            {socialImageUrl ? (
+              <img src={socialImageUrl} alt="Social preview" className="aspect-[1200/630] w-full object-cover" />
+            ) : (
+              <div className="flex aspect-[1200/630] w-full items-center justify-center bg-muted text-sm text-muted-foreground">
+                No preview image set
+              </div>
+            )}
+            <div className="space-y-1 p-3">
+              <p className="text-xs uppercase text-muted-foreground">
+                {(siteUrl || 'yoursite.com').replace(/^https?:\/\//, '')}
+              </p>
+              <p className="font-medium">{metaTitle || settings.brand_name}</p>
+              <p className="line-clamp-2 text-sm text-muted-foreground">{metaDescription}</p>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+
+      <Card className="border-dashed">
+        <CardHeader>
+          <CardTitle className="text-base">Good to know</CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-2 text-sm text-muted-foreground">
+          <p>
+            These values update the browser tab title, description, and search metadata immediately after saving and publishing.
+          </p>
+          <p>
+            WhatsApp, iMessage, Instagram and Facebook read previews from the site&apos;s base HTML file and cache them, so a
+            changed image can take a while to appear there — and for those apps the preview in the published HTML takes priority.
+            Ask Lovable to update the base preview if you change the image here.
+          </p>
+        </CardContent>
+      </Card>
+
+      <Button onClick={handleSave} disabled={isUpdating} className="gap-2">
+        <Save className="w-4 h-4" />
+        Save SEO Settings
       </Button>
     </div>
   );
