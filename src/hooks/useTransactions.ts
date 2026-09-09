@@ -112,6 +112,66 @@ export const useApproveBooking = () => {
   });
 };
 
+const invalidateAll = (queryClient: ReturnType<typeof useQueryClient>) => {
+  queryClient.invalidateQueries({ queryKey: ['booking-requests'] });
+  queryClient.invalidateQueries({ queryKey: ['carriers'] });
+  queryClient.invalidateQueries({ queryKey: ['transactions'] });
+};
+
+export const useStartRental = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async (params: {
+      p_booking_id: string;
+      p_carrier_id: string;
+      p_customer_name: string;
+      p_start_date: string;
+      p_end_date: string;
+      p_duration: string;
+      p_rent_amount: number;
+      p_deposit_amount: number;
+    }) => {
+      const { error } = await supabase.rpc('start_rental', params);
+      if (error) throw error;
+    },
+    onSuccess: () => invalidateAll(queryClient),
+  });
+};
+
+export const useUpdateRental = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async (params: {
+      p_booking_id: string;
+      p_carrier_id: string;
+      p_start_date: string;
+      p_end_date: string;
+      p_duration: string;
+      p_rent_amount: number;
+    }) => {
+      const { error } = await supabase.rpc('update_rental', params);
+      if (error) throw error;
+    },
+    onSuccess: () => invalidateAll(queryClient),
+  });
+};
+
+export const useMarkBookingSold = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async (params: {
+      p_booking_id: string;
+      p_carrier_id: string;
+      p_customer_name: string;
+      p_amount: number;
+    }) => {
+      const { error } = await supabase.rpc('mark_booking_sold', params);
+      if (error) throw error;
+    },
+    onSuccess: () => invalidateAll(queryClient),
+  });
+};
+
 export const useCompleteBooking = () => {
   const queryClient = useQueryClient();
   return useMutation({
