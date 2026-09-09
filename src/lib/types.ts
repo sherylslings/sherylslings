@@ -29,9 +29,12 @@ export interface BookingRequest {
   phone: string;
   city: string;
   address: string | null;
-  start_date: string;
+  start_date: string | null;
   duration: 'weekly' | 'biweekly' | 'monthly';
-  status: 'pending' | 'approved' | 'completed' | 'cancelled';
+  rental_start_date: string | null;
+  rental_end_date: string | null;
+  rental_duration: string | null;
+  status: 'pending' | 'approved' | 'on_rent' | 'completed' | 'cancelled' | 'sold';
   agreed_to_terms: boolean;
   notes: string | null;
   created_at: string;

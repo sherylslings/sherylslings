@@ -62,7 +62,10 @@ export type Database = {
           id: string
           notes: string | null
           phone: string
-          start_date: string
+          rental_duration: string | null
+          rental_end_date: string | null
+          rental_start_date: string | null
+          start_date: string | null
           status: string
           updated_at: string
         }
@@ -77,7 +80,10 @@ export type Database = {
           id?: string
           notes?: string | null
           phone: string
-          start_date: string
+          rental_duration?: string | null
+          rental_end_date?: string | null
+          rental_start_date?: string | null
+          start_date?: string | null
           status?: string
           updated_at?: string
         }
@@ -92,7 +98,10 @@ export type Database = {
           id?: string
           notes?: string | null
           phone?: string
-          start_date?: string
+          rental_duration?: string | null
+          rental_end_date?: string | null
+          rental_start_date?: string | null
+          start_date?: string | null
           status?: string
           updated_at?: string
         }
@@ -495,6 +504,15 @@ export type Database = {
         }
         Returns: boolean
       }
+      mark_booking_sold: {
+        Args: {
+          p_amount: number
+          p_booking_id: string
+          p_carrier_id: string
+          p_customer_name: string
+        }
+        Returns: undefined
+      }
       record_purchase_paid: {
         Args: {
           p_amount: number
@@ -505,6 +523,30 @@ export type Database = {
         Returns: undefined
       }
       refresh_carrier_availability: { Args: never; Returns: undefined }
+      start_rental: {
+        Args: {
+          p_booking_id: string
+          p_carrier_id: string
+          p_customer_name: string
+          p_deposit_amount: number
+          p_duration: string
+          p_end_date: string
+          p_rent_amount: number
+          p_start_date: string
+        }
+        Returns: undefined
+      }
+      update_rental: {
+        Args: {
+          p_booking_id: string
+          p_carrier_id: string
+          p_duration: string
+          p_end_date: string
+          p_rent_amount: number
+          p_start_date: string
+        }
+        Returns: undefined
+      }
     }
     Enums: {
       app_role: "admin" | "user"
