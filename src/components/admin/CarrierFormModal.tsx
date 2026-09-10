@@ -106,6 +106,8 @@ export const CarrierFormModal = ({ open, onOpenChange, carrier }: CarrierFormMod
         monthly_rent: 0,
         refundable_deposit: 0,
         buyout_price: 0,
+        purchase_cost: 0,
+        purchased_from: '',
         condition: 'gently used',
         carry_positions: '',
         description: '',
