@@ -24,7 +24,7 @@ import { useCreateBookingRequest } from '@/hooks/useBookingRequests';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
 import type { Carrier } from '@/lib/types';
-import { cn } from '@/lib/utils';
+
 import { Link } from 'react-router-dom';
 
 const bookingSchema = z.object({
