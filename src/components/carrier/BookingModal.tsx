@@ -2,8 +2,7 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import { format } from 'date-fns';
-import { CalendarIcon, CheckCircle2 } from 'lucide-react';
+import { CheckCircle2 } from 'lucide-react';
 import {
   Dialog,
   DialogContent,
@@ -14,12 +13,6 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Checkbox } from '@/components/ui/checkbox';
-import { Calendar } from '@/components/ui/calendar';
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from '@/components/ui/popover';
 import {
   Select,
   SelectContent,
@@ -31,7 +24,7 @@ import { useCreateBookingRequest } from '@/hooks/useBookingRequests';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
 import type { Carrier } from '@/lib/types';
-import { cn } from '@/lib/utils';
+
 import { Link } from 'react-router-dom';
 
 const bookingSchema = z.object({
@@ -39,7 +32,6 @@ const bookingSchema = z.object({
   phone: z.string().min(10, 'Valid phone number required'),
   pincode: z.string().regex(/^\d{6}$/, 'Enter a valid 6-digit pincode'),
   address: z.string().min(5, 'Full address is required'),
-  start_date: z.date({ required_error: 'Start date is required' }),
   duration: z.enum(['weekly', 'biweekly', 'monthly']),
   agreed_to_terms: z.literal(true, {
     errorMap: () => ({ message: 'You must agree to the rental terms' }),
@@ -59,17 +51,6 @@ export const BookingModal = ({ carrier, open, onOpenChange }: BookingModalProps)
   const { toast } = useToast();
   const createBooking = useCreateBookingRequest();
 
-  const earliestDate = (() => {
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-    if (carrier.availability_status === 'rented' && carrier.next_available_date) {
-      const next = new Date(carrier.next_available_date);
-      next.setHours(0, 0, 0, 0);
-      return next > today ? next : today;
-    }
-    return today;
-  })();
-
   const {
     register,
     handleSubmit,
@@ -81,12 +62,10 @@ export const BookingModal = ({ carrier, open, onOpenChange }: BookingModalProps)
     resolver: zodResolver(bookingSchema),
     defaultValues: {
       duration: 'weekly',
-      start_date: earliestDate,
       agreed_to_terms: false as unknown as true,
     },
   });
 
-  const startDate = watch('start_date');
   const duration = watch('duration');
   const agreedToTerms = watch('agreed_to_terms');
 
@@ -100,7 +79,7 @@ export const BookingModal = ({ carrier, open, onOpenChange }: BookingModalProps)
         phone: data.phone,
         city: data.pincode,
         address: data.address,
-        start_date: format(data.start_date, 'yyyy-MM-dd'),
+        start_date: null,
         duration: data.duration,
         agreed_to_terms: data.agreed_to_terms,
         notes: null,
@@ -221,53 +200,24 @@ export const BookingModal = ({ carrier, open, onOpenChange }: BookingModalProps)
             )}
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div className="space-y-2">
-              <Label>Preferred Start Date</Label>
-              <Popover>
-                <PopoverTrigger asChild>
-                  <Button
-                    variant="outline"
-                    className={cn(
-                      "w-full justify-start text-left font-normal",
-                      !startDate && "text-muted-foreground"
-                    )}
-                  >
-                    <CalendarIcon className="mr-2 h-4 w-4" />
-                    {startDate ? format(startDate, 'dd MMM yyyy') : 'Pick a date'}
-                  </Button>
-                </PopoverTrigger>
-                <PopoverContent className="w-auto p-0">
-                  <Calendar
-                    mode="single"
-                    selected={startDate}
-                    onSelect={(date) => date && setValue('start_date', date)}
-                    disabled={(date) => date < earliestDate}
-                    initialFocus
-                  />
-                </PopoverContent>
-              </Popover>
-              {errors.start_date && (
-                <p className="text-xs text-destructive">{errors.start_date.message}</p>
-              )}
-            </div>
-
-            <div className="space-y-2">
-              <Label>Duration</Label>
-              <Select
-                value={duration}
-                onValueChange={(value: 'weekly' | 'biweekly' | 'monthly') => setValue('duration', value)}
-              >
-                <SelectTrigger>
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="weekly">Weekly (₹{carrier.weekly_rent})</SelectItem>
-                  <SelectItem value="biweekly">Biweekly (₹{carrier.weekly_rent * 2})</SelectItem>
-                  <SelectItem value="monthly">Monthly (₹{carrier.monthly_rent})</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
+          <div className="space-y-2">
+            <Label>Duration</Label>
+            <Select
+              value={duration}
+              onValueChange={(value: 'weekly' | 'biweekly' | 'monthly') => setValue('duration', value)}
+            >
+              <SelectTrigger>
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="weekly">Weekly (₹{carrier.weekly_rent})</SelectItem>
+                <SelectItem value="biweekly">Biweekly (₹{carrier.weekly_rent * 2})</SelectItem>
+                <SelectItem value="monthly">Monthly (₹{carrier.monthly_rent})</SelectItem>
+              </SelectContent>
+            </Select>
+            <p className="text-xs text-muted-foreground">
+              We'll confirm your rental start date on WhatsApp.
+            </p>
           </div>
 
           <div className="bg-muted/50 rounded-lg p-4 text-sm space-y-2">
