@@ -11,6 +11,8 @@ export interface Carrier {
   monthly_rent: number;
   refundable_deposit: number;
   buyout_price: number;
+  purchase_cost: number;
+  purchased_from: string | null;
   condition: string;
   carry_positions: string[];
   description: string | null;
