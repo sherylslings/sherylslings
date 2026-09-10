@@ -59,6 +59,8 @@ const AdminCarriers = () => {
                   <TableHead>Category</TableHead>
                   <TableHead>Weekly</TableHead>
                   <TableHead>Monthly</TableHead>
+                  <TableHead>Purchase Cost</TableHead>
+                  <TableHead>Purchased From</TableHead>
                   <TableHead>Status</TableHead>
                   <TableHead className="text-right">Actions</TableHead>
                 </TableRow>
