@@ -84,6 +84,8 @@ const AdminCarriers = () => {
                     <TableCell>{getCategoryName(carrier.category)}</TableCell>
                     <TableCell>₹{carrier.weekly_rent}</TableCell>
                     <TableCell>₹{carrier.monthly_rent}</TableCell>
+                    <TableCell>₹{carrier.purchase_cost}</TableCell>
+                    <TableCell className="text-muted-foreground">{carrier.purchased_from || '—'}</TableCell>
                     <TableCell>
                       <Badge
                         variant={
