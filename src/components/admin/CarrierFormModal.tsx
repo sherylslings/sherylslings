@@ -130,6 +130,8 @@ export const CarrierFormModal = ({ open, onOpenChange, carrier }: CarrierFormMod
         monthly_rent: data.monthly_rent,
         refundable_deposit: data.refundable_deposit,
         buyout_price: data.buyout_price,
+        purchase_cost: data.purchase_cost,
+        purchased_from: data.purchased_from?.trim() || null,
         condition: data.condition,
         carry_positions: data.carry_positions.split(',').map(p => p.trim()).filter(Boolean),
         description: data.description || null,
