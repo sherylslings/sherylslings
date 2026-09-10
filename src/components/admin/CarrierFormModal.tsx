@@ -28,6 +28,8 @@ const carrierSchema = z.object({
   monthly_rent: z.coerce.number().min(1, 'Monthly rent required'),
   refundable_deposit: z.coerce.number().min(1, 'Deposit required'),
   buyout_price: z.coerce.number().min(1, 'Buyout price required'),
+  purchase_cost: z.coerce.number().min(0, 'Purchase cost must be 0 or more'),
+  purchased_from: z.string().optional(),
   condition: z.string().min(1, 'Condition required'),
   carry_positions: z.string(),
   description: z.string().optional(),
