@@ -86,6 +86,8 @@ export const CarrierFormModal = ({ open, onOpenChange, carrier }: CarrierFormMod
         monthly_rent: carrier.monthly_rent,
         refundable_deposit: carrier.refundable_deposit,
         buyout_price: carrier.buyout_price,
+        purchase_cost: carrier.purchase_cost,
+        purchased_from: carrier.purchased_from || '',
         condition: carrier.condition,
         carry_positions: carrier.carry_positions.join(', '),
         description: carrier.description || '',
