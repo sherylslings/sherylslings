@@ -39,7 +39,6 @@ const bookingSchema = z.object({
   phone: z.string().min(10, 'Valid phone number required'),
   pincode: z.string().regex(/^\d{6}$/, 'Enter a valid 6-digit pincode'),
   address: z.string().min(5, 'Full address is required'),
-  start_date: z.date({ required_error: 'Start date is required' }),
   duration: z.enum(['weekly', 'biweekly', 'monthly']),
   agreed_to_terms: z.literal(true, {
     errorMap: () => ({ message: 'You must agree to the rental terms' }),
