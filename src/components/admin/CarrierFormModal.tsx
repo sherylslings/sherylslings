@@ -28,6 +28,8 @@ const carrierSchema = z.object({
   monthly_rent: z.coerce.number().min(1, 'Monthly rent required'),
   refundable_deposit: z.coerce.number().min(1, 'Deposit required'),
   buyout_price: z.coerce.number().min(1, 'Buyout price required'),
+  purchase_cost: z.coerce.number().min(0, 'Purchase cost must be 0 or more'),
+  purchased_from: z.string().optional(),
   condition: z.string().min(1, 'Condition required'),
   carry_positions: z.string(),
   description: z.string().optional(),
@@ -62,6 +64,8 @@ export const CarrierFormModal = ({ open, onOpenChange, carrier }: CarrierFormMod
       category: 'ring-slings',
       availability_status: 'available',
       condition: 'gently used',
+      purchase_cost: 0,
+      purchased_from: '',
     },
   });
 
@@ -82,6 +86,8 @@ export const CarrierFormModal = ({ open, onOpenChange, carrier }: CarrierFormMod
         monthly_rent: carrier.monthly_rent,
         refundable_deposit: carrier.refundable_deposit,
         buyout_price: carrier.buyout_price,
+        purchase_cost: carrier.purchase_cost,
+        purchased_from: carrier.purchased_from || '',
         condition: carrier.condition,
         carry_positions: carrier.carry_positions.join(', '),
         description: carrier.description || '',
@@ -100,6 +106,8 @@ export const CarrierFormModal = ({ open, onOpenChange, carrier }: CarrierFormMod
         monthly_rent: 0,
         refundable_deposit: 0,
         buyout_price: 0,
+        purchase_cost: 0,
+        purchased_from: '',
         condition: 'gently used',
         carry_positions: '',
         description: '',
@@ -122,6 +130,8 @@ export const CarrierFormModal = ({ open, onOpenChange, carrier }: CarrierFormMod
         monthly_rent: data.monthly_rent,
         refundable_deposit: data.refundable_deposit,
         buyout_price: data.buyout_price,
+        purchase_cost: data.purchase_cost,
+        purchased_from: data.purchased_from?.trim() || null,
         condition: data.condition,
         carry_positions: data.carry_positions.split(',').map(p => p.trim()).filter(Boolean),
         description: data.description || null,
@@ -212,6 +222,18 @@ export const CarrierFormModal = ({ open, onOpenChange, carrier }: CarrierFormMod
             <div className="space-y-2">
               <Label>Buyout (₹)</Label>
               <Input type="number" {...register('buyout_price')} />
+            </div>
+          </div>
+
+          <div className="grid grid-cols-2 gap-4">
+            <div className="space-y-2">
+              <Label>Purchase Cost (₹)</Label>
+              <Input type="number" {...register('purchase_cost')} />
+              {errors.purchase_cost && <p className="text-xs text-destructive">{errors.purchase_cost.message}</p>}
+            </div>
+            <div className="space-y-2">
+              <Label>Purchased From</Label>
+              <Input {...register('purchased_from')} placeholder="e.g. Brand website, Preloved seller" />
             </div>
           </div>
 

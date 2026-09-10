@@ -132,6 +132,8 @@ export type Database = {
           model_name: string
           monthly_rent: number
           next_available_date: string | null
+          purchase_cost: number
+          purchased_from: string | null
           refundable_deposit: number
           updated_at: string
           weekly_rent: number
@@ -153,6 +155,8 @@ export type Database = {
           model_name: string
           monthly_rent: number
           next_available_date?: string | null
+          purchase_cost?: number
+          purchased_from?: string | null
           refundable_deposit: number
           updated_at?: string
           weekly_rent: number
@@ -174,6 +178,8 @@ export type Database = {
           model_name?: string
           monthly_rent?: number
           next_available_date?: string | null
+          purchase_cost?: number
+          purchased_from?: string | null
           refundable_deposit?: number
           updated_at?: string
           weekly_rent?: number

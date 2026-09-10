@@ -59,6 +59,8 @@ const AdminCarriers = () => {
                   <TableHead>Category</TableHead>
                   <TableHead>Weekly</TableHead>
                   <TableHead>Monthly</TableHead>
+                  <TableHead>Purchase Cost</TableHead>
+                  <TableHead>Purchased From</TableHead>
                   <TableHead>Status</TableHead>
                   <TableHead className="text-right">Actions</TableHead>
                 </TableRow>
@@ -82,6 +84,8 @@ const AdminCarriers = () => {
                     <TableCell>{getCategoryName(carrier.category)}</TableCell>
                     <TableCell>₹{carrier.weekly_rent}</TableCell>
                     <TableCell>₹{carrier.monthly_rent}</TableCell>
+                    <TableCell>₹{carrier.purchase_cost}</TableCell>
+                    <TableCell className="text-muted-foreground">{carrier.purchased_from || '—'}</TableCell>
                     <TableCell>
                       <Badge
                         variant={
