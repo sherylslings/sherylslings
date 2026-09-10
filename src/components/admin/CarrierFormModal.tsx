@@ -225,6 +225,18 @@ export const CarrierFormModal = ({ open, onOpenChange, carrier }: CarrierFormMod
             </div>
           </div>
 
+          <div className="grid grid-cols-2 gap-4">
+            <div className="space-y-2">
+              <Label>Purchase Cost (₹)</Label>
+              <Input type="number" {...register('purchase_cost')} />
+              {errors.purchase_cost && <p className="text-xs text-destructive">{errors.purchase_cost.message}</p>}
+            </div>
+            <div className="space-y-2">
+              <Label>Purchased From</Label>
+              <Input {...register('purchased_from')} placeholder="e.g. Brand website, Preloved seller" />
+            </div>
+          </div>
+
           <div className="space-y-2">
             <Label>Carry Positions (comma separated)</Label>
             <Input {...register('carry_positions')} placeholder="front inward, hip carry, back carry" />
