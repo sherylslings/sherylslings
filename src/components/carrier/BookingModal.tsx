@@ -221,53 +221,24 @@ export const BookingModal = ({ carrier, open, onOpenChange }: BookingModalProps)
             )}
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div className="space-y-2">
-              <Label>Preferred Start Date</Label>
-              <Popover>
-                <PopoverTrigger asChild>
-                  <Button
-                    variant="outline"
-                    className={cn(
-                      "w-full justify-start text-left font-normal",
-                      !startDate && "text-muted-foreground"
-                    )}
-                  >
-                    <CalendarIcon className="mr-2 h-4 w-4" />
-                    {startDate ? format(startDate, 'dd MMM yyyy') : 'Pick a date'}
-                  </Button>
-                </PopoverTrigger>
-                <PopoverContent className="w-auto p-0">
-                  <Calendar
-                    mode="single"
-                    selected={startDate}
-                    onSelect={(date) => date && setValue('start_date', date)}
-                    disabled={(date) => date < earliestDate}
-                    initialFocus
-                  />
-                </PopoverContent>
-              </Popover>
-              {errors.start_date && (
-                <p className="text-xs text-destructive">{errors.start_date.message}</p>
-              )}
-            </div>
-
-            <div className="space-y-2">
-              <Label>Duration</Label>
-              <Select
-                value={duration}
-                onValueChange={(value: 'weekly' | 'biweekly' | 'monthly') => setValue('duration', value)}
-              >
-                <SelectTrigger>
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="weekly">Weekly (₹{carrier.weekly_rent})</SelectItem>
-                  <SelectItem value="biweekly">Biweekly (₹{carrier.weekly_rent * 2})</SelectItem>
-                  <SelectItem value="monthly">Monthly (₹{carrier.monthly_rent})</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
+          <div className="space-y-2">
+            <Label>Duration</Label>
+            <Select
+              value={duration}
+              onValueChange={(value: 'weekly' | 'biweekly' | 'monthly') => setValue('duration', value)}
+            >
+              <SelectTrigger>
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="weekly">Weekly (₹{carrier.weekly_rent})</SelectItem>
+                <SelectItem value="biweekly">Biweekly (₹{carrier.weekly_rent * 2})</SelectItem>
+                <SelectItem value="monthly">Monthly (₹{carrier.monthly_rent})</SelectItem>
+              </SelectContent>
+            </Select>
+            <p className="text-xs text-muted-foreground">
+              We'll confirm your rental start date on WhatsApp.
+            </p>
           </div>
 
           <div className="bg-muted/50 rounded-lg p-4 text-sm space-y-2">
