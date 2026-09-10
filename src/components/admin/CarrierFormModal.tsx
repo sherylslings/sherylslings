@@ -64,6 +64,8 @@ export const CarrierFormModal = ({ open, onOpenChange, carrier }: CarrierFormMod
       category: 'ring-slings',
       availability_status: 'available',
       condition: 'gently used',
+      purchase_cost: 0,
+      purchased_from: '',
     },
   });
 
