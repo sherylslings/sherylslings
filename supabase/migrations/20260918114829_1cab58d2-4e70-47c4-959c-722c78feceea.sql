@@ -1,0 +1,2 @@
+ALTER TABLE public.carriers DROP CONSTRAINT IF EXISTS carriers_category_check;
+ALTER TABLE public.carriers ADD CONSTRAINT carriers_category_check CHECK (category = ANY (ARRAY['ring-slings'::text, 'wraps'::text, 'buckle-carriers'::text, 'onbuhimo'::text, 'meh-dai'::text, 'stretchy-wraps'::text, 'woven-wraps'::text, 'half-buckles'::text]));
