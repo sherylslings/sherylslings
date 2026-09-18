@@ -1,4 +1,13 @@
-export type Category = 'ring-slings' | 'wraps' | 'buckle-carriers' | 'onbuhimo' | 'meh-dai';
+export type Category =
+  | 'stretchy-wraps'
+  | 'woven-wraps'
+  | 'ring-slings'
+  | 'meh-dai'
+  | 'half-buckles'
+  | 'buckle-carriers'
+  | 'onbuhimo'
+  // legacy value, kept so existing carriers keep working
+  | 'wraps';
 
 export interface Carrier {
   id: string;
