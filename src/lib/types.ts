@@ -57,9 +57,25 @@ export interface CategoryInfo {
   name: string;
   description: string;
   image: string;
+  /** Legacy values are hidden from public filters unless a carrier still uses them */
+  legacy?: boolean;
+  /** Label used in admin forms (falls back to name) */
+  adminName?: string;
 }
 
 export const CATEGORIES: CategoryInfo[] = [
+  {
+    slug: 'stretchy-wraps',
+    name: 'Stretchy Wraps',
+    description: 'Soft and forgiving, the gentlest start for newborn front carries',
+    image: 'https://images.unsplash.com/photo-1555252333-9f8e92e65df9?w=600&h=400&fit=crop'
+  },
+  {
+    slug: 'woven-wraps',
+    name: 'Woven Wraps',
+    description: 'Supportive from newborn to toddler, endlessly versatile to tie',
+    image: 'https://images.unsplash.com/photo-1555252333-9f8e92e65df9?w=600&h=400&fit=crop'
+  },
   {
     slug: 'ring-slings',
     name: 'Ring Slings',
@@ -67,10 +83,16 @@ export const CATEGORIES: CategoryInfo[] = [
     image: 'https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=600&h=400&fit=crop'
   },
   {
-    slug: 'wraps',
-    name: 'Wraps',
-    description: 'Versatile and cozy, offering multiple carrying positions',
-    image: 'https://images.unsplash.com/photo-1555252333-9f8e92e65df9?w=600&h=400&fit=crop'
+    slug: 'meh-dai',
+    name: 'Meh Dai',
+    description: 'Traditional Asian-style carrier with ties, offering a custom fit',
+    image: 'https://images.unsplash.com/photo-1492725764893-90b379c2b6e7?w=600&h=400&fit=crop'
+  },
+  {
+    slug: 'half-buckles',
+    name: 'Half Buckles',
+    description: 'Buckle waistband with wrap straps, a comfy middle ground',
+    image: 'https://images.unsplash.com/photo-1544376798-89aa6b82c6cd?w=600&h=400&fit=crop'
   },
   {
     slug: 'buckle-carriers',
@@ -85,12 +107,19 @@ export const CATEGORIES: CategoryInfo[] = [
     image: 'https://images.unsplash.com/photo-1492725764893-90b379c2b6e7?w=600&h=400&fit=crop'
   },
   {
-    slug: 'meh-dai',
-    name: 'Meh Dai',
-    description: 'Traditional Asian-style carrier with ties, offering a custom fit',
-    image: 'https://images.unsplash.com/photo-1492725764893-90b379c2b6e7?w=600&h=400&fit=crop'
+    slug: 'wraps',
+    name: 'Wraps',
+    description: 'Versatile and cozy, offering multiple carrying positions',
+    image: 'https://images.unsplash.com/photo-1555252333-9f8e92e65df9?w=600&h=400&fit=crop',
+    legacy: true,
+    adminName: 'Wraps (legacy, please re-tag)'
   }
 ];
+
+export const PUBLIC_CATEGORIES: CategoryInfo[] = CATEGORIES.filter(c => !c.legacy);
+
+export const isCategory = (value: string | null | undefined): value is Category =>
+  !!value && CATEGORIES.some(c => c.slug === value);
 
 export const getCategoryName = (slug: Category): string => {
   return CATEGORIES.find(c => c.slug === slug)?.name || slug;
