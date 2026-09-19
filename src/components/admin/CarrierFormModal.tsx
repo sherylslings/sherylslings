@@ -184,7 +184,7 @@ export const CarrierFormModal = ({ open, onOpenChange, carrier }: CarrierFormMod
                 <SelectTrigger><SelectValue /></SelectTrigger>
                 <SelectContent>
                   {CATEGORIES.map(cat => (
-                    <SelectItem key={cat.slug} value={cat.slug}>{cat.name}</SelectItem>
+                    <SelectItem key={cat.slug} value={cat.slug}>{cat.adminName ?? cat.name}</SelectItem>
                   ))}
                 </SelectContent>
               </Select>
