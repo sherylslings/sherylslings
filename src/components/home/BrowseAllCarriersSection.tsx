@@ -1,4 +1,5 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect, useRef } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { CarrierCard } from '@/components/carrier/CarrierCard';
 import { useCarriers } from '@/hooks/useCarriers';
 import { Skeleton } from '@/components/ui/skeleton';
@@ -7,7 +8,8 @@ import { Label } from '@/components/ui/label';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Button } from '@/components/ui/button';
 import { Filter, X, Search, SlidersHorizontal } from 'lucide-react';
-import { CATEGORIES } from '@/lib/types';
+import { CATEGORIES, isCategory } from '@/lib/types';
+import { useSiteSettingsContext } from '@/contexts/SiteSettingsContext';
 import {
   Select,
   SelectContent,
@@ -27,13 +29,48 @@ type SortOption = 'newest' | 'price-low' | 'price-high' | 'name';
 
 export const BrowseAllCarriersSection = () => {
   const { data: carriers, isLoading } = useCarriers();
+  const { getWhatsAppLink } = useSiteSettingsContext();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const typeParam = searchParams.get('type');
   const [searchQuery, setSearchQuery] = useState('');
-  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
+  const [selectedCategories, setSelectedCategories] = useState<string[]>(
+    isCategory(typeParam) ? [typeParam] : []
+  );
+  const hasScrolledRef = useRef(false);
+
+  // Keep local selection in sync when the URL ?type= changes (e.g. in-app navigation)
+  useEffect(() => {
+    if (isCategory(typeParam)) {
+      setSelectedCategories(prev => (prev.length === 1 && prev[0] === typeParam ? prev : [typeParam]));
+      hasScrolledRef.current = false;
+    } else if (!typeParam) {
+      setSelectedCategories(prev => (prev.length === 0 ? prev : []));
+    }
+  }, [typeParam]);
+
+  // Scroll to this section once carriers have loaded for a valid ?type=
+  useEffect(() => {
+    if (isLoading || !isCategory(typeParam) || hasScrolledRef.current) return;
+    hasScrolledRef.current = true;
+    document.getElementById('browse-all')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }, [isLoading, typeParam]);
+
+  const setTypeParam = (slug: string | null) => {
+    const next = new URLSearchParams(searchParams);
+    if (slug) next.set('type', slug);
+    else next.delete('type');
+    setSearchParams(next, { replace: true });
+  };
   const [selectedBrands, setSelectedBrands] = useState<string[]>([]);
   const [selectedAgeRanges, setSelectedAgeRanges] = useState<string[]>([]);
   const [showAvailableOnly, setShowAvailableOnly] = useState(false);
   const [sortBy, setSortBy] = useState<SortOption>('newest');
   const [isFilterOpen, setIsFilterOpen] = useState(false);
+
+  const visibleCategories = useMemo(
+    () => CATEGORIES.filter(c => !c.legacy || (carriers ?? []).some(car => car.category === c.slug)),
+    [carriers]
+  );
 
   const filterOptions = useMemo(() => {
     if (!carriers) return { brands: [], ageRanges: [] };
@@ -90,12 +127,20 @@ export const BrowseAllCarriersSection = () => {
 
   const selectCategory = (slug: string) => {
     // Single-select: clicking the active category deselects it, otherwise replace selection
-    setSelectedCategories(prev => prev.includes(slug) ? [] : [slug]);
+    const next = selectedCategories.includes(slug) ? [] : [slug];
+    setSelectedCategories(next);
+    setTypeParam(next[0] ?? null);
+  };
+
+  const clearCategory = () => {
+    setSelectedCategories([]);
+    setTypeParam(null);
   };
 
   const clearAllFilters = () => {
     setSearchQuery('');
     setSelectedCategories([]);
+    setTypeParam(null);
     setSelectedBrands([]);
     setSelectedAgeRanges([]);
     setShowAvailableOnly(false);
@@ -125,7 +170,7 @@ export const BrowseAllCarriersSection = () => {
       <div>
         <Label className="text-sm font-medium mb-3 block">Category</Label>
         <div className="space-y-2">
-          {CATEGORIES.map((category) => (
+          {visibleCategories.map((category) => (
             <div key={category.slug} className="flex items-center space-x-2">
               <Checkbox
                 id={`home-category-${category.slug}`}
@@ -259,7 +304,7 @@ export const BrowseAllCarriersSection = () => {
         {/* Category Quick-Filter Pills */}
         <div className="flex flex-wrap gap-2 mb-6">
           <button
-            onClick={() => setSelectedCategories([])}
+            onClick={clearCategory}
             className={`px-4 py-1.5 rounded-full text-sm font-medium border transition-colors ${
               selectedCategories.length === 0
                 ? 'bg-primary text-primary-foreground border-primary'
@@ -268,7 +313,7 @@ export const BrowseAllCarriersSection = () => {
           >
             All
           </button>
-          {CATEGORIES.map((cat) => (
+          {visibleCategories.map((cat) => (
             <button
               key={cat.slug}
               onClick={() => selectCategory(cat.slug)}
@@ -314,13 +359,33 @@ export const BrowseAllCarriersSection = () => {
             </div>
           ) : (
             <div className="text-center py-12">
-              <p className="text-muted-foreground mb-4">
-                No carriers found matching your criteria.
-              </p>
-              {hasActiveFilters && (
-                <Button variant="outline" onClick={clearAllFilters}>
-                  Clear Filters
-                </Button>
+              {selectedCategories.length > 0 ? (
+                <>
+                  <p className="text-muted-foreground mb-4 max-w-md mx-auto">
+                    Nothing in this style right now. Message us on WhatsApp and we'll tell you when one is back.
+                  </p>
+                  <div className="flex flex-wrap gap-3 justify-center">
+                    <Button variant="outline" onClick={clearCategory}>
+                      Show all carriers
+                    </Button>
+                    <Button asChild>
+                      <a href={getWhatsAppLink()} target="_blank" rel="noopener noreferrer">
+                        Message us on WhatsApp
+                      </a>
+                    </Button>
+                  </div>
+                </>
+              ) : (
+                <>
+                  <p className="text-muted-foreground mb-4">
+                    No carriers found matching your criteria.
+                  </p>
+                  {hasActiveFilters && (
+                    <Button variant="outline" onClick={clearAllFilters}>
+                      Clear Filters
+                    </Button>
+                  )}
+                </>
               )}
             </div>
           )}
