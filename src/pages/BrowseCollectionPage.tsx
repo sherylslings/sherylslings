@@ -8,7 +8,7 @@ import { Label } from '@/components/ui/label';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Button } from '@/components/ui/button';
 import { Filter, X, Search } from 'lucide-react';
-import { CATEGORIES, getCategoryName } from '@/lib/types';
+import { PUBLIC_CATEGORIES as CATEGORIES, getCategoryName } from '@/lib/types';
 import {
   Sheet,
   SheetContent,

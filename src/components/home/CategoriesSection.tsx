@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
-import { CATEGORIES } from '@/lib/types';
+import { PUBLIC_CATEGORIES as CATEGORIES } from '@/lib/types';
 import { useSiteSettingsContext } from '@/contexts/SiteSettingsContext';
 
 export const CategoriesSection = () => {
