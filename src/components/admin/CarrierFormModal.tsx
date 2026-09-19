@@ -21,7 +21,7 @@ import { cn } from '@/lib/utils';
 const carrierSchema = z.object({
   brand_name: z.string().min(1, 'Brand name required'),
   model_name: z.string().min(1, 'Model name required'),
-  category: z.enum(['ring-slings', 'wraps', 'buckle-carriers', 'onbuhimo', 'meh-dai']),
+  category: z.enum(['stretchy-wraps', 'woven-wraps', 'ring-slings', 'meh-dai', 'half-buckles', 'buckle-carriers', 'onbuhimo', 'wraps']),
   age_range: z.string().min(1, 'Age range required'),
   weight_range: z.string().min(1, 'Weight range required'),
   weekly_rent: z.coerce.number().min(1, 'Weekly rent required'),
