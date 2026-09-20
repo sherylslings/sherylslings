@@ -1,6 +1,16 @@
 import { useEffect } from 'react';
 import { SiteSettings } from '@/lib/siteSettings';
 
+interface PageMetaOverride {
+  title: string;
+  description: string;
+  siteUrl: string;
+  path: string;
+}
+
+let currentSettings: SiteSettings | undefined;
+let currentPageMeta: PageMetaOverride | undefined;
+
 const setMeta = (attr: 'name' | 'property', key: string, value: string) => {
   if (!value) return;
   let el = document.head.querySelector<HTMLMetaElement>(`meta[${attr}="${key}"]`);
@@ -30,6 +40,51 @@ const absolute = (url: string, base: string) => {
   return `${origin}${url.startsWith('/') ? '' : '/'}${url}`;
 };
 
+const applyPageMeta = ({ title, description, siteUrl, path }: PageMetaOverride) => {
+  const normalizedSiteUrl = (siteUrl || window.location.origin).replace(/\/$/, '');
+  const pageUrl = `${normalizedSiteUrl}${path.startsWith('/') ? path : `/${path}`}`;
+
+  document.title = title;
+  setMeta('name', 'description', description);
+  setMeta('property', 'og:title', title);
+  setMeta('property', 'og:description', description);
+  setMeta('property', 'og:url', pageUrl);
+  setMeta('name', 'twitter:title', title);
+  setMeta('name', 'twitter:description', description);
+  setLink('canonical', pageUrl);
+};
+
+const applySiteMeta = (settings: SiteSettings) => {
+  const siteUrl = (settings.site_url || window.location.origin).replace(/\/$/, '');
+  const title = settings.meta_title || settings.brand_name;
+  const description = settings.meta_description || settings.tagline || '';
+  const image = absolute(settings.social_image_url || '', siteUrl);
+  const pageUrl = `${siteUrl}${window.location.pathname}`;
+
+  if (title) document.title = title;
+  setMeta('name', 'description', description);
+  setMeta('property', 'og:title', title);
+  setMeta('property', 'og:description', description);
+  setMeta('property', 'og:url', pageUrl);
+  setMeta('name', 'twitter:title', title);
+  setMeta('name', 'twitter:description', description);
+  if (image) {
+    setMeta('property', 'og:image', image);
+    setMeta('property', 'og:image:secure_url', image);
+    setMeta('name', 'twitter:image', image);
+  }
+  setLink('canonical', pageUrl);
+};
+
+const applyActiveMeta = () => {
+  if (currentPageMeta) {
+    applyPageMeta(currentPageMeta);
+    return;
+  }
+
+  if (currentSettings) applySiteMeta(currentSettings);
+};
+
 /**
  * Syncs the document head with the admin-managed SEO settings.
  * Note: social/chat crawlers read the static index.html, so these
@@ -39,24 +94,19 @@ export const useDocumentMeta = (settings: SiteSettings | undefined) => {
   useEffect(() => {
     if (!settings) return;
 
-    const siteUrl = (settings.site_url || window.location.origin).replace(/\/$/, '');
-    const title = settings.meta_title || settings.brand_name;
-    const description = settings.meta_description || settings.tagline || '';
-    const image = absolute(settings.social_image_url || '', siteUrl);
-    const pageUrl = `${siteUrl}${window.location.pathname}`;
-
-    if (title) document.title = title;
-    setMeta('name', 'description', description);
-    setMeta('property', 'og:title', title);
-    setMeta('property', 'og:description', description);
-    setMeta('property', 'og:url', pageUrl);
-    setMeta('name', 'twitter:title', title);
-    setMeta('name', 'twitter:description', description);
-    if (image) {
-      setMeta('property', 'og:image', image);
-      setMeta('property', 'og:image:secure_url', image);
-      setMeta('name', 'twitter:image', image);
-    }
-    setLink('canonical', pageUrl);
+    currentSettings = settings;
+    applyActiveMeta();
   }, [settings]);
+};
+
+export const usePageMeta = (meta: PageMetaOverride) => {
+  useEffect(() => {
+    currentPageMeta = meta;
+    applyActiveMeta();
+
+    return () => {
+      if (currentPageMeta === meta) currentPageMeta = undefined;
+      applyActiveMeta();
+    };
+  }, [meta.title, meta.description, meta.siteUrl, meta.path]);
 };

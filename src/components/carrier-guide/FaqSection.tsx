@@ -1,0 +1,1 @@
+export const FaqSection = () => <section id="faq" className="scroll-mt-24 py-16 md:py-24" />;

@@ -1,0 +1,1 @@
+export const CarrierTypes = () => <section id="types" className="scroll-mt-24 py-16 md:py-24" />;

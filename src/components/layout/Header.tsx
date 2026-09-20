@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { MessageCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useSiteSettingsContext } from '@/contexts/SiteSettingsContext';
+import { carrierGuide } from '@/content/carrierGuide';
 
 export const Header = () => {
   const { settings, getWhatsAppLink } = useSiteSettingsContext();
@@ -34,6 +35,9 @@ export const Header = () => {
         </Link>
 
         <div className="flex items-center gap-3">
+          <Link to={carrierGuide.navigation.href} className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors">
+            {carrierGuide.navigation.label}
+          </Link>
           <Link to="/policies" className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors hidden sm:block">
             Policies
           </Link>
