@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
-import { MessageCircle } from 'lucide-react';
+import { Menu, MessageCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { useSiteSettingsContext } from '@/contexts/SiteSettingsContext';
 import { carrierGuide } from '@/content/carrierGuide';
 
@@ -35,24 +36,47 @@ export const Header = () => {
         </Link>
 
         <div className="flex items-center gap-3">
-          <Link to={carrierGuide.navigation.href} className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors">
-            {carrierGuide.navigation.label}
-          </Link>
-          <Link to="/policies" className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors hidden sm:block">
-            Policies
-          </Link>
-          <Link to="/safety" className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors hidden sm:block">
-            Safety
-          </Link>
-          <Link to="/blog" className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors hidden sm:block">
-            Blog
-          </Link>
+          <div className="hidden items-center gap-3 sm:flex">
+            <Link to={carrierGuide.navigation.href} className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors">
+              {carrierGuide.navigation.label}
+            </Link>
+            <Link to="/policies" className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors">
+              Policies
+            </Link>
+            <Link to="/safety" className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors">
+              Safety
+            </Link>
+            <Link to="/blog" className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors">
+              Blog
+            </Link>
+          </div>
           <a href={getWhatsAppLink()} target="_blank" rel="noopener noreferrer">
             <Button size="sm" className="gap-2">
               <MessageCircle className="w-4 h-4" />
               <span className="hidden sm:inline">WhatsApp</span>
             </Button>
           </a>
+          <Sheet>
+            <SheetTrigger asChild>
+              <Button variant="outline" size="icon" className="sm:hidden" aria-label="Open navigation">
+                <Menu className="w-4 h-4" />
+              </Button>
+            </SheetTrigger>
+            <SheetContent className="flex flex-col gap-6 pt-16 sm:hidden">
+              <Link to={carrierGuide.navigation.href} className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors">
+                {carrierGuide.navigation.label}
+              </Link>
+              <Link to="/policies" className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors">
+                Policies
+              </Link>
+              <Link to="/safety" className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors">
+                Safety
+              </Link>
+              <Link to="/blog" className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors">
+                Blog
+              </Link>
+            </SheetContent>
+          </Sheet>
         </div>
       </nav>
     </header>
