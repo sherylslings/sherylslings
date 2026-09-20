@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { MessageCircle, Instagram, Heart } from 'lucide-react';
 import { useSiteSettingsContext } from '@/contexts/SiteSettingsContext';
+import { carrierGuide } from '@/content/carrierGuide';
 
 export const Footer = () => {
   const { settings, getWhatsAppLink } = useSiteSettingsContext();
@@ -61,6 +62,13 @@ export const Footer = () => {
           <div>
             <h4 className="font-serif font-semibold mb-4 text-foreground">Information</h4>
             <ul className="space-y-2 text-sm">
+              <li>
+                <Link
+                  to={carrierGuide.navigation.href}
+                  className="text-muted-foreground hover:text-primary transition-colors">
+                  {carrierGuide.navigation.label}
+                </Link>
+              </li>
               {settings.footer_links.map((link) =>
               <li key={link.name}>
                   <Link

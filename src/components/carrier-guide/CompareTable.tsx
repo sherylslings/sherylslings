@@ -1,0 +1,1 @@
+export const CompareTable = () => <section id="compare" className="scroll-mt-24 py-16 md:py-24" />;

@@ -3,6 +3,11 @@ export type CarrierId =
   | "halfbuckles" | "buckles" | "onbuhimos";
 
 export const carrierGuide = {
+  navigation: {
+    label: "Carrier Guide",
+    href: "/carrier-guide",
+  },
+
   seo: {
     title: "How to choose a baby carrier | Nestled",
     description:

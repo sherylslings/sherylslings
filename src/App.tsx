@@ -22,6 +22,7 @@ import Transactions from "./pages/admin/Transactions";
 import AdminPurchases from "./pages/admin/AdminPurchases";
 import BlogPage from "./pages/BlogPage";
 import BlogPostPage from "./pages/BlogPostPage";
+import CarrierGuide from "./pages/CarrierGuide";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -41,6 +42,7 @@ const App = () => (
             <Route path="/safety" element={<SafetyPage />} />
             <Route path="/blog" element={<BlogPage />} />
             <Route path="/blog/:slug" element={<BlogPostPage />} />
+            <Route path="/carrier-guide" element={<CarrierGuide />} />
             <Route path="/admin/login" element={<AdminLogin />} />
             <Route path="/admin/dashboard" element={<AdminDashboard />}>
               <Route index element={<Navigate to="carriers" replace />} />
