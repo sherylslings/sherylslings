@@ -46,7 +46,9 @@ const CarrierGuide = () => {
         if (!section.enabled) return null;
         const Section = sectionComponents[section.id];
 
-        if (section.id === 'start') return <Section key={section.id} />;
+        if (section.id === 'start' || section.id === 'fit' || section.id === 'safety') {
+          return <Section key={section.id} />;
+        }
 
         return (
           <div key={section.id} className="container max-w-5xl">
