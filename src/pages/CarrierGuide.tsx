@@ -42,13 +42,18 @@ const CarrierGuide = () => {
   return (
     <Layout>
       <GuideHero />
-      <div className="container max-w-5xl">
-        {carrierGuide.sections.map((section) => {
-          if (!section.enabled) return null;
-          const Section = sectionComponents[section.id];
-          return <Section key={section.id} />;
-        })}
-      </div>
+      {carrierGuide.sections.map((section) => {
+        if (!section.enabled) return null;
+        const Section = sectionComponents[section.id];
+
+        if (section.id === 'start') return <Section key={section.id} />;
+
+        return (
+          <div key={section.id} className="container max-w-5xl">
+            <Section />
+          </div>
+        );
+      })}
     </Layout>
   );
 };
