@@ -131,3 +131,8 @@ export const isCategory = (value: string | null | undefined): value is Category 
 export const getCategoryName = (slug: Category): string => {
   return CATEGORIES.find(c => c.slug === getPublicCategory(slug))?.name || slug;
 };
+
+export const getAdminCategoryName = (slug: Category): string => {
+  const category = CATEGORIES.find(c => c.slug === slug);
+  return category?.adminName ?? category?.name ?? slug;
+};
