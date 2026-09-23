@@ -32,7 +32,7 @@ export const carrierGuide = {
   },
 
   hero: {
-    eyebrow: "The Nestled carrier guide",
+    eyebrow: "The Nestled carrier finder",
     title: "Which carrier is right for your family?",
     intro:
       "Think about your baby's stage, the kind of days you have, and what feels the most comfortable for you. Find a carrier that works for you, rent it from the Nestled Carrier Library before you buy one from the brand or from the library itself.",
@@ -184,9 +184,9 @@ export const carrierGuide = {
     }[],
     helperCard: {
       enabled: true,
-      title: "Do multiple kind of these carrier styles sound right to you?",
-      text: "That's okay! Connect with Sheryl about your baby's age, your requirements, what your perfect babywearing experience sounds like, and she will suggest which one to rent first.",
-      buttonLabel: "Ask her",
+      title: "Do any of these carrier styles sound right to you?",
+      text: "That's okay! Connect with Sheryl (a Certified Babywearing Educator and Consultant) about your baby's age, your requirements, what your perfect babywearing experience sounds like, and she will suggest which one to rent first.",
+      buttonLabel: "Ask Sheryl on WhatsApp",
       href: "#help",
     },
   },
@@ -353,19 +353,19 @@ export const carrierGuide = {
     items: [
       {
         q: "Will one carrier last from birth to toddlerhood?",
-        a: "Sometimes. Woven wraps and a few highly adjustable soft structured carriers cover a long span. Stretchy wraps suit the early newborn months, ring slings work better once they have better neck control, and some buckle carriers are made for just one-two stages. Check the limits on the listing, and remember that renting lets you switch styles as your baby grows instead of owning three different carriers.",
+        a: "Sometimes. Woven wraps and a few highly adjustable soft structured carriers cover a long span. Stretchy wraps suit the early newborn months, ring slings work better once babies have better neck control, and some buckle carriers are made for just one/two stages. Check the limits on the listing, and remember that renting lets you switch styles as your baby grows instead of owning three different carriers.",
       },
       {
         q: "How many carriers do we need?",
-        a: "One that you reach for without thinking, and like the look of. Some parents later add a second for a different need, such as a ring sling for quick trips alongside a soft structured carrier for longer days.",
+        a: "Go for a carrier that you like the look of. More often than not, it might end up being the carrier that you reach for without thinking. Some parents later add a second for a different need, such as a ring sling for quick trips alongside a soft structured carrier for longer days.",
       },
       {
         q: "The carrier everyone recommends feels wrong on me. What now?",
-        a: "First, reach out to Sheryl, who is a babywearing educator and consultant. She will guide you on how you can optimise your fit. A strap adjusted a few centimetres can bring about a world of difference in your fit. If you still feel that it's not working for you, try a different carrier.",
+        a: "Reach out to Sheryl. She will guide you on how you can optimise your fit. A strap adjusted a few centimetres can bring about a world of difference in your fit. If you still feel that it's not working for you, try a different carrier.",
       },
       {
         q: "What if I want to buy the carrier after renting it?",
-        a: "For every rental, you pay a refundable deposit, rental fees and shipping charges. If yo wish to return the carrier after renting it, your deposit will be refunded. If you decide to keep the carrier, deposit is retained and your rental fee is refunded. Shipping charges are non-refundable.",
+        a: "For every rental, you pay a refundable deposit, rental fees and shipping charges. If you wish to return the carrier after renting it, your deposit will be refunded. If you decide to keep the carrier, deposit is retained and your rental fee is refunded. Shipping charges are non-refundable.",
       },
       {
         q: "How to use the carrier?",
@@ -376,8 +376,8 @@ export const carrierGuide = {
 
   cta: {
     title: "Still torn? Rent one and find out.",
-    text: "Reading the guide can only get you so far. Rent the style you're leaning towards, learn to use it, and reach out for help to adjust it along the way. Rent weekly, biweekly or monthly. Shipping across India.",
-    primaryLabel: "Browse the library",
+    text: "Reading this Carrier Finder can only get you so far. Try the style you're leaning towards, learn to use it, and reach out for help to adjust it along the way. Rent weekly, biweekly or monthly. Shipping across India.",
+    primaryLabel: "Browse the Library",
     secondaryLabel: "Ask Sheryl on WhatsApp",
     image: { src: "", alt: "Carriers from the Nestled library" },
   },
