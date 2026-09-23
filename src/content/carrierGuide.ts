@@ -36,7 +36,7 @@ export const carrierGuide = {
     title: "Which carrier is right for your family?",
     intro:
       "Think about your baby's stage, the kind of days you have, and what your own back and shoulders enjoy. Find a carrier that works, to rent it before you buy one from the brand or from the library itself.",
-    //byline: "Written by [NAME, YOUR BABYWEARING CREDENTIAL]",
+    byline: "",
     image: { src: "", alt: "A parent wearing a baby in a carrier from the Nestled library" },
   },
 
