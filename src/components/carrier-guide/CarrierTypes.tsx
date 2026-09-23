@@ -16,6 +16,7 @@ export const CarrierTypes = () => (
     <div className="mt-10 grid items-stretch gap-5 md:grid-cols-2 lg:grid-cols-4">
       {carrierGuide.types.cards.map((card) => (
         <Card id={card.id} key={card.id} className="scroll-mt-24 flex h-full flex-col overflow-hidden">
+          {card.id === 'mehdais' && <span id="halfbuckles" className="scroll-mt-24" aria-hidden="true" />}
           {card.image.src ? (
             <img
               src={card.image.src}
