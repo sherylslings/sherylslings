@@ -1,4 +1,4 @@
-export type CarrierId = "stretchy" | "woven" | "slings" | "mehdais" | "halfbuckles" | "buckles" | "onbuhimos";
+export type CarrierId = "stretchy" | "woven" | "slings" | "mehdais" | "buckles" | "onbuhimos";
 
 export const carrierGuide = {
   navigation: {
@@ -9,7 +9,7 @@ export const carrierGuide = {
   seo: {
     title: "How to choose a baby carrier | Nestled",
     description:
-      "Stretchy wrap, woven wrap, ring sling, meh dai, half buckle, buckle carrier or onbuhimo? A plain-spoken guide to finding your fit, and renting it before you buy.",
+      "Stretchy wrap, woven wrap, ring sling, meh dai or half buckle, soft structured carrier or onbuhimo? A plain-spoken guide to finding your fit, and renting it before you buy.",
   },
 
   // Set enabled to false to hide a section. Reorder this array to reorder the page.
@@ -52,7 +52,7 @@ export const carrierGuide = {
       },
       {
         situation: "Long walks, travel days, airports and stations",
-        suggestion: "Try a buckle carrier",
+        suggestion: "Try a soft structured carrier",
         target: "buckles",
       },
       {
@@ -62,12 +62,12 @@ export const carrierGuide = {
       },
       {
         situation: "Soft, spread-out shoulder straps, but a quick clip at the waist",
-        suggestion: "Try a half buckle",
-        target: "halfbuckles",
+        suggestion: "Try a meh dai or half buckle",
+        target: "mehdais",
       },
       {
         situation: "No buckles anywhere, but less cloth to handle than a wrap",
-        suggestion: "Try a meh dai",
+        suggestion: "Try a meh dai or half buckle",
         target: "mehdais",
       },
       {
@@ -92,7 +92,7 @@ export const carrierGuide = {
 
   types: {
     eyebrow: "What's in the library",
-    title: "Seven styles, from all cloth to all clips",
+    title: "Six styles, from all cloth to all clips",
     intro:
       "Listed from the softest and most hands-on to the most structured. These are honest generalisations; individual models differ, which is the whole reason to try one on first.",
     goodForLabel: "Lovely for",
@@ -133,27 +133,17 @@ export const carrierGuide = {
       },
       {
         id: "mehdais",
-        name: "Meh dais",
-        description: "A fabric panel with four long straps: two knot at the waist, two cross your shoulders and tie.",
-        goodFor: "The spread of a wrap with far less cloth to manage. Adjusts to any adult, so it shares well.",
-        readyFor: "You tie it fresh every time, and the straps are long enough to dangle while you do.",
-        linkLabel: "See meh dais to rent",
+        name: "Meh dais & half buckles",
+        description: "Both have a shaped fabric panel and long shoulder straps to tie. A meh dai ties at the waist too; a half buckle clips there instead.",
+        goodFor: "Wrap-like comfort with less cloth to manage. The meh dai adjusts easily between adults; the half buckle gives you a quicker waist fastening.",
+        readyFor: "Both need shoulder straps tied each time, and their long tails can dangle. A half buckle's belt fits some bodies better than others.",
+        linkLabel: "See meh dais and half buckles to rent",
         href: "/?type=meh-dai#browse-all",
-        image: { src: "", alt: "Meh dai baby carrier with tie straps" },
-      },
-      {
-        id: "halfbuckles",
-        name: "Half buckles",
-        description: "A shaped panel on a belt that clips shut, with long fabric shoulder straps that you tie.",
-        goodFor: "A fast, secure waist with soft shoulders you can fan out exactly where you want them.",
-        readyFor: "Still some tying each time, and the belt fits some bodies better than others.",
-        linkLabel: "See half buckles to rent",
-        href: "/?type=half-buckles#browse-all",
-        image: { src: "", alt: "Half buckle baby carrier" },
+        image: { src: "", alt: "Meh dai or half buckle baby carrier with tie straps" },
       },
       {
         id: "buckles",
-        name: "Buckle carriers",
+        name: "Soft structured carriers",
         description:
           "A shaped body panel with padded straps and a waist belt. You clip it on and pull the webbing snug.",
         goodFor: "Longer outings, heavier babies, and handing over to a partner or grandparent in seconds.",
@@ -161,7 +151,7 @@ export const carrierGuide = {
           "Belts and straps suit some bodies more than others, and many models need adjusting or an insert for a newborn.",
         linkLabel: "See soft structured carriers to rent",
         href: "/?type=buckle-carriers#browse-all",
-        image: { src: "", alt: "Buckle baby carrier" },
+        image: { src: "", alt: "Soft structured baby carrier" },
       },
       {
         id: "onbuhimos",
@@ -220,18 +210,11 @@ export const carrierGuide = {
         "Easy, adjusts widely",
       ],
       [
-        "Meh dai",
-        "Knot the waist, cross and tie the shoulders",
+        "Meh dai & half buckle",
+        "Knot or clip the waist, then tie the shoulders",
         "A few tries",
-        "Wrap-like comfort with less cloth",
-        "Very easy, nothing to reset",
-      ],
-      [
-        "Half buckle",
-        "Clip the waist, tie the shoulders",
-        "A few tries",
-        "Quick waist, soft shoulders",
-        "Easy, only the belt needs resizing",
+        "Wrap-like comfort with a tied or clipped waist",
+        "Easy; a half buckle's belt may need resizing",
       ],
       [
         "Soft structured carriers",
@@ -366,7 +349,7 @@ export const carrierGuide = {
       },
       {
         q: "How many carriers does a family need?",
-        a: "One that you reach for without thinking. Some families later add a second for a different job, such as a sling for quick trips alongside a buckle carrier for long days, but nobody needs a shelf full to get started.",
+        a: "One that you reach for without thinking. Some families later add a second for a different job, such as a sling for quick trips alongside a soft structured carrier for long days, but nobody needs a shelf full to get started.",
       },
       {
         q: "The carrier everyone recommends feels wrong on me. What now?",
