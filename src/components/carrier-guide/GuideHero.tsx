@@ -10,14 +10,14 @@ export const GuideHero = () => {
           <p className="mb-3 text-sm font-semibold uppercase text-primary">
             {carrierGuide.hero.eyebrow}
           </p>
-          <h1 className="text-balance text-4xl font-bold text-foreground dark:text-accent-foreground md:text-5xl">
+          <h1 className="text-balance text-4xl font-bold text-foreground md:text-5xl">
             {carrierGuide.hero.title}
           </h1>
           <p className="mt-6 max-w-2xl text-lg leading-relaxed text-muted-foreground">
             {carrierGuide.hero.intro}
           </p>
           {carrierGuide.hero.byline && (
-            <p className="mt-5 text-sm font-medium text-foreground dark:text-accent-foreground">
+            <p className="mt-5 text-sm font-medium text-foreground">
               {carrierGuide.hero.byline}
             </p>
           )}

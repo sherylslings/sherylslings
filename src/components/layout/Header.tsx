@@ -50,7 +50,7 @@ export const Header = () => {
               Blog
             </Link>
           </div>
-          <Button asChild size="sm" className="min-h-11 gap-2">
+          <Button asChild size="sm" className="min-h-11 min-w-11 gap-2">
             <a href={getWhatsAppLink()} target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">
               <MessageCircle className="w-4 h-4" />
               <span className="hidden sm:inline">WhatsApp</span>

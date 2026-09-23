@@ -7,7 +7,7 @@ export const HelpCta = () => {
 
   return (
     <section id="help" className="scroll-mt-24 py-16 md:py-24">
-      <div className="gradient-warm overflow-hidden rounded-lg text-foreground shadow-card dark:text-accent-foreground">
+      <div className="gradient-warm overflow-hidden rounded-lg text-foreground shadow-card">
         <div className={carrierGuide.cta.image.src ? 'grid items-center md:grid-cols-5' : ''}>
           <div className={carrierGuide.cta.image.src ? 'p-8 md:col-span-3 md:p-12' : 'p-8 md:p-12'}>
             <h2 className="text-3xl font-semibold md:text-4xl">{carrierGuide.cta.title}</h2>
