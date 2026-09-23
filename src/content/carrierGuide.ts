@@ -254,7 +254,7 @@ export const carrierGuide = {
             text: "Look at the minimum weight, how the head and neck are supported, and whetherthe carrier allows cinching it down with velcros or drawstrings. Baby's thighs should be fully supported by the base of the carrier and not let the legs dangle",
           },
           {
-            label: "Infants":",
+            label: "Infants:",
             text: "Arms can stay out but the panel should come up to the nape of the neck. M-position of legs to be maintained during infancy too",
           },
           {
@@ -365,15 +365,16 @@ export const carrierGuide = {
         q: "What if I want to buy the carrier after renting it?",
         a: "For every rental, you pay a refundable deposit, rental fees and shipping charges. If yo wish to return the carrier after renting it, your deposit will be refunded. If you decide to keep the carrier, deposit is retained and your rental fee is refunded. Shipping charges are non-refundable.",
       },
-      { 
-        q: "How to use the carrier?",
-        a: "With every rental, you get a free consult with Sheryl over a WhatsApp video call. Reach out for a quick fit check!
-      }
       {
-          
+        q: "How to use the carrier?",
+        a: "With every rental, you get a free consult with Sheryl over a WhatsApp video call. Reach out for a quick fit check!",
+      },
+    ],
+  },
+
   cta: {
     title: "Still torn? Rent one and find out.",
-    text: "Reading the guide can only get you so far. Rent the style you're leaning towards, learn to use it, and reach out for help to adjust it along the way. Rent weekly, biweekly or monthly. Shipping across India."
+    text: "Reading the guide can only get you so far. Rent the style you're leaning towards, learn to use it, and reach out for help to adjust it along the way. Rent weekly, biweekly or monthly. Shipping across India.",
     primaryLabel: "Browse the library",
     secondaryLabel: "Ask Sheryl on WhatsApp",
     image: { src: "", alt: "Carriers from the Nestled library" },
