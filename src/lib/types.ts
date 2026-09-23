@@ -61,6 +61,8 @@ export interface CategoryInfo {
   legacy?: boolean;
   /** Label used in admin forms (falls back to name) */
   adminName?: string;
+  /** Public browsing group; stored category slugs remain unchanged */
+  publicGroup?: Category;
 }
 
 export const CATEGORIES: CategoryInfo[] = [
@@ -84,19 +86,21 @@ export const CATEGORIES: CategoryInfo[] = [
   },
   {
     slug: 'meh-dai',
-    name: 'Meh Dai',
-    description: 'Traditional Asian-style carrier with ties, offering a custom fit',
+    name: 'Meh Dai & Half Buckles',
+    adminName: 'Meh Dai',
+    description: 'Tie-on comfort and a custom fit, with or without a buckle waistband',
     image: 'https://images.unsplash.com/photo-1492725764893-90b379c2b6e7?w=600&h=400&fit=crop'
   },
   {
     slug: 'half-buckles',
     name: 'Half Buckles',
+    publicGroup: 'meh-dai',
     description: 'Buckle waistband with wrap straps, a comfy middle ground',
     image: 'https://images.unsplash.com/photo-1544376798-89aa6b82c6cd?w=600&h=400&fit=crop'
   },
   {
     slug: 'buckle-carriers',
-    name: 'Buckle Carriers',
+    name: 'Soft Structured Carriers',
     description: 'Easy to use with adjustable buckles, great for beginners',
     image: 'https://images.unsplash.com/photo-1544376798-89aa6b82c6cd?w=600&h=400&fit=crop'
   },
@@ -116,11 +120,14 @@ export const CATEGORIES: CategoryInfo[] = [
   }
 ];
 
-export const PUBLIC_CATEGORIES: CategoryInfo[] = CATEGORIES.filter(c => !c.legacy);
+export const PUBLIC_CATEGORIES: CategoryInfo[] = CATEGORIES.filter(c => !c.legacy && !c.publicGroup);
+
+export const getPublicCategory = (category: Category): Category =>
+  CATEGORIES.find(c => c.slug === category)?.publicGroup ?? category;
 
 export const isCategory = (value: string | null | undefined): value is Category =>
   !!value && CATEGORIES.some(c => c.slug === value);
 
 export const getCategoryName = (slug: Category): string => {
-  return CATEGORIES.find(c => c.slug === slug)?.name || slug;
+  return CATEGORIES.find(c => c.slug === getPublicCategory(slug))?.name || slug;
 };

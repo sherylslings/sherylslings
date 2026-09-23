@@ -8,7 +8,7 @@ import { Label } from '@/components/ui/label';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Button } from '@/components/ui/button';
 import { Filter, X, Search, SlidersHorizontal } from 'lucide-react';
-import { CATEGORIES, isCategory } from '@/lib/types';
+import { CATEGORIES, getPublicCategory, isCategory } from '@/lib/types';
 import { useSiteSettingsContext } from '@/contexts/SiteSettingsContext';
 import {
   Select,
@@ -34,14 +34,15 @@ export const BrowseAllCarriersSection = () => {
   const typeParam = searchParams.get('type');
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategories, setSelectedCategories] = useState<string[]>(
-    isCategory(typeParam) ? [typeParam] : []
+    isCategory(typeParam) ? [getPublicCategory(typeParam)] : []
   );
   const hasScrolledRef = useRef(false);
 
   // Keep local selection in sync when the URL ?type= changes (e.g. in-app navigation)
   useEffect(() => {
     if (isCategory(typeParam)) {
-      setSelectedCategories(prev => (prev.length === 1 && prev[0] === typeParam ? prev : [typeParam]));
+      const group = getPublicCategory(typeParam);
+      setSelectedCategories(prev => (prev.length === 1 && prev[0] === group ? prev : [group]));
       hasScrolledRef.current = false;
     } else if (!typeParam) {
       setSelectedCategories(prev => (prev.length === 0 ? prev : []));
@@ -68,7 +69,7 @@ export const BrowseAllCarriersSection = () => {
   const [isFilterOpen, setIsFilterOpen] = useState(false);
 
   const visibleCategories = useMemo(
-    () => CATEGORIES.filter(c => !c.legacy || (carriers ?? []).some(car => car.category === c.slug)),
+    () => CATEGORIES.filter(c => !c.publicGroup && (!c.legacy || (carriers ?? []).some(car => car.category === c.slug))),
     [carriers]
   );
 
@@ -91,7 +92,7 @@ export const BrowseAllCarriersSection = () => {
           carrier.description?.toLowerCase().includes(query);
         if (!matchesSearch) return false;
       }
-      if (selectedCategories.length > 0 && !selectedCategories.includes(carrier.category)) return false;
+      if (selectedCategories.length > 0 && !selectedCategories.includes(getPublicCategory(carrier.category))) return false;
       if (selectedBrands.length > 0 && !selectedBrands.includes(carrier.brand_name)) return false;
       if (selectedAgeRanges.length > 0 && !selectedAgeRanges.includes(carrier.age_range)) return false;
       if (showAvailableOnly && carrier.availability_status !== 'available') return false;
