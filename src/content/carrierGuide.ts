@@ -219,99 +219,99 @@ export const carrierGuide = {
         "Meh dai & half buckle",
         "Knot or buckle at the waist, then tie shoulder straps",
         "A few tries",
-        "Wrap-like comfort with a tied or clipped waist",
-        "Easy; a half buckle's belt may need resizing",
+        "Wrap-like comfort with a tied or buckled waist",
+        "Easy; a half buckle's waistband may need resizing",
       ],
       [
         "Soft structured carriers",
-        "Clip the waist and chest, pull straps snug",
-        "Same day",
+        "Buckle the waist and chest strap, pull straps tight",
+        "A few tries",
         "Long outings, travel, newborn to toddler (some models)",
-        "Quick, though each person re-adjusts",
+        "Quick, but each person re-adjusts",
       ],
       [
         "Onbuhimo",
-        "Load baby on your back, tighten the straps",
-        "A few tries for back loading",
+        "Carry baby on your back, tighten the straps",
+        "A few tries for back-carrying",
         "Sitting babies and toddlers; no waist pressure",
         "Quick, strap adjusters only",
       ],
     ],
-    caption: "A rough guide for comparing styles. Your own experience may differ, and that's useful information too.",
+    caption: "This is a rough guide for comparing styles. Your own experience may differ.",
   },
 
   fit: {
-    eyebrow: "Fit before features",
-    title: "A carrier has two people to fit",
+    eyebrow: "Carrier fit before its features",
+    title: "A carrier has two people to fit:",
     columns: [
       {
         title: "Your baby",
         intro:
-          'Labels like "newborn" or "toddler size" mean different things from one maker to the next. The manual for the exact model is the authority.',
+          'Terms like "newborn" or "toddler" may vary between one brand to another. What a brand advertises for its carrier, may not translate well into practicality.',
         points: [
           {
-            label: "Tiny babies:",
-            text: "look at the minimum weight, how the head and neck are supported, and whether an insert or cinched setting is required.",
+            label: "Newborns:",
+            text: "Look at the minimum weight, how the head and neck are supported, and whetherthe carrier allows cinching it down with velcros or drawstrings. Baby's thighs should be fully supported by the base of the carrier and not let the legs dangle",
           },
           {
-            label: "The middle months:",
-            text: "the panel should reach from knee to knee and come up to the back of the neck without swallowing the baby.",
+            label: "Infants":",
+            text: "Arms can stay out but the panel should come up to the nape of the neck. M-position of legs to be maintained during infancy too",
           },
           {
             label: "Toddlers:",
-            text: "choose for your child’s current fit, rather than extra growing room.",
+            text: "They need upsies too! Choose a carrier that provides a generous spread of fabric at its base for good thigh support",
           },
         ],
       },
       {
         title: "Your body",
-        intro: "A carrier your friend swears by can feel all wrong on you. Neither of you is mistaken.",
+        intro: "A carrier that your friend swears by can feel all wrong on you. Neither of you is wrong, because every carrier fit is very individual",
         points: [
           {
             label: "Waist and hips:",
-            text: "where does the belt land, how stiff is it, and is it comfortable after a caesarean if that applies to you?",
+            text: "Where does the waistband lie on your torso, how stiff is it, and if it is comfortable for you after a C-section??",
           },
           {
             label: "Shoulders and neck:",
-            text: "notice strap width, padding, and whether fabric creeps toward your neck.",
+            text: "Notice if the strap padding is comfortable for you, whether the strap width is wide enough, and whether fabric creeps towards your neck.",
           },
           {
             label: "Real life:",
-            text: "can you reach every clip or tail yourself, without any help?",
+            text: "Can you reach every buckle or tail yourself, without any help?",
           },
         ],
       },
     ],
-    note: "Something pinching or sagging? It is often one small adjustment away from right.",
-    noteLinkLabel: "Send us a photo for a fit check",
+    note: "Does the carrier hurt your back or sag downwards? It is often one or two small adjustments away from the right fit.",
+    noteLinkLabel: "Send Sheryl some fit check photos",
     noteHref: "#help",
     noteAfter: "before you give up on it.",
   },
 
   fabric: {
     eyebrow: "Fabric and weather",
-    title: "Dress the carrier for the climate you live in",
+    title: "Choose the carrier for the climate you live in",
     intro:
-      "Two bodies pressed together run warm, and Indian summers and humidity can make it warmer. Count the carrier as a layer of clothing for both of you.",
+      "Two bodies pressed together can run warm, and Indian summers and humidity can make it warmer. Count the carrier as a layer of clothing for both of you.",
     items: [
-      { name: "Cotton", text: "The easy all-rounder. Breathes well, washes without fuss, and suits most of the year." },
+      { name: "Cotton", text: "The easy all-rounder. Breathes well, washes without fuss, suits most of the year." },
       {
         name: "Linen",
         text: "Airy and strong in a thin cloth. Feels crisp when new and softens the more it is used.",
       },
       {
-        name: "Stretchy knits fabric",
-        text: "Soft and forgiving for newborns, but usually worn in several layers, so they run warmer.",
+        name: "Stretchy fabric",
+        text: "Soft and forgiving for newborns, but usually worn in several layers, tends to run warm.",
       },
     ],
-    tip: "In the heat: dress baby one layer lighter, single-layer carries help, keep a thin muslin between skin and skin, and take breaks in the shade.",
+    tip: "In the heat: dress baby one layer lighter. Single-layer carries help! Keep a thin muslin cloth between yourself and baby, hydrate well and take breaks when needed.",
   },
 
   safety: {
-    eyebrow: "Every single carry",
+    eyebrow: "For every single carry",
     title: "The T.I.C.K.S. safety check",
     intro:
-      "A five-point check used by babywearing educators around the world for upright, tummy-to-tummy carrying. Run through it each time, and follow the maker's manual for any other position.",
+      "A five-point check used by babywearing educators around the world for upright, tummy-to-tummy carrying. Make a mental note to run through it each time, and follow the brand's instructions for any other position.",
     checks: [
       {
         letter: "T",
@@ -321,12 +321,12 @@ export const carrierGuide = {
       {
         letter: "I",
         name: "In view",
-        text: "A glance down shows you their face. Nothing covers the nose or mouth: not cloth, not a dupatta, not you.",
+        text: "A glance down shows you their face. Nothing covers the nose or mouth: not cloth, not a burp cloth, not your chest.",
       },
       {
         letter: "C",
         name: "Close enough to kiss",
-        text: "Their head rides high on your chest, so tipping your chin down reaches it.",
+        text: "Their head rests high on your chest, so you can kiss the top of their head.",
       },
       {
         letter: "K",
@@ -339,27 +339,27 @@ export const carrierGuide = {
         text: "The carrier holds their back in its natural gentle curve, with no slumping to one side.",
       },
     ],
-    morePageLabel: "Read our full safety page",
+    morePageLabel: "Read the full safety page",
     notes: [
-      "Look over seams, rings and buckles before each use, and keep checking on your baby while you wear them. Skip the carrier around the stove, hot chai, two-wheelers, running and cycling.",
-      "Speak to your paediatrician first if your baby is born premature or has a health condition. This guide is general information and does not replace their advice or the maker's manual.",
+      "Look over seams, rings and buckles before each use, and keep checking on your baby while you wear them. Avoid carrier use around the stove, hot chai, two-wheelers, while running and cycling.",
+      "Speak to your paediatrician first if your baby is born premature or has a health condition. This guide is for general information and does not replace their advice.",
     ],
   },
 
   faq: {
-    title: "Things parents ask us",
+    title: "Things parents often ask",
     items: [
       {
         q: "Will one carrier last from birth to toddlerhood?",
-        a: "Sometimes. Woven wraps and a few highly adjustable soft structured carriers cover a long span. Stretchy wraps suit the early months, onbuhimos come later, and many others are built for one stage. Check the limits on the listing, and remember that renting lets you switch styles as your baby grows instead of owning three.",
+        a: "Sometimes. Woven wraps and a few highly adjustable soft structured carriers cover a long span. Stretchy wraps suit the early newborn months, ring slings work better once they have better neck control, and some buckle carriers are made for just one-two stages. Check the limits on the listing, and remember that renting lets you switch styles as your baby grows instead of owning three different carriers.",
       },
       {
-        q: "How many carriers does a family need?",
-        a: "One that you reach for without thinking. Some families later add a second for a different job, such as a sling for quick trips alongside a soft structured carrier for long days, but nobody needs a shelf full to get started.",
+        q: "How many carriers do we need?",
+        a: "One that you reach for without thinking. Some parents later add a second for a different need, such as a ring sling for quick trips alongside a soft structured carrier for longer days.",
       },
       {
         q: "The carrier everyone recommends feels wrong on me. What now?",
-        a: "First, message us. A strap moved a few centimetres changes a lot. If it still isn't for you, that's the library doing its job: send it back and try a different style.",
+        a: "First, reach out to Sheryl, who is a babywearing educator and consultant. A strap adjusted a few centimetres can improve the fit a lot. If it stillfor you, try a different carrier.",
       },
       {
         q: "Are rental carriers cleaned between families?",
