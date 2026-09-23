@@ -40,9 +40,10 @@ const CarrierGuide = () => {
   }, []);
 
   return (
-    <Layout>
-      <GuideHero />
-      {carrierGuide.sections.map((section) => {
+    <div className="carrier-guide-page">
+      <Layout>
+        <GuideHero />
+        {carrierGuide.sections.map((section) => {
         if (!section.enabled) return null;
         const Section = sectionComponents[section.id];
 
@@ -55,8 +56,9 @@ const CarrierGuide = () => {
             <Section />
           </div>
         );
-      })}
-    </Layout>
+        })}
+      </Layout>
+    </div>
   );
 };
 

@@ -149,6 +149,7 @@ export const carrierGuide = {
       title: "Two of these sound right?",
       text: "That's normal. Tell us your baby's age and what a usual day looks like, and we'll suggest which one to borrow first.",
       buttonLabel: "Ask us",
+      href: "#help",
     },
   },
 
@@ -192,6 +193,7 @@ export const carrierGuide = {
     ],
     note: "Something pinching or sagging? It is often one small adjustment away from right.",
     noteLinkLabel: "Send us a photo for a fit check",
+    noteHref: "#help",
     noteAfter: "before you give up on it.",
   },
 

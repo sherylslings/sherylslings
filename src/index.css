@@ -48,8 +48,8 @@
     --radius: 0.75rem;
 
     /* Custom tokens */
-    --gradient-warm: linear-gradient(135deg, hsl(25, 70%, 92%) 0%, hsl(40, 33%, 97%) 100%);
-    --gradient-hero: linear-gradient(180deg, hsl(40, 33%, 97%) 0%, hsl(25, 70%, 92%) 100%);
+    --gradient-warm: linear-gradient(135deg, hsl(var(--accent)) 0%, hsl(var(--background)) 100%);
+    --gradient-hero: linear-gradient(180deg, hsl(var(--background)) 0%, hsl(var(--accent)) 100%);
     --shadow-soft: 0 4px 20px -4px hsl(25 25% 15% / 0.08);
     --shadow-card: 0 2px 12px -2px hsl(25 25% 15% / 0.06);
     --shadow-hover: 0 8px 30px -8px hsl(25 25% 15% / 0.12);
@@ -109,6 +109,29 @@
     --sidebar-accent-foreground: 40 15% 90%;
     --sidebar-border: 25 15% 18%;
     --sidebar-ring: 16 60% 60%;
+    --gradient-warm: linear-gradient(135deg, hsl(var(--accent)) 0%, hsl(var(--background)) 100%);
+    --gradient-hero: linear-gradient(180deg, hsl(var(--background)) 0%, hsl(var(--accent)) 100%);
+  }
+
+  /* Keep the guide's dark tokens coherent when Site Settings set light colors inline on :root. */
+  .dark .carrier-guide-page {
+    --background: 25 20% 8%;
+    --foreground: 40 20% 95%;
+    --primary: 16 60% 60%;
+    --primary-foreground: 25 20% 8%;
+    --secondary: 145 15% 20%;
+    --secondary-foreground: 145 20% 85%;
+    --muted: 25 15% 15%;
+    --muted-foreground: 30 15% 60%;
+    --accent: 25 30% 18%;
+    --accent-foreground: 25 50% 85%;
+    --card: 25 18% 10%;
+    --card-foreground: 40 20% 95%;
+    --border: 25 15% 18%;
+    --input: 25 15% 18%;
+    --ring: 16 60% 60%;
+    --gradient-warm: linear-gradient(135deg, hsl(var(--accent)) 0%, hsl(var(--background)) 100%);
+    --gradient-hero: linear-gradient(180deg, hsl(var(--background)) 0%, hsl(var(--accent)) 100%);
   }
 }
 

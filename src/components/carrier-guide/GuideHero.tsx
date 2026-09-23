@@ -26,7 +26,7 @@ export const GuideHero = () => {
               <a
                 key={section.id}
                 href={`#${section.id}`}
-                className="rounded-full border border-border bg-card px-4 py-2 text-sm font-medium text-foreground shadow-card transition-colors hover:bg-accent"
+                className="inline-flex min-h-11 items-center rounded-full border border-border bg-card px-4 py-2 text-sm font-medium text-foreground shadow-card transition-colors hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
               >
                 {section.label}
               </a>
@@ -38,6 +38,7 @@ export const GuideHero = () => {
           <img
             src={carrierGuide.hero.image.src}
             alt={carrierGuide.hero.image.alt}
+              loading="eager"
             className="aspect-[4/3] w-full rounded-lg object-cover shadow-card"
           />
         ) : (

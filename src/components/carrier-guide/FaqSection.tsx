@@ -30,7 +30,7 @@ export const FaqSection = () => (
       <Accordion type="single" collapsible defaultValue="faq-0" className="mt-8">
         {carrierGuide.faq.items.map((item, index) => (
           <AccordionItem key={item.q} value={`faq-${index}`}>
-            <AccordionTrigger className="text-left text-lg text-foreground">
+            <AccordionTrigger className="text-left text-lg text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">
               {item.q}
             </AccordionTrigger>
             <AccordionContent className="pr-8 leading-relaxed text-muted-foreground">
