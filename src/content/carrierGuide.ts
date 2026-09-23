@@ -159,7 +159,7 @@ export const carrierGuide = {
         goodFor: "Longer outings, heavier babies, and handing over to a partner or grandparent in seconds.",
         readyFor:
           "Belts and straps suit some bodies more than others, and many models need adjusting or an insert for a newborn.",
-        linkLabel: "See buckle carriers to rent",
+        linkLabel: "See soft structured carriers to rent",
         href: "/?type=buckle-carriers#browse-all",
         image: { src: "", alt: "Buckle baby carrier" },
       },
@@ -188,7 +188,7 @@ export const carrierGuide = {
     helperCard: {
       enabled: true,
       title: "Two of these sound right?",
-      text: "That's normal. Tell us your baby's age and what a usual day looks like, and we'll suggest which one to borrow first.",
+      text: "That's normal. Tell me your baby's age and what a usual day looks like, and we'll suggest which one to borrow first.",
       buttonLabel: "Ask us",
       href: "#help",
     },
@@ -234,10 +234,10 @@ export const carrierGuide = {
         "Easy, only the belt needs resizing",
       ],
       [
-        "Buckle carrier",
+        "Soft structured carriers",
         "Clip the waist and chest, pull straps snug",
         "Same day",
-        "Long outings, older babies, travel",
+        "Long outings, travel, newborn to toddler (some models)",
         "Quick, though each person re-adjusts",
       ],
       [
@@ -307,15 +307,11 @@ export const carrierGuide = {
     items: [
       { name: "Cotton", text: "The easy all-rounder. Breathes well, washes without fuss, and suits most of the year." },
       {
-        name: "Linen and linen blends",
+        name: "Linen",
         text: "Airy and strong in a thin cloth. Feels crisp when new and softens the more it is used.",
       },
       {
-        name: "Mesh panels",
-        text: "Some buckle carriers swap the padded body for mesh so air can move. Worth a look for hot cities.",
-      },
-      {
-        name: "Stretchy knits",
+        name: "Stretchy knits fabric",
         text: "Soft and forgiving for newborns, but usually worn in several layers, so they run warmer.",
       },
     ],
@@ -357,7 +353,7 @@ export const carrierGuide = {
     morePageLabel: "Read our full safety page",
     notes: [
       "Look over seams, rings and buckles before each use, and keep checking on your baby while you wear them. Skip the carrier around the stove, hot chai, two-wheelers, running and cycling.",
-      "Speak to your paediatrician first if your baby is under four months, arrived early, or has a health condition. This guide is general information and does not replace their advice or the maker's manual.",
+      "Speak to your paediatrician first if your baby is born premature or has a health condition. This guide is general information and does not replace their advice or the maker's manual.",
     ],
   },
 
@@ -366,15 +362,11 @@ export const carrierGuide = {
     items: [
       {
         q: "Will one carrier last from birth to toddlerhood?",
-        a: "Sometimes. Woven wraps and a few highly adjustable buckle carriers cover a long span. Stretchy wraps suit the early months, onbuhimos come later, and many others are built for one stage. Check the limits on the listing, and remember that renting lets you switch styles as your baby grows instead of owning three.",
+        a: "Sometimes. Woven wraps and a few highly adjustable soft structured carriers cover a long span. Stretchy wraps suit the early months, onbuhimos come later, and many others are built for one stage. Check the limits on the listing, and remember that renting lets you switch styles as your baby grows instead of owning three.",
       },
       {
         q: "How many carriers does a family need?",
         a: "One that you reach for without thinking. Some families later add a second for a different job, such as a sling for quick trips alongside a buckle carrier for long days, but nobody needs a shelf full to get started.",
-      },
-      {
-        q: "Why rent instead of just buying one?",
-        a: "Premium carriers are a real investment and you can't judge comfort from a photo. A rental gives you [RENTAL PERIOD] of ordinary life with it: the school run, the nap, the hot afternoon. [ADD YOUR RENTAL TERMS AND ANY RENT-TO-BUY OPTION]",
       },
       {
         q: "The carrier everyone recommends feels wrong on me. What now?",
@@ -391,7 +383,7 @@ export const carrierGuide = {
     title: "Still torn? Borrow one and find out.",
     text: "Reading only gets you so far. Rent the style you're leaning towards, live with it, and we'll help you adjust it along the way. [ONE LINE ON HOW RENTING WORKS AND WHERE YOU DELIVER]",
     primaryLabel: "Browse the library",
-    secondaryLabel: "Ask us on WhatsApp",
+    secondaryLabel: "Ask me on WhatsApp",
     image: { src: "", alt: "Carriers from the Nestled library" },
   },
 } as const;
