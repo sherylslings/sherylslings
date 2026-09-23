@@ -41,7 +41,7 @@ export const carrierGuide = {
   },
 
   quickMatch: {
-    title: "Start with your day, not the product",
+    title: "What does your week look like?",
     intro: "Pick the line that sounds most like your week. It points to the style worth borrowing first.",
     items: [
       { situation: "Newborn weeks, long cuddles at home", suggestion: "Try a stretchy wrap", target: "stretchy" },
