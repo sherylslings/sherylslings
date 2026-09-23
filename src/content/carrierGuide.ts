@@ -288,7 +288,7 @@ export const carrierGuide = {
           },
           {
             label: "Real life:",
-            text: "can you reach every clip or tail yourself, including over a kurta, saree or dupatta?",
+            text: "can you reach every clip or tail yourself, without any help?",
           },
         ],
       },
@@ -303,7 +303,7 @@ export const carrierGuide = {
     eyebrow: "Fabric and weather",
     title: "Dress the carrier for the climate you live in",
     intro:
-      "Two bodies pressed together run warm, and our summers and monsoons add to it. Count the carrier as a layer of clothing for both of you.",
+      "Two bodies pressed together run warm, and Indian summers and humidity can make it warmer. Count the carrier as a layer of clothing for both of you.",
     items: [
       { name: "Cotton", text: "The easy all-rounder. Breathes well, washes without fuss, and suits most of the year." },
       {
