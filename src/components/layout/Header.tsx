@@ -37,16 +37,16 @@ export const Header = () => {
 
         <div className="flex items-center gap-3">
           <div className="hidden items-center gap-3 sm:flex">
-            <Link to={carrierGuide.navigation.href} className="inline-flex min-h-11 items-center text-sm font-medium text-muted-foreground hover:text-primary transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">
+            <Link to={carrierGuide.navigation.href} className="inline-flex min-h-11 items-center px-1 text-sm font-medium text-muted-foreground hover:text-primary transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">
               {carrierGuide.navigation.label}
             </Link>
-            <Link to="/policies" className="inline-flex min-h-11 items-center text-sm font-medium text-muted-foreground hover:text-primary transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">
+            <Link to="/policies" className="inline-flex min-h-11 items-center px-1 text-sm font-medium text-muted-foreground hover:text-primary transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">
               Policies
             </Link>
-            <Link to="/safety" className="inline-flex min-h-11 items-center text-sm font-medium text-muted-foreground hover:text-primary transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">
+            <Link to="/safety" className="inline-flex min-h-11 items-center px-1 text-sm font-medium text-muted-foreground hover:text-primary transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">
               Safety
             </Link>
-            <Link to="/blog" className="inline-flex min-h-11 items-center text-sm font-medium text-muted-foreground hover:text-primary transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">
+            <Link to="/blog" className="inline-flex min-h-11 min-w-11 items-center px-1 text-sm font-medium text-muted-foreground hover:text-primary transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">
               Blog
             </Link>
           </div>
