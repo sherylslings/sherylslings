@@ -1,0 +1,1 @@
+UPDATE public.site_settings SET meta_description = replace(meta_description, 'buckle carriers', 'soft structured carriers') WHERE meta_description LIKE '%buckle carriers%';

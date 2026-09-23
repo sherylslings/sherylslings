@@ -7,7 +7,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import { Badge } from '@/components/ui/badge';
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from '@/components/ui/alert-dialog';
 import { useCarriers, useDeleteCarrier } from '@/hooks/useCarriers';
-import { getCategoryName } from '@/lib/types';
+import { getAdminCategoryName } from '@/lib/types';
 import { CarrierFormModal } from '@/components/admin/CarrierFormModal';
 import { useToast } from '@/hooks/use-toast';
 import type { Carrier } from '@/lib/types';
@@ -81,7 +81,7 @@ const AdminCarriers = () => {
                         </div>
                       </div>
                     </TableCell>
-                    <TableCell>{getCategoryName(carrier.category)}</TableCell>
+                    <TableCell>{getAdminCategoryName(carrier.category)}</TableCell>
                     <TableCell>₹{carrier.weekly_rent}</TableCell>
                     <TableCell>₹{carrier.monthly_rent}</TableCell>
                     <TableCell>₹{carrier.purchase_cost}</TableCell>

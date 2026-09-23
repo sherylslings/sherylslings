@@ -1,0 +1,3 @@
+- [x] Rename visible buckle carrier references to soft structured carriers across site defaults and guide.
+- [x] Group Meh Dai and Half Buckle into one browsing category and one guide entry, while preserving stored carrier types and old links.
+- [x] Verify guide and catalogue at mobile/desktop sizes and check build status.
