@@ -110,6 +110,12 @@
     --sidebar-border: 25 15% 18%;
     --sidebar-ring: 16 60% 60%;
   }
+
+  /* The guide inherits the dark palette even when Site Settings set light colors inline on :root. */
+  .dark .carrier-guide-page {
+    --background: 25 20% 8%;
+    --foreground: 40 20% 95%;
+  }
 }
 
 @layer base {
