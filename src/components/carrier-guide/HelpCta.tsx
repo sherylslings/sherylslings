@@ -29,6 +29,7 @@ export const HelpCta = () => {
               <img
                 src={carrierGuide.cta.image.src}
                 alt={carrierGuide.cta.image.alt}
+                 loading="lazy"
                 className="h-full min-h-80 w-full object-cover"
               />
             </div>

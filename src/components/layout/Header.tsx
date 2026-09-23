@@ -26,9 +26,9 @@ export const Header = () => {
             </div>
           )}
           <div className="block">
-            <h1 className="font-serif text-sm sm:text-lg font-semibold text-foreground leading-tight">
+            <span className="block font-serif text-sm sm:text-lg font-semibold text-foreground leading-tight">
               {settings.brand_name}
-            </h1>
+            </span>
             {settings.tagline && (
               <p className="text-xs text-muted-foreground hidden sm:block">{settings.tagline}</p>
             )}

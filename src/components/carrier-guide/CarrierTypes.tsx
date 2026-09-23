@@ -20,6 +20,7 @@ export const CarrierTypes = () => (
             <img
               src={card.image.src}
               alt={card.image.alt}
+              loading="lazy"
               className="aspect-[4/3] w-full object-cover"
             />
           ) : (
@@ -70,7 +71,7 @@ export const CarrierTypes = () => (
           </CardContent>
           <CardFooter>
             <Button asChild>
-              <a href="#help">{carrierGuide.types.helperCard.buttonLabel}</a>
+               <a href={carrierGuide.types.helperCard.href} className="min-h-11">{carrierGuide.types.helperCard.buttonLabel}</a>
             </Button>
           </CardFooter>
         </Card>

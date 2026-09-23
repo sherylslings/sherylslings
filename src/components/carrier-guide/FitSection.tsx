@@ -35,8 +35,8 @@ export const FitSection = () => (
       <p className="mt-8 leading-relaxed">
         {carrierGuide.fit.note}{' '}
         <a
-          href="#help"
-          className="font-medium underline underline-offset-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-secondary"
+           href={carrierGuide.fit.noteHref}
+           className="inline-flex min-h-11 items-center align-middle font-medium underline underline-offset-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-secondary"
         >
           {carrierGuide.fit.noteLinkLabel}
         </a>{' '}
