@@ -355,24 +355,27 @@ export const carrierGuide = {
       },
       {
         q: "How many carriers do we need?",
-        a: "One that you reach for without thinking. Some parents later add a second for a different need, such as a ring sling for quick trips alongside a soft structured carrier for longer days.",
+        a: "One that you reach for without thinking, and like the look of. Some parents later add a second for a different need, such as a ring sling for quick trips alongside a soft structured carrier for longer days.",
       },
       {
         q: "The carrier everyone recommends feels wrong on me. What now?",
-        a: "First, reach out to Sheryl, who is a babywearing educator and consultant. A strap adjusted a few centimetres can improve the fit a lot. If it stillfor you, try a different carrier.",
+        a: "First, reach out to Sheryl, who is a babywearing educator and consultant. She will guide you on how you can optimise your fit. A strap adjusted a few centimetres can bring about a world of difference in your fit. If you still feel that it's not working for you, try a different carrier.",
       },
       {
-        q: "Are rental carriers cleaned between families?",
-        a: "[DESCRIBE YOUR WASHING AND SAFETY INSPECTION PROCESS]",
+        q: "What if I want to buy the carrier after renting it?",
+        a: "For every rental, you pay a refundable deposit, rental fees and shipping charges. If yo wish to return the carrier after renting it, your deposit will be refunded. If you decide to keep the carrier, deposit is retained and your rental fee is refunded. Shipping charges are non-refundable.",
       },
-    ],
-  },
-
+      { 
+        q: "How to use the carrier?",
+        a: "With every rental, you get a free consult with Sheryl over a WhatsApp video call. Reach out for a quick fit check!
+      }
+      {
+          
   cta: {
-    title: "Still torn? Borrow one and find out.",
-    text: "Reading only gets you so far. Rent the style you're leaning towards, live with it, and we'll help you adjust it along the way. [ONE LINE ON HOW RENTING WORKS AND WHERE YOU DELIVER]",
+    title: "Still torn? Rent one and find out.",
+    text: "Reading the guide can only get you so far. Rent the style you're leaning towards, learn to use it, and reach out for help to adjust it along the way. Rent weekly, biweekly or monthly. Shipping across India."
     primaryLabel: "Browse the library",
-    secondaryLabel: "Ask me on WhatsApp",
+    secondaryLabel: "Ask Sheryl on WhatsApp",
     image: { src: "", alt: "Carriers from the Nestled library" },
   },
 } as const;
