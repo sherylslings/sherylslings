@@ -62,12 +62,12 @@ export const carrierGuide = {
       },
       {
         situation: "Soft, spread-out shoulder straps, but a quick clip at the waist",
-        suggestion: "Try a meh dai or half buckle",
+        suggestion: "Try a half buckle",
         target: "mehdais",
       },
       {
         situation: "No buckles anywhere, but less cloth to handle than a wrap",
-        suggestion: "Try a meh dai or half buckle",
+        suggestion: "Try a meh dai",
         target: "mehdais",
       },
       {
