@@ -94,7 +94,7 @@ export const carrierGuide = {
     eyebrow: "What's in the library",
     title: "Six styles of baby carriers",
     intro:
-      "The carriers listed here range between the softest, most hands-on to the most structured. These are honest generalisations. Individual models may differ, and renting a carrier to try it on  helps you decide as per yoru lifestyle needs.",
+      "The carriers listed here range between the softest, most hands-on to the most structured. These are honest generalisations. Individual models may differ, and renting a carrier to try it on  helps you decide as per your lifestyle needs.",
     goodForLabel: "Lovely for",
     readyForLabel: "Be ready for",
     cards: [
@@ -116,7 +116,8 @@ export const carrierGuide = {
         name: "Woven wraps",
         description:
           "A long woven cloth with no stretch, tightened section by section around baby and you, tied in various kinds of knot-finishes.",
-        goodFor: "A fit moulded to your body: from newborn to toddler, on the front, hip or back.",
+        goodFor:
+          "A versatile carrier fit moulded to your body: from newborn to toddler ages, on your front, hip or back.",
         readyFor:
           "Woven wraps have the steepest learning curve. Wrap length matters, and the fabric may trail on the ground.",
         linkLabel: "See woven wraps to rent",
@@ -251,25 +252,26 @@ export const carrierGuide = {
         points: [
           {
             label: "Newborns:",
-            text: "Look at the minimum weight, how the head and neck are supported, and whetherthe carrier allows cinching it down with velcros or drawstrings. Baby's thighs should be fully supported by the base of the carrier and not let the legs dangle",
+            text: "Look at the minimum weight limits, how the head and neck are supported, and whether the carrier allows cinching it down using velcros or drawstrings. Baby's thighs should be fully supported frm one kneepit to the other, at the base of the carrier. Legs should not dangle.",
           },
           {
             label: "Infants:",
-            text: "Arms can stay out but the panel should come up to the nape of the neck. M-position of legs to be maintained during infancy too",
+            text: "Arms can stay out but the panel should come up to the nape of the neck. M-position of legs to be maintained during infancy too. World-facing position allowed for 15-20 minutes at a stretch once sitting milestone has been achieved.",
           },
           {
             label: "Toddlers:",
-            text: "They need upsies too! Choose a carrier that provides a generous spread of fabric at its base for good thigh support",
+            text: "Yes,they need upsies too! Choose a carrier that provides a generous spread of fabric at its base for good thigh support, and a large body panel for supporting their back.",
           },
         ],
       },
       {
         title: "Your body",
-        intro: "A carrier that your friend swears by can feel all wrong on you. Neither of you is wrong, because every carrier fit is very individual",
+        intro:
+          "A carrier that your friend swears by can feel all wrong on you. Neither of you is wrong, because every carrier fit is very individual.",
         points: [
           {
             label: "Waist and hips:",
-            text: "Where does the waistband lie on your torso, how stiff is it, and if it is comfortable for you after a C-section??",
+            text: "Where does the waistband lie on your torso, how stiff is it, and if it is comfortable for you after a C-section?",
           },
           {
             label: "Shoulders and neck:",
@@ -277,7 +279,7 @@ export const carrierGuide = {
           },
           {
             label: "Real life:",
-            text: "Can you reach every buckle or tail yourself, without any help?",
+            text: "Can you reach every buckle or tail yourself, without any help? Most carriers can be worn on your own. If you need an extra hand putting it on, it may not end up being practical in the long run.",
           },
         ],
       },
@@ -326,12 +328,12 @@ export const carrierGuide = {
       {
         letter: "C",
         name: "Close enough to kiss",
-        text: "Their head rests high on your chest, so you can kiss the top of their head.",
+        text: "Their head rests high on your chest, so you can easily kiss the top of their head.",
       },
       {
         letter: "K",
         name: "Keep chin off chest",
-        text: "Leave at least a finger's width under the chin so the airway stays open.",
+        text: "Leave at least a finger's width under the chin so their airways (nose and mouth) stay open.",
       },
       {
         letter: "S",
