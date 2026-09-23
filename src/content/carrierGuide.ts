@@ -9,7 +9,7 @@ export const carrierGuide = {
   seo: {
     title: "How to choose a baby carrier | Nestled",
     description:
-      "Stretchy wrap, woven wrap, ring sling, meh dai or half buckle, soft structured carrier or onbuhimo? A plain-spoken guide to finding your fit, and renting it before you buy.",
+      "Stretchy wrap, woven wrap, ring sling, meh dai or half buckle, soft structured carrier or onbuhimo? A simple guide to finding your fit, and renting it before you buy.",
   },
 
   // Set enabled to false to hide a section. Reorder this array to reorder the page.
@@ -35,33 +35,33 @@ export const carrierGuide = {
     eyebrow: "The Nestled carrier guide",
     title: "Which carrier is right for your family?",
     intro:
-      "Think about your baby's stage, the kind of days you have, and what your own back and shoulders enjoy. Find a carrier that works, to rent it before you buy one from the brand or from the library itself.",
+      "Think about your baby's stage, the kind of days you have, and what feels the most comfortable for you. Find a carrier that works for you, rent it from the Nestled Carrier Library before you buy one from the brand or from the library itself.",
     byline: "",
     image: { src: "", alt: "A parent wearing a baby in a carrier from the Nestled library" },
   },
 
   quickMatch: {
     title: "What does your week look like?",
-    intro: "Pick the line that sounds most like your week. It points to the style worth borrowing first.",
+    intro: "Pick the line that sounds most like your week as a parent. It points to the style worth renting first.",
     items: [
       { situation: "Newborn weeks, long cuddles at home", suggestion: "Try a stretchy wrap", target: "stretchy" },
       {
-        situation: "Quick ups and downs, market runs, a baby who wants in and out",
+        situation: "Quick ups and downs, mall visits, a curious baby wanting to see the world",
         suggestion: "Try a ring sling",
         target: "slings",
       },
       {
-        situation: "Long walks, travel days, airports and stations",
+        situation: "Long walks, travel days, airports and sightseeing",
         suggestion: "Try a soft structured carrier",
         target: "buckles",
       },
       {
-        situation: "A fit shaped exactly to you, and you enjoy learning a skill",
+        situation: "A fit shaped exactly for you, if you enjoy learning a skill",
         suggestion: "Try a woven wrap",
         target: "woven",
       },
       {
-        situation: "Soft, spread-out shoulder straps, but a quick clip at the waist",
+        situation: "Soft, spread-out shoulder straps, with a buckled waistband",
         suggestion: "Try a half buckle",
         target: "mehdais",
       },
@@ -71,9 +71,9 @@ export const carrierGuide = {
         target: "mehdais",
       },
       {
-        situation: "Parents and grandparents of different builds all taking turns",
-        suggestion: "Try a meh dai or half buckle",
-        target: "mehdais",
+        situation: "Sharing between parents and caregivers of different body shapes",
+        suggestion: "Try a soft structured carrier",
+        target: "buckles",
       },
       {
         situation: "A sitting baby or toddler on your back, and nothing around your waist",
@@ -81,20 +81,20 @@ export const carrierGuide = {
         target: "onbuhimos",
       },
       {
-        situation: "Something small enough to live in the nappy bag",
+        situation: "Something small enough to live in your diaper bag",
         suggestion: "Try a ring sling or onbuhimo",
         target: "slings",
       },
     ] as { situation: string; suggestion: string; target: CarrierId }[],
-    noteLabel: "One check before you book:",
-    note: "every listing shows the maker's age, weight and developmental limits for that exact model. Go by those, not by the style name.",
+    noteLabel: "A note before you book:",
+    note: "every listing shows the manufacturer's age, weight and developmental limits for that exact model. Make sure you go through them before renting",
   },
 
   types: {
     eyebrow: "What's in the library",
-    title: "Six styles, from all cloth to all clips",
+    title: "Six styles of baby carriers",
     intro:
-      "Listed from the softest and most hands-on to the most structured. These are honest generalisations; individual models differ, which is the whole reason to try one on first.",
+      "The carriers listed here range between the softest, most hands-on to the most structured. These are honest generalisations. Individual models may differ, and renting a carrier to try it on  helps you decide as per yoru lifestyle needs.",
     goodForLabel: "Lovely for",
     readyForLabel: "Be ready for",
     cards: [
@@ -102,9 +102,11 @@ export const carrierGuide = {
         id: "stretchy",
         name: "Stretchy wraps",
         description:
-          "One long piece of soft, springy knit. You tie it on first, then tuck your baby in and spread the layers over them.",
-        goodFor: "The early months. Gentle and forgiving to learn, and you can pop baby in and out without retying.",
-        readyFor: "Several layers mean more warmth, and most start to sag once baby gets heavier. Front carries only.",
+          "One long piece of soft, stretchable knitted fabric, either cotton, lycra, spandex or a mix of all. You tie it on first, then tuck your baby in and spread the layers over them.",
+        goodFor:
+          "The newborn months. Gentle and forgiving to learn. You can pop baby in and out without retying each time.",
+        readyFor:
+          "Several layers mean more warmth, and most stretchy wraps start to sag once baby gets heavier. Front carries only.",
         linkLabel: "See stretchy wraps to rent",
         href: "/?type=stretchy-wraps#browse-all",
         image: { src: "", alt: "Stretchy wrap baby carrier" },
@@ -113,9 +115,10 @@ export const carrierGuide = {
         id: "woven",
         name: "Woven wraps",
         description:
-          "A long woven cloth with no stretch, tightened section by section around the two of you and knotted.",
-        goodFor: "A fit moulded to your body, from newborn to toddler, on the front, hip or back.",
-        readyFor: "The steepest learning curve here. Length matters, and the tails trail on the ground outdoors.",
+          "A long woven cloth with no stretch, tightened section by section around baby and you, tied in various kinds of knot-finishes.",
+        goodFor: "A fit moulded to your body: from newborn to toddler, on the front, hip or back.",
+        readyFor:
+          "Woven wraps have the steepest learning curve. Wrap length matters, and the fabric may trail on the ground.",
         linkLabel: "See woven wraps to rent",
         href: "/?type=woven-wraps#browse-all",
         image: { src: "", alt: "Woven wrap baby carrier" },
@@ -124,9 +127,9 @@ export const carrierGuide = {
         id: "slings",
         name: "Ring slings",
         description:
-          "A shorter cloth that runs through a pair of rings and sits across one shoulder, forming a pouch you snug up strand by strand.",
-        goodFor: "Short carries, hip carries, babies who want up and down all day, and travelling light.",
-        readyFor: "All the weight on one side. Threading and tightening feel fiddly for the first few tries.",
+          "A shorter cloth that runs through a pair of rings and sits across one shoulder, forming a pouch that you tighten strand by strand.",
+        goodFor: "Short carries and hip carries, for travelling light with curious babies and toddlers.",
+        readyFor: "All the weight on one side. Threading and tightening feel overwhelming for the first few tries.",
         linkLabel: "See ring slings to rent",
         href: "/?type=ring-slings#browse-all",
         image: { src: "", alt: "Ring sling baby carrier" },
@@ -134,9 +137,12 @@ export const carrierGuide = {
       {
         id: "mehdais",
         name: "Meh dais & half buckles",
-        description: "Both have a shaped fabric panel and long shoulder straps to tie. A meh dai ties at the waist too; a half buckle clips there instead.",
-        goodFor: "Wrap-like comfort with less cloth to manage. The meh dai adjusts easily between adults; the half buckle gives you a quicker waist fastening.",
-        readyFor: "Both need shoulder straps tied each time, and their long tails can dangle. A half buckle's belt fits some bodies better than others.",
+        description:
+          "Both have a shaped fabric panel and long shoulder straps to tie. A meh dai ties at the waist; a half buckle clips at the waist.",
+        goodFor:
+          "Wrap-like comfort with less cloth to manage. The meh dai adjusts easily between adults; the half buckle gives you a quicker waist fastening.",
+        readyFor:
+          "Both need shoulder straps tied each time, and their long tails can dangle. A half buckle's waistband fits some bodies better than others.",
         linkLabel: "See meh dais and half buckles to rent",
         href: "/?type=meh-dai#browse-all",
         image: { src: "", alt: "Meh dai or half buckle baby carrier with tie straps" },
@@ -145,10 +151,10 @@ export const carrierGuide = {
         id: "buckles",
         name: "Soft structured carriers",
         description:
-          "A shaped body panel with padded straps and a waist belt. You clip it on and pull the webbing snug.",
-        goodFor: "Longer outings, heavier babies, and handing over to a partner or grandparent in seconds.",
+          "A shaped body panel with padded straps and a waistband. Pull the straps, fasten the buckles for a snug fit.",
+        goodFor: "Longer outings, quick fastening, sharing between caregivers",
         readyFor:
-          "Belts and straps suit some bodies more than others, and many models need adjusting or an insert for a newborn.",
+          "Waistbands and straps suit some bodies more than others. Many models may need appropriate sizing down for a newborn.",
         linkLabel: "See soft structured carriers to rent",
         href: "/?type=buckle-carriers#browse-all",
         image: { src: "", alt: "Soft structured baby carrier" },
@@ -156,11 +162,11 @@ export const carrierGuide = {
       {
         id: "onbuhimos",
         name: "Onbuhimos",
-        description: "A small panel with shoulder straps and no waist belt at all. Made mainly for high back carries.",
+        description: "A small panel with shoulder straps and no waistband at all. Made mainly for high back carries.",
         goodFor:
-          "Babies who sit on their own and toddlers. Nothing pressing on your tummy, quick on and off, folds up tiny.",
+          "Babies and toddlers who can sit on their own. Nothing pressing on your belly, quick on and off, folds up small.",
         readyFor:
-          "Your shoulders take the whole load. Not for young babies: check the sitting and size requirements on the listing.",
+          "Your shoulders take the entire load. Not for young babies: check the developmental and sizing requirements on the listing.",
         linkLabel: "See onbuhimos to rent",
         href: "/?type=onbuhimo#browse-all",
         image: { src: "", alt: "Onbuhimo baby carrier without a waistband" },
@@ -177,9 +183,9 @@ export const carrierGuide = {
     }[],
     helperCard: {
       enabled: true,
-      title: "Two of these sound right?",
-      text: "That's normal. Tell me your baby's age and what a usual day looks like, and we'll suggest which one to borrow first.",
-      buttonLabel: "Ask us",
+      title: "Do multiple kind of these carrier styles sound right to you?",
+      text: "That's okay! Connect with Sheryl about your baby's age, your requirements, what your perfect babywearing experience sounds like, and she will suggest which one to rent first.",
+      buttonLabel: "Ask her",
       href: "#help",
     },
   },
@@ -193,25 +199,25 @@ export const carrierGuide = {
         "Tie it on, then slide baby in",
         "A few tries",
         "Newborn months at home",
-        "Easy, one size ties to fit",
+        "Easy, one size fits all",
       ],
       [
         "Woven wrap",
-        "Wind, tighten section by section, knot",
+        "Wrap, tighten section by section, knot",
         "Several practice sessions",
         "Custom fit from newborn to toddler",
         "Easy, if the length suits both of you",
       ],
       [
         "Ring sling",
-        "Over one shoulder, tighten through the rings",
+        "One shoulder carry, tighten through the rings",
         "A few tries",
-        "Short, frequent carries; packs tiny",
+        "Short, frequent carries; packs small",
         "Easy, adjusts widely",
       ],
       [
         "Meh dai & half buckle",
-        "Knot or clip the waist, then tie the shoulders",
+        "Knot or buckle at the waist, then tie shoulder straps",
         "A few tries",
         "Wrap-like comfort with a tied or clipped waist",
         "Easy; a half buckle's belt may need resizing",
