@@ -270,7 +270,7 @@ export const carrierGuide = {
           },
           {
             label: "Toddlers:",
-            text: 'choose for the child you have today. Buying big to "grow into" usually means a poor fit now.',
+            text: "choose for your child’s current fit, rather than extra growing room.",
           },
         ],
       },
