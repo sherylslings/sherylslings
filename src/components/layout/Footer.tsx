@@ -41,7 +41,8 @@ export const Footer = () => {
                 href={getWhatsAppLink()}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="p-2 rounded-full bg-primary/10 text-primary hover:bg-primary/20 transition-colors">
+                aria-label="WhatsApp"
+                className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-primary/10 text-primary hover:bg-primary/20 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">
                 
                 <MessageCircle className="w-5 h-5" />
               </a>
@@ -50,7 +51,8 @@ export const Footer = () => {
                 href={settings.instagram_url.startsWith('http') ? settings.instagram_url : `https://instagram.com/${settings.instagram_url.replace(/^@/, '')}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="p-2 rounded-full bg-primary/10 text-primary hover:bg-primary/20 transition-colors">
+                aria-label="Instagram"
+                className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-primary/10 text-primary hover:bg-primary/20 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">
                 
                   <Instagram className="w-5 h-5" />
                 </a>
@@ -65,7 +67,7 @@ export const Footer = () => {
               <li>
                 <Link
                   to={carrierGuide.navigation.href}
-                  className="text-muted-foreground hover:text-primary transition-colors">
+                  className="inline-flex min-h-11 items-center text-muted-foreground hover:text-primary transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">
                   {carrierGuide.navigation.label}
                 </Link>
               </li>
@@ -73,7 +75,7 @@ export const Footer = () => {
               <li key={link.name}>
                   <Link
                   to={link.href}
-                  className="text-muted-foreground hover:text-primary transition-colors">
+                  className="inline-flex min-h-11 items-center text-muted-foreground hover:text-primary transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">
                   
                     {link.name}
                   </Link>
@@ -82,7 +84,7 @@ export const Footer = () => {
               <li>
                 <Link
                   to="/admin/login"
-                  className="text-muted-foreground hover:text-primary transition-colors">
+                  className="inline-flex min-h-11 items-center text-muted-foreground hover:text-primary transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">
                   
                   Admin Login
                 </Link>
