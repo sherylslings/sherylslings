@@ -109,7 +109,10 @@ export const carrierGuide = {
           "Several layers mean more warmth, and most stretchy wraps start to sag once baby gets heavier. Front carries only.",
         linkLabel: "See stretchy wraps to rent",
         href: "/?type=stretchy-wraps#browse-all",
-        image: { src: "", alt: "Stretchy wrap baby carrier" },
+        image: {
+          src: "https://res.cloudinary.com/dan644ohr/image/upload/v1781882828/IMG_9465_of7n3g.jpg",
+          alt: "Stretchy wrap baby carrier",
+        },
       },
       {
         id: "woven",
