@@ -136,7 +136,10 @@ export const carrierGuide = {
         readyFor: "All the weight on one side. Threading and tightening feel overwhelming for the first few tries.",
         linkLabel: "See ring slings to rent",
         href: "/?type=ring-slings#browse-all",
-        image: { src: "", alt: "Ring sling baby carrier" },
+        image: {
+          src: "https://res.cloudinary.com/dan644ohr/image/upload/v1790239356/4774431C-9CF7-4F9F-9E37-4B7952393B25_yf5kcu.png",
+          alt: "Ring sling baby carrier",
+        },
       },
       {
         id: "mehdais",
@@ -149,7 +152,10 @@ export const carrierGuide = {
           "Both need shoulder straps tied each time, and their long tails can dangle. A half buckle's waistband fits some bodies better than others.",
         linkLabel: "See meh dais and half buckles to rent",
         href: "/?type=meh-dai#browse-all",
-        image: { src: "", alt: "Meh dai or half buckle baby carrier with tie straps" },
+        image: {
+          src: "https://res.cloudinary.com/dan644ohr/image/upload/v1790239366/579378E2-C273-486D-A17E-7B27E0018A16_bab3sl.png",
+          alt: "Meh dai or half buckle baby carrier with tie straps",
+        },
       },
       {
         id: "buckles",
@@ -161,7 +167,10 @@ export const carrierGuide = {
           "Waistbands and straps suit some bodies more than others. Many models may need appropriate sizing down for a newborn.",
         linkLabel: "See soft structured carriers to rent",
         href: "/?type=buckle-carriers#browse-all",
-        image: { src: "", alt: "Soft structured baby carrier" },
+        image: {
+          src: "https://res.cloudinary.com/dan644ohr/image/upload/v1790239361/BFFDCA4A-0783-4BD7-A8D2-91BF64E57643_ntek3t.png",
+          alt: "Soft structured baby carrier",
+        },
       },
       {
         id: "onbuhimos",
