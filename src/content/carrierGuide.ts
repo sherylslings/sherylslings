@@ -2,8 +2,8 @@ export type CarrierId = "stretchy" | "woven" | "slings" | "mehdais" | "buckles" 
 
 export const carrierGuide = {
   navigation: {
-    label: "Carrier Guide",
-    href: "/carrier-guide",
+    label: "Carrier Finder",
+    href: "/carrier-finder",
   },
 
   seo: {
