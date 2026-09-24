@@ -4,10 +4,10 @@ import { carrierGuide } from '@/content/carrierGuide';
 export const FitSection = () => (
   <section id="fit" className="scroll-mt-24 bg-secondary py-16 text-secondary-foreground md:py-24">
     <div className="container max-w-5xl">
-      <p className="text-sm font-semibold uppercase text-secondary-foreground">
+      <p className="text-sm font-semibold uppercase text-primary">
         {carrierGuide.fit.eyebrow}
       </p>
-      <h2 className="mt-3 text-3xl font-semibold text-secondary-foreground md:text-4xl">
+      <h2 className="mt-3 text-3xl font-semibold text-foreground md:text-4xl">
         {carrierGuide.fit.title}
       </h2>
 

@@ -43,7 +43,7 @@ export const CarrierTypes = () => (
               <p className="mt-1 text-sm leading-relaxed text-card-foreground">{card.goodFor}</p>
             </div>
             <div>
-              <p className="text-xs font-semibold uppercase text-secondary-foreground">
+              <p className="text-xs font-semibold uppercase text-accent-foreground">
                 {carrierGuide.types.readyForLabel}
               </p>
               <p className="mt-1 text-sm leading-relaxed text-card-foreground">{card.readyFor}</p>
