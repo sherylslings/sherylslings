@@ -37,7 +37,10 @@ export const carrierGuide = {
     intro:
       "Think about your baby's stage, the kind of days you have, and what feels the most comfortable for you. Find a carrier that works for you, rent it from the Nestled Carrier Library before you buy one from the brand or from the library itself.",
     byline: "",
-    image: { src: "", alt: "A parent wearing a baby in a carrier from the Nestled library" },
+    image: {
+      src: "https://res.cloudinary.com/dan644ohr/image/upload/v1790250211/a49cc329-ca5a-406e-bcf6-df077b7b4d79_cht4wg.jpg",
+      alt: "A parent wearing a baby in a carrier from the Nestled library",
+    },
   },
 
   quickMatch: {
@@ -110,7 +113,7 @@ export const carrierGuide = {
         linkLabel: "See stretchy wraps to rent",
         href: "/?type=stretchy-wraps#browse-all",
         image: {
-          src: "",
+          src: "https://res.cloudinary.com/dan644ohr/image/upload/v1774120428/image_6_wrvvzd.png",
           alt: "Stretchy wrap baby carrier",
         },
       },
@@ -125,7 +128,10 @@ export const carrierGuide = {
           "Woven wraps have the steepest learning curve. Wrap length matters, and the fabric may trail on the ground.",
         linkLabel: "See woven wraps to rent",
         href: "/?type=woven-wraps#browse-all",
-        image: { src: "", alt: "Woven wrap baby carrier" },
+        image: {
+          src: "https://almitratattva.com/cdn/shop/files/Falak_woven_Nature_Baby_Wrap_Carrier_Front_Carry.png",
+          alt: "Woven wrap baby carrier",
+        },
       },
       {
         id: "slings",
@@ -137,7 +143,7 @@ export const carrierGuide = {
         linkLabel: "See ring slings to rent",
         href: "/?type=ring-slings#browse-all",
         image: {
-          src: "https://res.cloudinary.com/dan644ohr/image/upload/v1790239356/4774431C-9CF7-4F9F-9E37-4B7952393B25_yf5kcu.png",
+          src: "https://res.cloudinary.com/dan644ohr/image/upload/v1781449580/IMG_9115_xcukv7.jpg",
           alt: "Ring sling baby carrier",
         },
       },
@@ -153,7 +159,7 @@ export const carrierGuide = {
         linkLabel: "See meh dais and half buckles to rent",
         href: "/?type=meh-dai#browse-all",
         image: {
-          src: "https://res.cloudinary.com/dan644ohr/image/upload/v1790239366/579378E2-C273-486D-A17E-7B27E0018A16_bab3sl.png",
+          src: "https://res.cloudinary.com/dan644ohr/image/upload/v1781078907/Gemini_Generated_Image_u87gk3u87gk3u87g_igjnvv.png",
           alt: "Meh dai or half buckle baby carrier with tie straps",
         },
       },
@@ -168,7 +174,7 @@ export const carrierGuide = {
         linkLabel: "See soft structured carriers to rent",
         href: "/?type=buckle-carriers#browse-all",
         image: {
-          src: "https://res.cloudinary.com/dan644ohr/image/upload/v1790239361/BFFDCA4A-0783-4BD7-A8D2-91BF64E57643_ntek3t.png",
+          src: "https://res.cloudinary.com/dan644ohr/image/upload/v1788517575/IMG_0566_o9g4cw.jpg",
           alt: "Soft structured baby carrier",
         },
       },
@@ -182,7 +188,10 @@ export const carrierGuide = {
           "Your shoulders take the entire load. Not for young babies: check the developmental and sizing requirements on the listing.",
         linkLabel: "See onbuhimos to rent",
         href: "/?type=onbuhimo#browse-all",
-        image: { src: "", alt: "Onbuhimo baby carrier without a waistband" },
+        image: {
+          src: "https://res.cloudinary.com/dan644ohr/image/upload/v1774120635/vvkupbywvvy1l8ph1z1l_2_t0afjz.png",
+          alt: "Onbuhimo baby carrier without a waistband",
+        },
       },
     ] as {
       id: CarrierId;
@@ -196,8 +205,8 @@ export const carrierGuide = {
     }[],
     helperCard: {
       enabled: true,
-      title: "Do any of these carrier styles sound right to you?",
-      text: "That's okay! Connect with Sheryl (a Certified Babywearing Educator and Consultant) about your baby's age, your requirements, what your perfect babywearing experience sounds like, and she will suggest which one to rent first.",
+      title: "Do many of these carrier styles sound right to you?",
+      text: "Connect with Sheryl (a Certified Babywearing Educator and Consultant) about your baby's age, your requirements, what your perfect babywearing experience sounds like, and she will suggest which one to rent first.",
       buttonLabel: "Ask Sheryl on WhatsApp",
       href: "#help",
     },
