@@ -43,7 +43,7 @@ export const CarrierTypes = () => (
               <p className="mt-1 text-sm leading-relaxed text-card-foreground">{card.goodFor}</p>
             </div>
             <div>
-              <p className="text-xs font-semibold uppercase text-secondary-foreground">
+              <p className="text-xs font-semibold uppercase text-accent-foreground">
                 {carrierGuide.types.readyForLabel}
               </p>
               <p className="mt-1 text-sm leading-relaxed text-card-foreground">{card.readyFor}</p>
@@ -62,21 +62,18 @@ export const CarrierTypes = () => (
         </Card>
       ))}
 
-      {carrierGuide.types.helperCard.enabled && (
-        <Card className="flex h-full flex-col border-secondary bg-secondary text-secondary-foreground">
-          <CardHeader>
-            <CardTitle className="text-xl leading-snug">{carrierGuide.types.helperCard.title}</CardTitle>
-          </CardHeader>
-          <CardContent className="flex-1">
-            <p className="text-sm leading-relaxed">{carrierGuide.types.helperCard.text}</p>
-          </CardContent>
-          <CardFooter>
-            <Button asChild>
-               <a href={carrierGuide.types.helperCard.href} className="min-h-11">{carrierGuide.types.helperCard.buttonLabel}</a>
-            </Button>
-          </CardFooter>
-        </Card>
-      )}
     </div>
+
+    {carrierGuide.types.helperCard.enabled && (
+      <div className="mt-10 flex w-full flex-col gap-6 rounded-lg bg-secondary p-6 text-secondary-foreground shadow-card md:flex-row md:items-center md:justify-between md:p-10">
+        <div className="max-w-3xl">
+          <h3 className="text-2xl font-semibold leading-snug text-foreground">{carrierGuide.types.helperCard.title}</h3>
+          <p className="mt-3 leading-relaxed">{carrierGuide.types.helperCard.text}</p>
+        </div>
+        <Button asChild size="lg" className="shrink-0 self-start md:self-center">
+          <a href={carrierGuide.types.helperCard.href} className="min-h-11">{carrierGuide.types.helperCard.buttonLabel}</a>
+        </Button>
+      </div>
+    )}
   </section>
 );
