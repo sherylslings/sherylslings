@@ -40,7 +40,7 @@ const CarrierGuide = () => {
   }, []);
 
   return (
-    <div className="carrier-guide-page">
+    <div className="carrier-finder-page">
       <Layout>
         <GuideHero />
         {carrierGuide.sections.map((section) => {

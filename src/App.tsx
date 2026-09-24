@@ -42,7 +42,7 @@ const App = () => (
             <Route path="/safety" element={<SafetyPage />} />
             <Route path="/blog" element={<BlogPage />} />
             <Route path="/blog/:slug" element={<BlogPostPage />} />
-            <Route path="/carrier-guide" element={<CarrierGuide />} />
+            <Route path="/carrier-finder" element={<CarrierGuide />} />
             <Route path="/admin/login" element={<AdminLogin />} />
             <Route path="/admin/dashboard" element={<AdminDashboard />}>
               <Route index element={<Navigate to="carriers" replace />} />
