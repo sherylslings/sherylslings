@@ -110,7 +110,7 @@ export const carrierGuide = {
         linkLabel: "See stretchy wraps to rent",
         href: "/?type=stretchy-wraps#browse-all",
         image: {
-          src: "https://res.cloudinary.com/dan644ohr/image/upload/v1781882828/IMG_9465_of7n3g.jpg",
+          src: "",
           alt: "Stretchy wrap baby carrier",
         },
       },
